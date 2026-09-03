@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFCFA;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#29262A}
+a{color:#963568;text-decoration:none}
+a:hover{color:#E87FAF}
+input,textarea,button{font-family:'Jost',system-ui,sans-serif}
+input:focus,textarea:focus{outline:none;border-color:#963568}
+@keyframes vmIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes vmSlide{from{transform:translateX(100%)}to{transform:none}}
+@keyframes vmSlideL{from{transform:translateX(-100%)}to{transform:none}}
+@keyframes vmMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<div style="background:#963568;color:#FFFCFA;padding:11px 24px;text-align:center;font:400 11.5px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase">Have a very merry party</div>
+
+<header style="position:sticky;top:0;z-index:40;background:#FFFCFA;border-bottom:1px solid #E9E3E6">
+<div style="max-width:1440px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:18px">
+<button onClick="{{ toggleMenu }}" aria-label="Menú" style="flex:none;background:transparent;border:0;padding:8px;cursor:pointer;display:flex;flex-direction:column;gap:5px">
+<span style="width:22px;height:1.6px;background:#29262A;display:block"></span>
+<span style="width:22px;height:1.6px;background:#29262A;display:block"></span>
+<span style="width:14px;height:1.6px;background:#29262A;display:block"></span>
+</button>
+<button onClick="{{ goHome }}" style="flex:none;background:transparent;border:0;padding:0;cursor:pointer;display:block">
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:150px;display:block;mix-blend-mode:multiply">
+</button>
+<nav style="flex:1;display:flex;gap:22px;justify-content:center;flex-wrap:wrap;font:400 13.5px/1 'Jost',sans-serif">
+<sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+<sc-if value="{{ l.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ l.go }}" style="background:transparent;border:0;border-bottom:1.5px solid #963568;padding:6px 0 4px;cursor:pointer;font:500 13.5px/1 'Jost',sans-serif;color:#963568">{{ l.name }}</button></sc-if>
+<sc-if value="{{ l.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ l.go }}" style="background:transparent;border:0;padding:6px 0;cursor:pointer;font:400 13.5px/1 'Jost',sans-serif;color:#29262A">{{ l.name }}</button></sc-if>
+</sc-for>
+</nav>
+<div style="flex:none;display:flex;align-items:center;gap:14px">
+<a href="{{ waLink }}" target="_blank" rel="noreferrer" style="display:flex;align-items:center;gap:7px;background:#F5DCE7;border-radius:999px;padding:9px 15px;color:#963568;text-decoration:none">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>
+<span style="font:500 12px/1 'Jost',sans-serif">WhatsApp</span>
+</a>
+<button onClick="{{ toggleSearch }}" aria-label="Buscar" style="background:transparent;border:0;padding:6px;cursor:pointer;color:#29262A;display:flex">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+</button>
+<button onClick="{{ openCart }}" aria-label="Carrito" style="background:transparent;border:0;padding:6px;cursor:pointer;color:#29262A;display:flex;position:relative">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg>
+<sc-if value="{{ hasCart }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:-2px;right:-4px;min-width:17px;height:17px;border-radius:999px;background:#963568;color:#FFFCFA;font:500 10px/17px 'Jost',sans-serif;text-align:center;padding:0 4px;box-sizing:border-box">{{ cartCount }}</span></sc-if>
+</button>
+</div>
+</div>
+<div style="border-top:1px solid #E9E3E6">
+<div style="max-width:1440px;margin:0 auto;padding:11px 24px;display:flex;gap:8px;overflow-x:auto">
+<sc-for list="{{ navCats }}" as="c" hint-placeholder-count="6">
+<sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.go }}" style="flex:none;font:400 12.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:10px 15px;cursor:pointer">{{ c.name }}</button></sc-if>
+<sc-if value="{{ c.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.go }}" style="flex:none;font:400 12.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:9px 14px;cursor:pointer">{{ c.name }}</button></sc-if>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{ searchOpen }}" hint-placeholder-val="{{ false }}">
+<div style="border-top:1px solid #E9E3E6;background:#FFF1F6;animation:vmIn .18s ease-out">
+<div style="max-width:1000px;margin:0 auto;padding:22px 24px 26px">
+<div style="display:flex;align-items:center;gap:12px;background:#FFFCFA;border:1px solid #F5DCE7;border-radius:999px;padding:14px 20px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#963568" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Buscar platos, guirnaldas, toppers…" style="flex:1;min-width:0;border:0;background:transparent;font:400 15px/1.2 'Jost',sans-serif;color:#29262A;padding:2px 0">
+<button onClick="{{ closeSearch }}" style="background:transparent;border:0;cursor:pointer;font:300 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.55)">Cerrar</button>
+</div>
+<sc-if value="{{ queryEmpty }}" hint-placeholder-val="{{ true }}">
+<div style="margin-top:20px">
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:14px">Búsquedas populares</div>
+<div style="display:flex;gap:9px;flex-wrap:wrap">
+<sc-for list="{{ populares }}" as="p" hint-placeholder-count="4">
+<button onClick="{{ p.go }}" style="font:300 12.5px/1 'Jost',sans-serif;color:#29262A;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:999px;padding:9px 14px;cursor:pointer">{{ p.name }}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ hasResults }}" hint-placeholder-val="{{ false }}">
+<div style="margin-top:20px;display:flex;flex-direction:column;gap:6px">
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:8px">{{ resultsLabel }}</div>
+<sc-for list="{{ results }}" as="r" hint-placeholder-count="0">
+<button onClick="{{ r.open }}" style="display:flex;gap:14px;align-items:center;text-align:left;background:transparent;border:0;border-radius:9px;padding:9px;cursor:pointer">
+<span style="width:56px;height:56px;flex:none;border-radius:7px;background-image:url({{ r.photo }});background-size:cover;background-position:center;background-color:#F5DCE7;display:block"></span>
+<span style="flex:1;display:block"><span style="display:block;font:400 14.5px/1.3 'Jost',sans-serif;color:#29262A">{{ r.name }}</span><span style="display:block;font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:3px">{{ r.cat }}</span></span>
+<span style="font:500 14.5px/1 'Jost',sans-serif;color:#29262A">{{ r.priceLabel }}</span>
+</button>
+</sc-for>
+<button onClick="{{ goSearchAll }}" style="align-self:flex-start;margin-top:8px;font:500 13px/1 'Jost',sans-serif;color:#963568;background:transparent;border:0;cursor:pointer;padding:6px 0">Ver todos los resultados →</button>
+</div>
+</sc-if>
+<sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+<div style="margin-top:24px;text-align:center;padding:18px 0 6px">
+<div style="display:flex;gap:7px;justify-content:center;margin-bottom:16px"><span style="width:8px;height:8px;border-radius:999px;background:#F5DCE7"></span><span style="width:8px;height:8px;border-radius:999px;background:#E87FAF"></span><span style="width:8px;height:8px;border-radius:999px;background:#963568"></span></div>
+<div style="font:500 26px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:8px">{{ noResultsTitle }}</div>
+<div style="font:300 13.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.65);max-width:360px;margin:0 auto 18px">Puede que aún no lo tengamos en línea. Escríbenos y lo buscamos por ti.</div>
+<a href="{{ waLink }}" target="_blank" rel="noreferrer" style="display:inline-block;font:500 13.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border-radius:999px;padding:15px 26px;text-decoration:none">Preguntar por WhatsApp</a>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+</header>
+
+<main style="flex:1">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div>
+<div style="max-width:1440px;margin:0 auto;padding:34px 24px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:26px;align-items:stretch">
+<div style="background:#FFF1F6;border-radius:18px;padding:58px 50px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;min-height:460px">
+<span style="position:absolute;top:-40px;right:-40px;width:190px;height:190px;border-radius:999px;background:#F5DCE7"></span>
+<span style="position:absolute;bottom:34px;right:44px;width:9px;height:9px;border-radius:999px;background:#E87FAF"></span>
+<span style="position:absolute;bottom:58px;right:76px;width:6px;height:6px;border-radius:999px;background:#963568"></span>
+<div style="position:relative;z-index:1">
+<div>
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:16px">
+<span style="width:6px;height:6px;border-radius:999px;background:#E87FAF"></span><span style="width:6px;height:6px;border-radius:999px;background:#963568"></span><span style="width:6px;height:6px;border-radius:999px;background:#F5DCE7"></span>
+<span style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568">Nueva temporada</span>
+</div>
+<h1 style="font:500 clamp(34px,4.4vw,54px)/1.04 'Cormorant Garamond',serif;color:#29262A;margin:0 0 14px;letter-spacing:-.015em">Haz de cada celebración algo inolvidable</h1>
+<p style="font:300 16px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.7);margin:0 0 26px;max-width:400px">Encuentra todos los detalles para crear momentos muy merry.</p>
+<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+<button onClick="{{ goCatalog }}" style="font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:17px 36px;cursor:pointer">Comprar ahora</button>
+<button onClick="{{ goNew }}" style="font:400 14px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:0;border-bottom:1px solid rgba(41,38,42,.25);padding:0 0 4px;cursor:pointer">Ver New Arrivals</button>
+</div>
+</div>
+</div>
+</div>
+<div style="position:relative;border-radius:18px;overflow:hidden;min-height:460px;background:#F5DCE7">
+<img src="assets/hero-granja.jpg" alt="Fiesta de cumpleaños" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+<button onClick="{{ heroPeek.open }}" style="position:absolute;left:18px;bottom:18px;display:flex;gap:12px;align-items:center;background:rgba(255,252,250,.95);border:0;border-radius:12px;padding:12px 18px 12px 12px;cursor:pointer;box-shadow:0 10px 26px rgba(41,38,42,.18);text-align:left">
+<sc-if value="{{ dataReady }}" hint-placeholder-val="{{ false }}"><img src="{{ heroPeek.photo }}" alt="" style="width:54px;height:54px;border-radius:8px;object-fit:cover;display:block"></sc-if>
+<span style="display:block">
+<span style="display:block;font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:5px">Nuevo</span>
+<span style="display:block;font:400 13px/1.25 'Jost',sans-serif;color:#29262A;max-width:160px">{{ heroPeek.name }}</span>
+<span style="display:block;font:500 13px/1 'Jost',sans-serif;color:#29262A;margin-top:5px">{{ heroPeek.priceLabel }}</span>
+</span>
+</button>
+</div>
+</div>
+<div style="overflow:hidden;background:#963568;margin-top:34px;padding:14px 0">
+<div style="display:flex;gap:42px;white-space:nowrap;animation:vmMarquee 30s linear infinite;font:400 12px/1 'Jost',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#FFFCFA">
+<span>Have a very merry party</span><span>✽</span><span>Entrega el mismo día en Tegucigalpa</span><span>✽</span><span>Armamos tu mesa por WhatsApp</span><span>✽</span><span>Have a very merry party</span><span>✽</span><span>Entrega el mismo día en Tegucigalpa</span><span>✽</span><span>Armamos tu mesa por WhatsApp</span><span>✽</span>
+</div>
+</div>
+
+<div style="max-width:1440px;margin:0 auto;padding:72px 24px 20px">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:28px">
+<div>
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Explora</div>
+<h2 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Categorías principales</h2>
+</div>
+<button onClick="{{ goCatalog }}" style="font:400 13.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:0;border-bottom:1px solid rgba(41,38,42,.25);padding:0 0 4px;cursor:pointer">Ver todos los productos</button>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:18px;align-items:stretch">
+<button onClick="{{ catA.go }}" style="flex:1 1 300px;min-height:438px;position:relative;border:0;padding:0;cursor:pointer;border-radius:14px;overflow:hidden;display:block;background:#F5DCE7">
+<sc-if value="{{ dataReady }}" hint-placeholder-val="{{ false }}"><img src="{{ catA.photo }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<span style="position:absolute;inset:auto 0 0 0;padding:26px 24px;background:linear-gradient(to top,rgba(41,38,42,.62),rgba(41,38,42,0));display:block;text-align:left">
+<span style="display:block;font:500 30px/1.1 'Cormorant Garamond',serif;color:#FFFCFA">{{ catA.name }}</span>
+<span style="display:block;font:300 12px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.8);margin-top:5px">{{ catA.countLabel }}</span>
+</span>
+</button>
+<div style="flex:1 1 300px;display:flex;flex-direction:column;gap:18px">
+<button onClick="{{ catB.go }}" style="flex:1 1 210px;min-height:210px;position:relative;border:0;padding:0;cursor:pointer;border-radius:14px;overflow:hidden;display:block;background:#F5DCE7">
+<sc-if value="{{ dataReady }}" hint-placeholder-val="{{ false }}"><img src="{{ catB.photo }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<span style="position:absolute;left:16px;bottom:16px;background:rgba(255,252,250,.95);border-radius:9px;padding:11px 16px;display:block;text-align:left">
+<span style="display:block;font:500 18px/1.2 'Cormorant Garamond',serif;color:#29262A">{{ catB.name }}</span>
+<span style="display:block;font:300 11px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:2px">{{ catB.countLabel }}</span>
+</span>
+</button>
+<button onClick="{{ catC.go }}" style="flex:1 1 210px;min-height:210px;position:relative;border:0;padding:0;cursor:pointer;border-radius:14px;overflow:hidden;display:block;background:#F5DCE7">
+<sc-if value="{{ dataReady }}" hint-placeholder-val="{{ false }}"><img src="{{ catC.photo }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<span style="position:absolute;left:16px;bottom:16px;background:rgba(255,252,250,.95);border-radius:9px;padding:11px 16px;display:block;text-align:left">
+<span style="display:block;font:500 18px/1.2 'Cormorant Garamond',serif;color:#29262A">{{ catC.name }}</span>
+<span style="display:block;font:300 11px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:2px">{{ catC.countLabel }}</span>
+</span>
+</button>
+</div>
+<button onClick="{{ catD.go }}" style="flex:1 1 100%;min-height:230px;position:relative;border:0;padding:0;cursor:pointer;border-radius:14px;overflow:hidden;display:block;background:#F5DCE7">
+<sc-if value="{{ dataReady }}" hint-placeholder-val="{{ false }}"><img src="{{ catD.photo }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<span style="position:absolute;left:20px;bottom:18px;background:rgba(255,252,250,.95);border-radius:9px;padding:12px 18px;display:block;text-align:left">
+<span style="display:block;font:500 22px/1.15 'Cormorant Garamond',serif;color:#29262A;max-width:320px">{{ catD.name }}</span>
+<span style="display:block;font:300 11px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:3px">{{ catD.countLabel }}</span>
+</span>
+</button>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+<sc-for list="{{ catRest }}" as="c" hint-placeholder-count="3">
+<button onClick="{{ c.go }}" style="display:flex;align-items:center;gap:11px;background:#FFF1F6;border:0;border-radius:999px;padding:8px 18px 8px 8px;cursor:pointer">
+<img src="{{ c.photo }}" alt="" style="width:34px;height:34px;border-radius:999px;object-fit:cover;display:block">
+<span style="display:block;text-align:left"><span style="display:block;font:400 13px/1.2 'Jost',sans-serif;color:#29262A">{{ c.name }}</span><span style="display:block;font:300 10.5px/1.2 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:2px">{{ c.countLabel }}</span></span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div style="max-width:1440px;margin:0 auto;padding:64px 24px 0">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:26px">
+<div>
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Recién llegado</div>
+<h2 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">New Arrivals</h2>
+</div>
+<button onClick="{{ goNew }}" style="font:400 13.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:0;border-bottom:1px solid rgba(41,38,42,.25);padding:0 0 4px;cursor:pointer">Ver todo</button>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:26px">
+<sc-for list="{{ newArrivals }}" as="p" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column">
+<div style="position:relative">
+<button onClick="{{ p.open }}" style="width:100%;border:0;padding:0;cursor:pointer;border-radius:9px;overflow:hidden;aspect-ratio:4/5;display:block;background:#F5DCE7">
+<img src="{{ p.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
+</button>
+<sc-if value="{{ p.hasBadge }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:7px 11px">{{ p.badge }}</span></sc-if>
+<button onClick="{{ p.add }}" aria-label="Agregar al carrito" style="position:absolute;bottom:12px;right:12px;width:40px;height:40px;border-radius:999px;background:#FFFCFA;border:0;box-shadow:0 2px 8px rgba(41,38,42,.16);display:flex;align-items:center;justify-content:center;color:#963568;cursor:pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg>
+</button>
+</div>
+<button onClick="{{ p.open }}" style="text-align:left;background:transparent;border:0;padding:14px 0 0;cursor:pointer;font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A">{{ p.name }}</button>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">{{ p.sub }}</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:9px">{{ p.priceLabel }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<sc-if value="{{ showSale }}" hint-placeholder-val="{{ true }}">
+<div style="background:#963568;margin-top:66px;padding:64px 24px">
+<div style="max-width:1440px;margin:0 auto">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:30px">
+<div style="display:flex;align-items:flex-end;gap:26px;flex-wrap:wrap">
+<div style="font:500 clamp(64px,9vw,120px)/.8 'Cormorant Garamond',serif;color:#E87FAF;letter-spacing:-.03em">30%</div>
+<div>
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,252,250,.7);margin-bottom:12px">Hasta 30% menos</div>
+<h2 style="font:500 44px/1.05 'Cormorant Garamond',serif;color:#FFFCFA;margin:0">Sale <span style="font-style:italic;color:#F5DCE7">de temporada</span></h2>
+</div>
+</div>
+<button onClick="{{ goSale }}" style="font:400 13.5px/1 'Jost',sans-serif;color:#FFFCFA;background:transparent;border:0;border-bottom:1px solid rgba(255,252,250,.45);padding:0 0 4px;cursor:pointer">Ver toda la promoción</button>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:24px">
+<sc-for list="{{ saleItems }}" as="p" hint-placeholder-count="3">
+<div style="background:#FFFCFA;border-radius:10px;padding:16px;display:flex;flex-direction:column">
+<div style="position:relative">
+<button onClick="{{ p.open }}" style="width:100%;border:0;padding:0;cursor:pointer;border-radius:7px;overflow:hidden;aspect-ratio:1;display:block;background:#F5DCE7">
+<img src="{{ p.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
+</button>
+<span style="position:absolute;top:11px;left:11px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 11px">{{ p.saleLabel }}</span>
+</div>
+<button onClick="{{ p.open }}" style="text-align:left;background:transparent;border:0;padding:13px 0 0;cursor:pointer;font:400 15px/1.35 'Jost',sans-serif;color:#29262A">{{ p.name }}</button>
+<div style="display:flex;gap:9px;align-items:baseline;margin-top:8px">
+<span style="font:500 16px/1 'Jost',sans-serif;color:#963568">{{ p.priceLabel }}</span>
+<span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">{{ p.oldPriceLabel }}</span>
+</div>
+<button onClick="{{ p.add }}" style="margin-top:12px;font:500 12.5px/1 'Jost',sans-serif;color:#29262A;background:#F5DCE7;border:0;border-radius:999px;padding:12px;cursor:pointer">Agregar al carrito</button>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<div style="max-width:1440px;margin:0 auto;padding:64px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px">
+<div style="position:relative;border-radius:12px;overflow:hidden;min-height:320px;display:flex;align-items:center;background:#F5DCE7">
+<img src="assets/pasteles-rosa.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+<div style="position:relative;margin:26px;background:rgba(255,252,250,.94);border-radius:10px;padding:30px 32px;max-width:340px">
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Temporada · Cumpleaños</div>
+<h3 style="font:500 34px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Velas altas y bases festoneadas</h3>
+<p style="font:300 14px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.7);margin:0 0 20px">El pastel se ve mejor sobre una base con pie y rodeado de velas de colores.</p>
+<button onClick="{{ goVelas }}" style="font:500 13.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:15px 28px;cursor:pointer">Ver la mesa de pastel</button>
+</div>
+</div>
+<div style="border-radius:12px;background:#963568;padding:34px;display:flex;flex-direction:column;justify-content:space-between;min-height:320px">
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,252,250,.7);margin-bottom:12px">Tema del mes</div>
+<h3 style="font:500 32px/1.12 'Cormorant Garamond',serif;color:#FFFCFA;margin:0 0 12px">Fiesta<br>en la granja</h3>
+<p style="font:300 14px/1.6 'Jost',sans-serif;color:rgba(255,252,250,.75);margin:0;max-width:280px">Guirnaldas, coronas, toppers y vajilla que combinan entre sí.</p>
+</div>
+<button onClick="{{ goFarm }}" style="align-self:flex-start;font:400 13px/1 'Jost',sans-serif;color:#FFFCFA;background:transparent;border:0;border-bottom:1px solid rgba(255,252,250,.4);padding:0 0 4px;cursor:pointer">Ver el tema completo</button>
+</div>
+</div>
+
+<div style="max-width:1440px;margin:0 auto;padding:8px 24px 64px">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:28px">
+<div>
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Cómo lo hacemos</div>
+<h2 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Arma tu mesa en tres pasos</h2>
+</div>
+<a href="{{ waLink }}" target="_blank" rel="noreferrer" style="font:400 13.5px/1 'Jost',sans-serif;color:#963568;border-bottom:1px solid rgba(150,53,104,.3);padding-bottom:4px">Que te ayudemos por WhatsApp</a>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+<div>
+<div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#F5DCE7"><img src="assets/set-granja.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+<div style="display:flex;gap:14px;margin-top:16px">
+<span style="flex:none;font:500 30px/1 'Cormorant Garamond',serif;color:#E87FAF">01</span>
+<div>
+<div style="font:500 17px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:5px">Elige el tema</div>
+<div style="font:300 13.5px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.65)">Granja, flores o vajilla clásica: cada tema trae platos, vasos y servilletas que combinan.</div>
+</div>
+</div>
+</div>
+<div>
+<div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#F5DCE7"><img src="assets/pasteles-rosa.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+<div style="display:flex;gap:14px;margin-top:16px">
+<span style="flex:none;font:500 30px/1 'Cormorant Garamond',serif;color:#E87FAF">02</span>
+<div>
+<div style="font:500 17px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:5px">Suma altura y velas</div>
+<div style="font:300 13.5px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.65)">Bases festoneadas y velas altas para que el pastel sea el centro de la foto.</div>
+</div>
+</div>
+</div>
+<div>
+<div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#F5DCE7"><img src="assets/guirnalda-granja.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+<div style="display:flex;gap:14px;margin-top:16px">
+<span style="flex:none;font:500 30px/1 'Cormorant Garamond',serif;color:#E87FAF">03</span>
+<div>
+<div style="font:500 17px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:5px">Decora la pared</div>
+<div style="font:300 13.5px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.65)">Guirnaldas y coronas para cerrar el ambiente y repartir entre los invitados.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div style="background:#FFF1F6;padding:60px 24px">
+<div style="max-width:1440px;margin:0 auto">
+<div style="text-align:center;margin-bottom:26px">
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">@verymerryhn</div>
+<h2 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Fiestas muy merry</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+<img src="assets/pasteles-rosa.jpg" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block">
+<img src="assets/platos-cerdito.jpg" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block">
+<img src="assets/mesa-flores.jpg" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block">
+<img src="assets/velas-mesa.jpg" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block">
+<img src="assets/gorritos-fiesta.jpg" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block">
+<img src="assets/toppers-hadas.jpg" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block">
+</div>
+</div>
+</div>
+
+<div style="background:#FFFCFA;border-top:1px solid #E9E3E6;padding:52px 24px">
+<div style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:30px">
+<div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.4"></circle></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Variedad para cada celebración</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Temas completos, vajilla, velas y flores decorativas.</div></div>
+<div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Atención personalizada</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Te ayudamos a armar la fiesta por WhatsApp, de 9 a 6.</div></div>
+<div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="12" height="9" rx="1.4"></rect><path d="M15 10h3.4l2.6 3v3H15z"></path><circle cx="7" cy="18" r="1.8"></circle><circle cx="17.4" cy="18" r="1.8"></circle></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Entregas disponibles</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Mismo día en la capital y envío nacional en 24–72 h.</div></div>
+<div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3.2 19.5 6v6.2c0 4.4-3.1 7.3-7.5 8.6-4.4-1.3-7.5-4.2-7.5-8.6V6z"></path><path d="M9 12.2l2.2 2.2 4-4.2"></path></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Compra fácil y segura</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Pedido en tres pasos y confirmación inmediata.</div></div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCatalog }}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="background:#FFF1F6;padding:38px 24px 40px">
+<div style="max-width:1440px;margin:0 auto">
+<div style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-bottom:14px">{{ crumbs }}</div>
+<h1 style="font:500 44px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 12px">{{ catalogTitle }}</h1>
+<p style="font:300 15px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.68);margin:0;max-width:560px">{{ catalogDesc }}</p>
+</div>
+</div>
+<div style="max-width:1440px;margin:0 auto;padding:30px 24px 70px">
+<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid #E9E3E6;margin-bottom:26px">
+<span style="font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6)">{{ resultsCountLabel }}</span>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Ordenar por</span>
+<sc-for list="{{ sorts }}" as="s" hint-placeholder-count="3">
+<sc-if value="{{ s.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ s.go }}" style="font:400 12.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:11px 16px;cursor:pointer">{{ s.name }}</button></sc-if>
+<sc-if value="{{ s.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ s.go }}" style="font:400 12.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:10px 15px;cursor:pointer">{{ s.name }}</button></sc-if>
+</sc-for>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:30px 26px">
+<sc-for list="{{ catalogItems }}" as="p" hint-placeholder-count="8">
+<div style="display:flex;flex-direction:column">
+<div style="position:relative">
+<button onClick="{{ p.open }}" style="width:100%;border:0;padding:0;cursor:pointer;border-radius:9px;overflow:hidden;aspect-ratio:4/5;display:block;background:#F5DCE7">
+<img src="{{ p.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
+</button>
+<sc-if value="{{ p.soldOut }}" hint-placeholder-val="{{ false }}">
+<span style="position:absolute;inset:0;background:rgba(255,252,250,.5);border-radius:9px;display:block"></span>
+<span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:500 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#29262A;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:999px;padding:9px 16px">Agotado</span>
+</sc-if>
+<sc-if value="{{ p.hasBadge }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:7px 11px">{{ p.badge }}</span></sc-if>
+<sc-if value="{{ p.canAdd }}" hint-placeholder-val="{{ true }}">
+<button onClick="{{ p.add }}" aria-label="Agregar al carrito" style="position:absolute;bottom:12px;right:12px;width:40px;height:40px;border-radius:999px;background:#FFFCFA;border:0;box-shadow:0 2px 8px rgba(41,38,42,.16);display:flex;align-items:center;justify-content:center;color:#963568;cursor:pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg>
+</button>
+</sc-if>
+</div>
+<button onClick="{{ p.open }}" style="text-align:left;background:transparent;border:0;padding:14px 0 0;cursor:pointer;font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A">{{ p.name }}</button>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">{{ p.metaLabel }}</div>
+<div style="display:flex;gap:10px;align-items:baseline;margin-top:9px">
+<span style="font:500 16px/1 'Jost',sans-serif;color:#29262A">{{ p.priceLabel }}</span>
+<sc-if value="{{ p.hasOld }}" hint-placeholder-val="{{ false }}"><span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">{{ p.oldPriceLabel }}</span></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ catalogEmpty }}" hint-placeholder-val="{{ false }}">
+<div style="padding:60px 0;text-align:center">
+<div style="font:500 28px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:10px">Nada por aquí todavía</div>
+<div style="font:300 14px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:20px">Prueba con otra categoría o mira todo el catálogo.</div>
+<button onClick="{{ goCatalog }}" style="font:500 13.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:15px 28px;cursor:pointer">Ver todos los productos</button>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProduct }}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="max-width:1440px;margin:0 auto;padding:26px 24px 0">
+<button onClick="{{ goBackCatalog }}" style="font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.55);background:transparent;border:0;padding:0;cursor:pointer">← {{ detail.crumb }}</button>
+</div>
+<div style="max-width:1440px;margin:0 auto;padding:22px 24px 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:50px">
+<div>
+<div style="position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1;background:#F5DCE7">
+<img src="{{ detail.photo }}" alt="{{ detail.name }}" style="width:100%;height:100%;object-fit:cover;display:block">
+</div>
+<div style="display:flex;gap:12px;margin-top:12px">
+<sc-for list="{{ gallery }}" as="g" hint-placeholder-count="4">
+<sc-if value="{{ g.active }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.go }}" style="width:82px;height:82px;border:0;padding:0;border-radius:7px;overflow:hidden;cursor:pointer;box-shadow:0 0 0 1.5px #963568;display:block"><img src="{{ g.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></button></sc-if>
+<sc-if value="{{ g.idle }}" hint-placeholder-val="{{ false }}"><button onClick="{{ g.go }}" style="width:82px;height:82px;border:0;padding:0;border-radius:7px;overflow:hidden;cursor:pointer;opacity:.75;display:block"><img src="{{ g.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></button></sc-if>
+</sc-for>
+</div>
+</div>
+<div>
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:14px">{{ detail.cat }}</div>
+<h1 style="font:500 42px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 14px">{{ detail.name }}</h1>
+<div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:10px">
+<span style="font:500 28px/1 'Jost',sans-serif;color:#29262A">{{ detail.priceLabel }}</span>
+<sc-if value="{{ detail.hasOld }}" hint-placeholder-val="{{ false }}"><span style="font:400 16px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">{{ detail.oldPriceLabel }}</span></sc-if>
+<sc-if value="{{ detail.hasSale }}" hint-placeholder-val="{{ false }}"><span style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 11px">{{ detail.saleLabel }}</span></sc-if>
+</div>
+<div style="display:flex;align-items:center;gap:8px;font:400 12.5px/1 'Jost',sans-serif;color:#963568;margin-bottom:24px"><span style="width:7px;height:7px;border-radius:999px;background:#963568"></span>{{ detail.stockLabel }}</div>
+<p style="font:300 15px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.72);margin:0 0 26px;max-width:520px;text-wrap:pretty">{{ detail.desc }}</p>
+<div style="margin-bottom:26px">
+<div style="font:500 12px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#29262A;margin-bottom:12px">Presentación</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<sc-for list="{{ variants }}" as="v" hint-placeholder-count="2">
+<sc-if value="{{ v.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ v.go }}" style="font:400 13px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1.5px solid #963568;border-radius:999px;padding:12px 20px;cursor:pointer">{{ v.name }}</button></sc-if>
+<sc-if value="{{ v.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ v.go }}" style="font:400 13px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:12px 20px;cursor:pointer">{{ v.name }}</button></sc-if>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{ detail.available }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+<div style="display:flex;align-items:center;gap:18px;border:1px solid #E9E3E6;border-radius:999px;padding:12px 18px">
+<button onClick="{{ decQty }}" aria-label="Menos" style="background:transparent;border:0;cursor:pointer;font:300 17px/1 'Jost',sans-serif;color:rgba(41,38,42,.55)">−</button>
+<span style="font:500 15px/1 'Jost',sans-serif;color:#29262A;min-width:14px;text-align:center">{{ qty }}</span>
+<button onClick="{{ incQty }}" aria-label="Más" style="background:transparent;border:0;cursor:pointer;font:300 17px/1 'Jost',sans-serif;color:#29262A">+</button>
+</div>
+<button onClick="{{ addCurrent }}" style="flex:1;min-width:240px;font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:18px;cursor:pointer">Agregar al carrito · {{ detail.lineLabel }}</button>
+</div>
+</sc-if>
+<sc-if value="{{ detail.soldOut }}" hint-placeholder-val="{{ false }}">
+<button disabled style="width:100%;font:500 14px/1 'Jost',sans-serif;color:rgba(41,38,42,.35);background:#E9E3E6;border:0;border-radius:999px;padding:18px;margin-bottom:12px">Agotado</button>
+</sc-if>
+<a href="{{ waLink }}" target="_blank" rel="noreferrer" style="display:flex;align-items:center;justify-content:center;gap:10px;font:500 14px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1px solid #963568;border-radius:999px;padding:17px;text-decoration:none;margin-bottom:28px">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Consultar por WhatsApp
+</a>
+<div style="border-top:1px solid #E9E3E6">
+<sc-for list="{{ accordion }}" as="a" hint-placeholder-count="3">
+<button onClick="{{ a.go }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 0;background:transparent;border:0;border-bottom:1px solid #E9E3E6;cursor:pointer;font:400 14px/1 'Jost',sans-serif;color:#29262A;text-align:left">{{ a.title }}<span style="font:300 17px/1 'Jost',sans-serif;color:#963568">{{ a.sign }}</span></button>
+<sc-if value="{{ a.open }}" hint-placeholder-val="{{ false }}"><div style="font:300 13.5px/1.75 'Jost',sans-serif;color:rgba(41,38,42,.68);padding:14px 0 18px;border-bottom:1px solid #E9E3E6">{{ a.body }}</div></sc-if>
+</sc-for>
+</div>
+</div>
+</div>
+<div style="background:#FFF1F6;padding:56px 24px">
+<div style="max-width:1440px;margin:0 auto">
+<h2 style="font:500 34px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 26px">Combina muy merry</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px">
+<sc-for list="{{ related }}" as="p" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column">
+<button onClick="{{ p.open }}" style="width:100%;border:0;padding:0;cursor:pointer;border-radius:9px;overflow:hidden;aspect-ratio:1;display:block;background:#F5DCE7"><img src="{{ p.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></button>
+<button onClick="{{ p.open }}" style="text-align:left;background:transparent;border:0;padding:13px 0 0;cursor:pointer;font:400 15px/1.35 'Jost',sans-serif;color:#29262A">{{ p.name }}</button>
+<div style="font:500 15.5px/1 'Jost',sans-serif;color:#29262A;margin-top:7px">{{ p.priceLabel }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1180px;margin:0 auto;padding:40px 24px 70px">
+<div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:26px;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">
+<span style="color:#963568">1 · Datos</span><span>2 · Entrega</span><span>3 · Confirmación</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px">
+<div>
+<h1 style="font:500 38px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 8px">Finalizar pedido</h1>
+<p style="font:300 14px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.65);margin:0 0 28px">Completa tus datos y confirmamos por WhatsApp en pocos minutos.</p>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:16px">Tus datos</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:30px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Nombre completo</span><input value="{{ form.nombre }}" onChange="{{ onNombre }}" placeholder="María Fernanda López" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Teléfono / WhatsApp</span><input value="{{ form.telefono }}" onChange="{{ onTelefono }}" placeholder="+504 9876-5432" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block;grid-column:1/-1"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Correo electrónico</span><input value="{{ form.correo }}" onChange="{{ onCorreo }}" placeholder="tu@correo.com" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
+</div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:16px">Entrega</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+<sc-for list="{{ deliveryOptions }}" as="d" hint-placeholder-count="2">
+<sc-if value="{{ d.active }}" hint-placeholder-val="{{ true }}">
+<button onClick="{{ d.go }}" style="flex:1;min-width:220px;text-align:left;border:1.5px solid #963568;background:#FFF1F6;border-radius:10px;padding:16px 18px;cursor:pointer">
+<span style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span style="font:500 14px/1 'Jost',sans-serif;color:#29262A">{{ d.name }}</span><span style="width:16px;height:16px;border-radius:999px;border:4px solid #963568;background:#FFFCFA;display:block;box-sizing:border-box"></span></span>
+<span style="display:block;font:300 12.5px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:7px">{{ d.note }}</span>
+</button>
+</sc-if>
+<sc-if value="{{ d.idle }}" hint-placeholder-val="{{ false }}">
+<button onClick="{{ d.go }}" style="flex:1;min-width:220px;text-align:left;border:1px solid #E9E3E6;background:transparent;border-radius:10px;padding:16px 18px;cursor:pointer">
+<span style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span style="font:500 14px/1 'Jost',sans-serif;color:#29262A">{{ d.name }}</span><span style="width:16px;height:16px;border-radius:999px;border:1px solid #E9E3E6;display:block;box-sizing:border-box"></span></span>
+<span style="display:block;font:300 12.5px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:7px">{{ d.note }}</span>
+</button>
+</sc-if>
+</sc-for>
+</div>
+<sc-if value="{{ esRetiro }}" hint-placeholder-val="{{ false }}">
+<div style="background:#FFF1F6;border-radius:10px;padding:20px 22px;margin-bottom:26px">
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;color:#963568">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.6V12l3 1.9"></path></svg>
+<span style="font:500 13.5px/1 'Jost',sans-serif">Horario de retiro</span>
+</div>
+<div style="font:300 13.5px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.7)">Food Market, San Pedro Sula · Lunes a sábado de 9:00 a 18:00. Tu pedido queda listo en 2 horas si lo haces antes de las 4:00 p.m.; te escribimos por WhatsApp cuando puedas pasar y lo guardamos 48 horas.</div>
+</div>
+</sc-if>
+<sc-if value="{{ esDomicilio }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:26px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Ciudad</span><input value="{{ form.ciudad }}" onChange="{{ onCiudad }}" placeholder="Tegucigalpa" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Colonia / zona</span><input value="{{ form.colonia }}" onChange="{{ onColonia }}" placeholder="Col. Tepeyac" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block;grid-column:1/-1"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Dirección de entrega</span><input value="{{ form.direccion }}" onChange="{{ onDireccion }}" placeholder="Calle principal, casa #24" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block;grid-column:1/-1"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Referencias de la dirección</span><input value="{{ form.referencias }}" onChange="{{ onReferencias }}" placeholder="Frente al parque, portón crema…" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
+</div>
+</sc-if>
+<div style="display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:26px">
+<label style="display:block;grid-column:1/-1"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Notas del pedido</span><textarea value="{{ form.notas }}" onChange="{{ onNotas }}" placeholder="Es para un cumpleaños el sábado…" rows="3" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.5 'Jost',sans-serif;color:#29262A;resize:vertical"></textarea></label>
+</div>
+<button onClick="{{ toggleTerms }}" style="width:100%;text-align:left;background:#FFF1F6;border:0;border-radius:10px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;cursor:pointer">
+<sc-if value="{{ terms }}" hint-placeholder-val="{{ false }}"><span style="width:18px;height:18px;border-radius:5px;background:#963568;color:#FFFCFA;flex:none;margin-top:2px;font:500 11px/18px 'Jost',sans-serif;text-align:center;display:block">✓</span></sc-if>
+<sc-if value="{{ termsOff }}" hint-placeholder-val="{{ true }}"><span style="width:18px;height:18px;border-radius:5px;border:1px solid #963568;flex:none;margin-top:2px;display:block;box-sizing:border-box"></span></sc-if>
+<span style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.7)">Acepto las políticas de compra y la información de entregas, cambios y devoluciones.</span>
+</button>
+<div style="margin-top:22px;border:1px dashed #E9E3E6;border-radius:10px;padding:18px 20px;font:300 12.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.5)">Espacio reservado para la pasarela de pagos. Por ahora el pedido se confirma por WhatsApp.</div>
+</div>
+<aside style="height:fit-content;background:#FFF1F6;border-radius:11px;padding:26px">
+<div style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:20px">Tu pedido</div>
+<div style="display:flex;flex-direction:column;gap:15px;padding-bottom:18px;border-bottom:1px solid #F5DCE7">
+<sc-for list="{{ cartItems }}" as="i" hint-placeholder-count="2">
+<div style="display:flex;gap:12px;align-items:center">
+<img src="{{ i.photo }}" alt="" style="width:50px;height:62px;flex:none;border-radius:6px;object-fit:cover;display:block">
+<span style="flex:1;display:block"><span style="display:block;font:400 13.5px/1.3 'Jost',sans-serif;color:#29262A">{{ i.name }}</span><span style="display:block;font:300 11.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:3px">{{ i.metaLabel }}</span></span>
+<span style="font:500 13.5px/1 'Jost',sans-serif;color:#29262A">{{ i.lineLabel }}</span>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:11px;padding:18px 0;font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.75);border-bottom:1px solid #F5DCE7">
+<div style="display:flex;justify-content:space-between"><span>Subtotal</span><span style="color:#29262A">{{ subtotalLabel }}</span></div>
+<div style="display:flex;justify-content:space-between"><span>Costo de entrega</span><span style="color:#29262A">{{ deliveryLabel }}</span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:18px 0 20px"><span style="font:400 15px/1 'Jost',sans-serif;color:#29262A">Total</span><span style="font:500 26px/1 'Jost',sans-serif;color:#29262A">{{ totalLabel }}</span></div>
+<button onClick="{{ confirmOrder }}" style="width:100%;font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:18px;cursor:pointer">Confirmar pedido</button>
+<a href="{{ waPedido }}" target="_blank" rel="noreferrer" style="display:flex;align-items:center;justify-content:center;gap:9px;margin-top:10px;font:500 13.5px/1 'Jost',sans-serif;color:#963568;background:#FFFCFA;border:1px solid #963568;border-radius:999px;padding:16px;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Enviar el pedido por WhatsApp</a>
+<button onClick="{{ goCatalog }}" style="width:100%;margin-top:10px;font:500 13px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:15px;cursor:pointer">Seguir comprando</button>
+<div style="font:300 12px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:14px;text-align:center">{{ termsHint }}</div>
+</aside>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isConfirm }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:720px;margin:0 auto;padding:50px 24px 80px">
+<div style="background:#FFF1F6;border-radius:12px;padding:46px 40px 40px;text-align:center">
+<div style="width:58px;height:58px;border-radius:999px;background:#963568;display:flex;align-items:center;justify-content:center;margin:0 auto 22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFCFA" stroke-width="1.8"><path d="M6 12.4l4 4 8-8.4"></path></svg></div>
+<h1 style="font:500 38px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 12px">¡Tu pedido está en camino a ser muy merry!</h1>
+<p style="font:300 14.5px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.7);margin:0 auto;max-width:400px">Recibimos tu pedido y te escribimos por WhatsApp para coordinar la entrega.</p>
+<div style="display:inline-flex;gap:10px;align-items:center;background:#FFFCFA;border-radius:999px;padding:12px 22px;margin-top:22px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A"><span style="color:rgba(41,38,42,.5);font-weight:300">Pedido</span><span style="font-weight:500;letter-spacing:.06em">{{ order.number }}</span></div>
+</div>
+<div style="padding:34px 4px 0">
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:16px">Resumen de la compra</div>
+<div style="display:flex;flex-direction:column;gap:13px;padding-bottom:18px;border-bottom:1px solid #E9E3E6">
+<sc-for list="{{ order.items }}" as="i" hint-placeholder-count="2">
+<div style="display:flex;justify-content:space-between;gap:16px;font:400 13.5px/1.4 'Jost',sans-serif;color:#29262A"><span>{{ i.label }}</span><span>{{ i.lineLabel }}</span></div>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;padding:18px 0;font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.7);border-bottom:1px solid #E9E3E6">
+<div style="display:flex;justify-content:space-between"><span>Subtotal</span><span style="color:#29262A">{{ order.subtotalLabel }}</span></div>
+<div style="display:flex;justify-content:space-between"><span>{{ order.deliveryName }}</span><span style="color:#29262A">{{ order.deliveryLabel }}</span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:18px 0 4px"><span style="font:400 15px/1 'Jost',sans-serif;color:#29262A">Total</span><span style="font:500 26px/1 'Jost',sans-serif;color:#29262A">{{ order.totalLabel }}</span></div>
+<div style="font:300 13px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.6);margin:16px 0 26px">{{ order.deliveryDetail }}</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<a href="{{ waLink }}" target="_blank" rel="noreferrer" style="flex:1;min-width:220px;display:flex;align-items:center;justify-content:center;gap:9px;font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border-radius:999px;padding:17px;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Contactar por WhatsApp</a>
+<button onClick="{{ goHome }}" style="flex:none;font:500 13.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:16px 24px;cursor:pointer">Volver a la tienda</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isFaq }}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="background:#FFF1F6;padding:44px 24px 40px">
+<div style="max-width:1000px;margin:0 auto">
+<div style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-bottom:14px">Inicio / Ayuda / Preguntas frecuentes</div>
+<h1 style="font:500 42px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Preguntas frecuentes</h1>
+<p style="font:300 15px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.68);margin:0;max-width:520px">Si no encuentras tu respuesta, escríbenos por WhatsApp de lunes a sábado de 9:00 a 18:00.</p>
+</div>
+</div>
+<div style="max-width:1000px;margin:0 auto;padding:36px 24px 70px">
+<sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
+<button onClick="{{ f.go }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;background:transparent;border:0;border-bottom:1px solid #E9E3E6;cursor:pointer;text-align:left;font:400 17.5px/1.4 'Jost',sans-serif;color:#29262A">{{ f.q }}<span style="font:300 20px/1 'Jost',sans-serif;color:#963568">{{ f.sign }}</span></button>
+<sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><div style="font:300 14.5px/1.75 'Jost',sans-serif;color:rgba(41,38,42,.7);padding:16px 0 20px;border-bottom:1px solid #E9E3E6;max-width:680px">{{ f.a }}</div></sc-if>
+</sc-for>
+<div style="margin-top:38px;background:#FFF1F6;border-radius:11px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+<div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:6px">¿Te quedó una duda?</div>
+<div style="font:300 13.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.65)">Escríbenos y te ayudamos a armar tu celebración.</div>
+</div>
+<a href="{{ waLink }}" target="_blank" rel="noreferrer" style="flex:none;display:flex;align-items:center;gap:9px;font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border-radius:999px;padding:16px 28px;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>WhatsApp</a>
+</div>
+</div>
+</div>
+</sc-if>
+
+</main>
+
+<footer style="background:#29262A;padding:56px 24px 28px">
+<div style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:40px;padding-bottom:38px;border-bottom:1px solid rgba(255,252,250,.13)">
+<div>
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:160px;display:block;filter:invert(1) grayscale(1) brightness(1.9);mix-blend-mode:screen;margin-bottom:18px">
+<div style="font:300 13px/1.8 'Jost',sans-serif;color:rgba(255,252,250,.62)">Tegucigalpa, Honduras<br>+504 9000-0000<br>hola@verymerry.hn<br>L–S 9:00 a 18:00</div>
+</div>
+<div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E87FAF;margin-bottom:16px">Tienda</div>
+<div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+<button onClick="{{ goNew }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.72)">New Arrivals</button>
+<button onClick="{{ goSale }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.72)">Sale</button>
+<button onClick="{{ goCatalog }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.72)">Todos los productos</button>
+<button onClick="{{ openCart }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.72)">Mi carrito</button>
+</div>
+</div>
+<div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E87FAF;margin-bottom:16px">Ayuda</div>
+<div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+<button onClick="{{ goFaq }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.72)">Preguntas frecuentes</button>
+<button onClick="{{ goFaq }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.72)">Políticas de compra</button>
+<button onClick="{{ goFaq }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.72)">Información de entregas</button>
+<button onClick="{{ goFaq }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.72)">Cambios y devoluciones</button>
+</div>
+</div>
+<div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E87FAF;margin-bottom:16px">Novedades</div>
+<div style="font:300 13.5px/1.6 'Jost',sans-serif;color:rgba(255,252,250,.72);margin-bottom:16px">Recibe lanzamientos y promociones antes que nadie.</div>
+<div style="display:flex;gap:8px;background:rgba(255,252,250,.08);border:1px solid rgba(255,252,250,.2);border-radius:999px;padding:5px 5px 5px 18px;align-items:center">
+<input value="{{ news }}" onChange="{{ onNews }}" placeholder="tu@correo.com" style="flex:1;min-width:0;border:0;background:transparent;font:300 13px/1.2 'Jost',sans-serif;color:#FFFCFA;padding:8px 0">
+<button onClick="{{ subscribe }}" style="flex:none;font:500 12px/1 'Jost',sans-serif;color:#29262A;background:#FFFCFA;border:0;border-radius:999px;padding:11px 18px;cursor:pointer">Suscribirme</button>
+</div>
+</div>
+</div>
+<div style="max-width:1440px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(255,252,250,.4)">
+<span>© 2026 Very Merry · Todos los derechos reservados</span>
+<a href="Very Merry Panel Admin.dc.html" style="color:rgba(255,252,250,.55)">Iniciar sesión · panel administrativo</a>
+<span>Have a very merry party</span>
+</div>
+</footer>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:60;background:rgba(41,38,42,.4);display:flex">
+<div style="width:330px;max-width:86vw;background:#FFFCFA;height:100%;display:flex;flex-direction:column;animation:vmSlideL .22s ease-out;box-shadow:14px 0 40px rgba(41,38,42,.2)">
+<div style="padding:20px 22px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E9E3E6">
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:118px;display:block;mix-blend-mode:multiply">
+<button onClick="{{ toggleMenu }}" aria-label="Cerrar" style="background:transparent;border:0;cursor:pointer;font:300 22px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">×</button>
+</div>
+<div style="flex:1;overflow-y:auto;padding:14px 22px 20px">
+<button onClick="{{ goHome }}" style="width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #E9E3E6;padding:15px 0;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A">Inicio</button>
+<button onClick="{{ goNew }}" style="width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #E9E3E6;padding:15px 0;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A">New Arrivals</button>
+<button onClick="{{ goSale }}" style="width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #E9E3E6;padding:15px 0;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A">Sale</button>
+<sc-for list="{{ menuCats }}" as="m" hint-placeholder-count="6">
+<button onClick="{{ m.go }}" style="width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #E9E3E6;padding:15px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font:400 15px/1.3 'Jost',sans-serif;color:#29262A">{{ m.name }}<span style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">{{ m.countLabel }}</span></button>
+</sc-for>
+<button onClick="{{ goCatalog }}" style="width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #E9E3E6;padding:15px 0;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A">Todos los productos</button>
+<button onClick="{{ goFaq }}" style="width:100%;text-align:left;background:transparent;border:0;padding:15px 0;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A">Preguntas frecuentes · Contacto</button>
+</div>
+<div style="padding:18px 22px 24px;background:#FFF1F6">
+<a href="{{ waLink }}" target="_blank" rel="noreferrer" style="display:flex;align-items:center;justify-content:center;gap:9px;font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border-radius:999px;padding:15px;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Escríbenos por WhatsApp</a>
+</div>
+</div>
+<button onClick="{{ toggleMenu }}" aria-label="Cerrar menú" style="flex:1;background:transparent;border:0;cursor:pointer"></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:70;background:rgba(41,38,42,.4);display:flex;justify-content:flex-end">
+<button onClick="{{ closeCart }}" aria-label="Cerrar carrito" style="flex:1;background:transparent;border:0;cursor:pointer"></button>
+<div style="width:430px;max-width:92vw;background:#FFFCFA;height:100%;display:flex;flex-direction:column;animation:vmSlide .22s ease-out;box-shadow:-14px 0 40px rgba(41,38,42,.2)">
+<div style="padding:22px 26px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E9E3E6">
+<span style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A">{{ cartTitle }}</span>
+<button onClick="{{ closeCart }}" aria-label="Cerrar" style="background:transparent;border:0;cursor:pointer;font:300 22px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">×</button>
+</div>
+<sc-if value="{{ hasCart }}" hint-placeholder-val="{{ true }}">
+<div style="background:#FFF1F6;padding:13px 26px;font:300 12.5px/1.5 'Jost',sans-serif;color:#963568">{{ freeShippingLabel }}</div>
+</sc-if>
+<div style="flex:1;overflow-y:auto;padding:20px 26px;display:flex;flex-direction:column;gap:20px">
+<sc-for list="{{ cartItems }}" as="i" hint-placeholder-count="2">
+<div style="display:flex;gap:14px">
+<img src="{{ i.photo }}" alt="" style="width:76px;height:94px;flex:none;border-radius:7px;object-fit:cover;display:block">
+<div style="flex:1;min-width:0">
+<div style="display:flex;justify-content:space-between;gap:10px">
+<span style="font:400 14.5px/1.35 'Jost',sans-serif;color:#29262A">{{ i.name }}</span>
+<button onClick="{{ i.remove }}" aria-label="Eliminar" style="background:transparent;border:0;cursor:pointer;font:300 16px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">×</button>
+</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:4px">{{ i.metaLabel }}</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px">
+<div style="display:flex;align-items:center;gap:14px;border:1px solid #E9E3E6;border-radius:999px;padding:7px 14px">
+<button onClick="{{ i.dec }}" aria-label="Menos" style="background:transparent;border:0;cursor:pointer;font:300 15px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">−</button>
+<span style="font:400 13px/1 'Jost',sans-serif;color:#29262A;min-width:10px;text-align:center">{{ i.qty }}</span>
+<button onClick="{{ i.inc }}" aria-label="Más" style="background:transparent;border:0;cursor:pointer;font:300 15px/1 'Jost',sans-serif;color:#29262A">+</button>
+</div>
+<span style="font:500 15px/1 'Jost',sans-serif;color:#29262A">{{ i.lineLabel }}</span>
+</div>
+</div>
+</div>
+</sc-for>
+<sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+<div style="padding:40px 0;text-align:center">
+<div style="display:flex;gap:7px;justify-content:center;margin-bottom:16px"><span style="width:8px;height:8px;border-radius:999px;background:#F5DCE7"></span><span style="width:8px;height:8px;border-radius:999px;background:#E87FAF"></span><span style="width:8px;height:8px;border-radius:999px;background:#963568"></span></div>
+<div style="font:500 26px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:10px">Tu carrito está vacío</div>
+<div style="font:300 13.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:20px">Empieza por New Arrivals o mira las promociones.</div>
+<button onClick="{{ goCatalogFromCart }}" style="font:500 13.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:15px 28px;cursor:pointer">Ver productos</button>
+</div>
+</sc-if>
+</div>
+<div style="padding:20px 26px 26px;border-top:1px solid #E9E3E6">
+<div style="display:flex;justify-content:space-between;font:400 14px/1 'Jost',sans-serif;color:#29262A;margin-bottom:9px"><span>Subtotal</span><span style="font-weight:500">{{ subtotalLabel }}</span></div>
+<div style="font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-bottom:16px">El costo de entrega se calcula en el siguiente paso.</div>
+<button onClick="{{ goCheckout }}" style="width:100%;font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:18px;cursor:pointer;margin-bottom:10px">Finalizar pedido</button>
+<a href="{{ waPedido }}" target="_blank" rel="noreferrer" style="display:flex;align-items:center;justify-content:center;gap:9px;font:500 13.5px/1 'Jost',sans-serif;color:#963568;background:#F5DCE7;border-radius:999px;padding:16px;text-decoration:none;margin-bottom:10px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Enviar pedido por WhatsApp</a>
+<button onClick="{{ goCatalogFromCart }}" style="width:100%;font:500 13.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:16px;cursor:pointer">Continuar comprando</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:90;background:#963568;color:#FFFCFA;border-radius:999px;padding:15px 26px;font:400 13.5px/1 'Jost',sans-serif;box-shadow:0 12px 34px rgba(150,53,104,.34);animation:vmIn .18s ease-out;display:flex;gap:16px;align-items:center">
+{{ toast }}
+<button onClick="{{ openCart }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,252,250,.4);padding:0 0 2px;cursor:pointer;font:500 13px/1 'Jost',sans-serif;color:#FFFCFA">Ver carrito</button>
+</div>
+</sc-if>
+
+<a href="{{ waLink }}" target="_blank" rel="noreferrer" aria-label="WhatsApp" style="position:fixed;right:22px;bottom:22px;z-index:50;width:54px;height:54px;border-radius:999px;background:#963568;color:#FFFCFA;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(150,53,104,.35);text-decoration:none">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>
+</a>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;mostrarSale&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Tienda&quot;},&quot;envioGratisDesde&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2000,&quot;min&quot;:500,&quot;max&quot;:5000,&quot;step&quot;:100,&quot;unit&quot;:&quot;L&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Tienda&quot;},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;50495740139&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;}}">
+class Component extends DCLogic {
+  state = {
+    route: 'home', productId: 'set-granja', cat: 'Todos', sort: 'recientes',
+    query: '', searchOpen: false, menuOpen: false, cartOpen: false,
+    qty: 1, variant: 0, gallery: 0, openAcc: 'entrega', openFaq: 'pedido',
+    cart: [{ id: 'set-granja', qty: 1 }, { id: 'platos-flor', qty: 1 }],
+    delivery: 'domicilio', terms: false, toast: '', news: '', order: null,
+    form: { nombre: '', telefono: '', correo: '', ciudad: '', colonia: '', direccion: '', referencias: '', notas: '' }
+  };
+
+  P = [
+    { id: 'set-granja', name: 'Set completo Fiesta en la Granja', cat: 'Party Themes', price: 1150, sub: '8 puestos · platos, vasos y servilletas', badge: 'Destacado', photo: 'assets/set-granja.jpg', variants: ['8 puestos', '16 puestos'], desc: 'Todo el tema de granja en una caja: platos grandes y de postre, vasos de gallo, servilletas ilustradas y coronas de orejas para ocho invitados. Las piezas combinan con la guirnalda y los toppers de la misma línea.' },
+    { id: 'guirnalda-granja', name: 'Guirnalda de granja', cat: 'Celebrations', price: 395, sub: '2.5 m · 9 figuras', badge: 'Nuevo', photo: 'assets/guirnalda-granja.jpg', variants: ['2.5 m', '5 m (2 piezas)'], desc: 'Nueve figuras de papel ilustradas a mano —cerdito, vaca, cabra, oveja, granero, tractor, perro, caballo y gallo— unidas con cordel de yute. Llega lista para colgar.' },
+    { id: 'toppers-granja', name: 'Toppers de granja para cupcakes', cat: 'Birthday Candles & Toppers', price: 295, sub: '24 piezas · 6 diseños', badge: 'Nuevo', photo: 'assets/toppers-granja.jpg', variants: ['24 piezas', '48 piezas'], desc: 'Veinticuatro toppers en palillo de madera con seis animales de la granja y el tractor. Ideales para cupcakes, gelatinas o para decorar el pastel principal.' },
+    { id: 'coronas-granja', name: 'Coronas de orejas de granja', cat: 'Accessories', price: 245, sub: '8 piezas · vaca, cerdito y oveja', soldOut: true, photo: 'assets/coronas-granja.jpg', variants: ['8 piezas'], desc: 'Ocho coronas de papel con orejas de vaca, cerdito y oveja, con elástico plateado ajustable. Las favoritas para la foto de grupo.' },
+    { id: 'matasuegras-granja', name: 'Matasuegras de granja', cat: 'Accessories', price: 195, sub: '8 piezas · BAAAH, OINKK, MOOO', low: true, photo: 'assets/matasuegras-granja.jpg', variants: ['8 piezas', '16 piezas'], desc: 'Ocho matasuegras con cabecitas de oveja, cerdito, vaca y caballo, cada uno con su sonido impreso en la cinta. Se reparten al final y la fiesta sube de volumen.' },
+    { id: 'platos-flor', name: 'Platos flor grandes', cat: 'Mix and Match Tableware', price: 450, old: 645, sub: '8 piezas · 4 colores', photo: 'assets/platos-flor.jpg', variants: ['8 piezas', '16 piezas'], desc: 'Platos troquelados en forma de flor con centro esponjado en amarillo, rosa, azul y marfil. Papel firme con acabado mate, aptos para comida fría y caliente.' },
+    { id: 'mesa-flores', name: 'Set de mesa Jardín en Flor', cat: 'Florals', price: 725, old: 950, sub: '8 puestos · platos y servilletas', photo: 'assets/mesa-flores.jpg', variants: ['8 puestos', '16 puestos'], desc: 'Platos flor grandes y pequeños en tonos pastel con servilletas a juego. La combinación favorita para baby shower, primera comunión y cumpleaños de adulto.' },
+    { id: 'coleccion-floral', name: 'Colección floral inglesa', cat: 'Mix and Match Tableware', price: 1450, old: 1795, sub: '12 puestos · vajilla completa', photo: 'assets/coleccion-floral.jpg', variants: ['12 puestos', '24 puestos'], desc: 'Vajilla completa con borde dorado: platos festoneados en cuatro estampados florales, vasos a juego y dos diseños de servilletas. La opción más elegante de la tienda.' },
+    { id: 'base-rosa', name: 'Base para pastel festoneada rosa', cat: 'Home Decor, Serveware & Scented Candles', price: 725, sub: '30 cm · melamina', badge: 'Nuevo', photo: 'assets/base-pastel-rosa.jpg', variants: ['30 cm', '25 cm'], desc: 'Base con pie y borde festoneado en rosa pastel, de melamina resistente y reutilizable. Levanta el pastel principal y se limpia con un paño húmedo.' },
+    { id: 'base-marfil', name: 'Base para pastel festoneada marfil', cat: 'Home Decor, Serveware & Scented Candles', price: 725, sub: '30 cm · melamina', photo: 'assets/base-pastel-marfil.jpg', variants: ['30 cm', '25 cm'], desc: 'La misma base festoneada en marfil, para mesas neutras o para combinar en pares de distinta altura con la versión rosa.' },
+    { id: 'platos-cerdito', name: 'Platos cerdito y servilletas tractor', cat: 'Party Themes', price: 395, sub: '8 platos + 20 servilletas', low: true, photo: 'assets/platos-cerdito.jpg', variants: ['8 puestos', '16 puestos'], desc: 'Platos troquelados con forma de cerdito en rosa pastel y servilletas de tractor rojo. La combinación más pedida del tema de granja para niños.' },
+    { id: 'velas-largas', name: 'Velas altas para pastel Rosa Party', cat: 'Birthday Candles & Toppers', price: 295, old: 395, sub: '24 velas · 3 tonos de rosa', photo: 'assets/pasteles-rosa.jpg', variants: ['24 velas', '48 velas'], desc: 'Velas altas de cera teñida en coral, fucsia y rosa pálido con base dorada. Duran cerca de veinte minutos encendidas: alcanzan para la foto y para el video.' },
+    { id: 'platos-carita', name: 'Platos flor Happy Face', cat: 'Mix and Match Tableware', price: 395, sub: '8 platos flor + 8 de base', badge: 'Nuevo', photo: 'assets/platos-carita.jpg', photos: ['assets/platos-carita.jpg', 'assets/coleccion-carita.jpg'], variants: ['8 puestos', '16 puestos'], desc: 'Platos troquelados en forma de flor rosa con carita dorada, sobre platos base de estampado de cerezas, arcoíris y fresas. La combinación más alegre para cumpleaños de niña.' },
+    { id: 'coleccion-carita', name: 'Colección Happy Face completa', cat: 'Party Themes', price: 1150, sub: '8 puestos · platos, vasos y servilletas', badge: 'Destacado', photo: 'assets/coleccion-carita.jpg', photos: ['assets/coleccion-carita.jpg', 'assets/platos-carita.jpg'], variants: ['8 puestos', '16 puestos'], desc: 'Todo el tema en una caja: platos flor con carita, platos base estampados, vasos con flor y corazón de papel nido de abeja, servilletas de arcoíris y caritas, más los hongos y cerezas decorativos.' },
+    { id: 'gorritos-fiesta', name: 'Gorritos de fiesta a rayas', cat: 'Accessories', price: 245, sub: '8 piezas · con pompón', photo: 'assets/gorritos-fiesta.jpg', variants: ['8 piezas', '16 piezas'], desc: 'Gorritos cónicos de papel a rayas en menta, rosa y durazno con pompón rojo y elástico suave. Del tamaño ideal para bebés y niños pequeños.' },
+    { id: 'toppers-hadas', name: 'Toppers de hadas para pastel', cat: 'Birthday Candles & Toppers', price: 325, sub: '12 piezas · papel nido de abeja', badge: 'Nuevo', photo: 'assets/toppers-hadas.jpg', variants: ['12 piezas', '24 piezas'], desc: 'Hadas de papel con faldas plisadas y globos de nido de abeja en menta, rosa y mostaza. Se clavan directo en el pastel y quedan de recuerdo.' },
+    { id: 'velas-mesa', name: 'Velas acanaladas de mesa 25 cm', cat: 'Home Decor, Serveware & Scented Candles', price: 450, sub: '2 piezas · 4 colores', badge: 'Nuevo', photo: 'assets/velas-mesa.jpg', photos: ['assets/velas-mesa.jpg', 'assets/velas-rosa.jpg', 'assets/velas-verde.jpg', 'assets/velas-marfil.jpg', 'assets/velas-azul.jpg'], variants: ['Rosa', 'Verde salvia', 'Marfil', 'Azul'], desc: 'Par de velas acanaladas de 25 cm en cera sin aroma, para candelabro o portavelas. Vienen en caja con faja dorada: quedan lindas en la mesa y también como regalo de anfitriona.' }
+  ];
+
+  CATS = [
+    { name: 'Party Themes', photo: 'assets/coleccion-carita.jpg' },
+    { name: 'Accessories', photo: 'assets/gorritos-fiesta.jpg' },
+    { name: 'Florals', photo: 'assets/mesa-flores.jpg' },
+    { name: 'Home Decor, Serveware & Scented Candles', photo: 'assets/velas-mesa.jpg' },
+    { name: 'Mix and Match Tableware', photo: 'assets/platos-carita.jpg' },
+    { name: 'Celebrations', photo: 'assets/guirnalda-granja.jpg' },
+    { name: 'Birthday Candles & Toppers', photo: 'assets/toppers-hadas.jpg' },
+    { name: "Valentine's Day", photo: 'assets/pasteles-rosa.jpg' },
+    { name: 'Sports', photo: 'assets/platos-cerdito.jpg' },
+    { name: 'Planners and Notepads', photo: 'assets/coleccion-floral.jpg' }
+  ];
+
+  FAQ = [
+    { id: 'pedido', q: '¿Cómo hago un pedido?', a: 'Agrega los productos al carrito, presiona “Finalizar pedido” y completa tus datos de entrega. Te confirmamos por WhatsApp en pocos minutos con el total y la hora de entrega.' },
+    { id: 'entrega', q: '¿Cuánto cuesta la entrega y en cuánto tiempo llega?', a: 'En Tegucigalpa la entrega cuesta L 90.00 y sale el mismo día si pides antes de las 2:00 p.m. Al resto del país enviamos por encomienda en 24 a 72 horas. También puedes retirar sin costo en Food Market, San Pedro Sula.' },
+    { id: 'pagos', q: '¿Qué formas de pago aceptan?', a: 'Transferencia bancaria, efectivo contra entrega y tarjeta en tienda. La pasarela de pago en línea queda lista para integrarse en la siguiente etapa.' },
+    { id: 'cambios', q: '¿Puedo cambiar o devolver un producto?', a: 'Sí, dentro de 7 días con su empaque original y comprobante. No aplica a artículos personalizados ni a globos inflados.' },
+    { id: 'kits', q: '¿Arman kits o mesas de fiesta a la medida?', a: 'Con gusto. Cuéntanos el tema, la cantidad de invitados y el presupuesto por WhatsApp y te armamos una propuesta con fotos.' },
+    { id: 'stock', q: '¿Qué pasa si un producto aparece agotado?', a: 'Escríbenos y te avisamos la fecha de la próxima entrada; muchos artículos se reponen cada dos semanas.' }
+  ];
+
+  catCard(i) {
+    const withStock = this.CATS.filter(c => this.P.filter(x => x.cat === c.name).length > 0);
+    const c = withStock[i] || withStock[0];
+    return { name: c.name, photo: c.photo, countLabel: this.count(c.name), go: () => this.go('catalog', { cat: c.name }) };
+  }
+  count(cat) {
+    const n = this.P.filter(x => x.cat === cat).length;
+    return n === 0 ? 'Pronto' : (n === 1 ? '1 producto' : n + ' productos');
+  }
+  money(n) { return 'L ' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  find(id) { return this.P.filter(p => p.id === id)[0] || this.P[0]; }
+  set(o) { this.setState(o); }
+  flash(msg) {
+    this.setState({ toast: msg });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: '' }), 2600);
+  }
+  addToCart(id, n) {
+    const qty = n || 1;
+    const cart = this.state.cart.map(i => Object.assign({}, i));
+    const hit = cart.filter(i => i.id === id)[0];
+    if (hit) hit.qty += qty; else cart.push({ id: id, qty: qty });
+    this.setState({ cart: cart });
+    this.flash(this.find(id).name + ' agregado');
+  }
+  setQty(id, n) {
+    if (n <= 0) { this.setState({ cart: this.state.cart.filter(i => i.id !== id) }); return; }
+    this.setState({ cart: this.state.cart.map(i => i.id === id ? { id: i.id, qty: n } : i) });
+  }
+  go(route, extra) { this.setState(Object.assign({ route: route, menuOpen: false, cartOpen: false, searchOpen: false }, extra || {})); window.scrollTo(0, 0); }
+  openProduct(id) { this.go('product', { productId: id, qty: 1, variant: 0, gallery: 0 }); }
+
+  filtered() {
+    const s = this.state;
+    let list = this.P.slice();
+    if (s.cat === 'Sale') list = list.filter(p => p.old);
+    else if (s.cat === 'Nuevos') list = list.filter(p => p.badge === 'Nuevo');
+    else if (s.cat !== 'Todos') list = list.filter(p => p.cat === s.cat);
+    if (s.sort === 'precio-asc') list.sort((a, b) => a.price - b.price);
+    if (s.sort === 'precio-desc') list.sort((a, b) => b.price - a.price);
+    return list;
+  }
+
+  card(p) {
+    const sale = p.old ? '−' + Math.round((1 - p.price / p.old) * 100) + '%' : '';
+    return {
+      id: p.id, name: p.name, sub: p.sub, photo: p.photo, cat: p.cat,
+      priceLabel: this.money(p.price), oldPriceLabel: p.old ? this.money(p.old) : '',
+      hasOld: !!p.old, saleLabel: sale ? 'Sale ' + sale : '',
+      badge: p.old ? 'Sale ' + sale : (p.badge || ''),
+      hasBadge: !!(p.badge || p.old), soldOut: !!p.soldOut, canAdd: !p.soldOut,
+      metaLabel: p.sub + ' · ' + (p.soldOut ? 'Agotado' : (p.low ? 'Pocas unidades' : 'En existencia')),
+      open: () => this.openProduct(p.id),
+      add: () => this.addToCart(p.id, 1)
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const props = this.props || {};
+    const wa = props.whatsapp || '50495740139';
+    const waPedido = (() => {
+      if (!s.cart.length) return 'https://wa.me/' + wa + '?text=' + encodeURIComponent('¡Hola Very Merry! Quiero hacer un pedido.');
+      const lineas = s.cart.map(i => {
+        const pr = this.find(i.id);
+        return '• ' + pr.name + ' x' + i.qty + ' — ' + this.money(pr.price * i.qty);
+      });
+      const sub = s.cart.reduce((t, i) => t + this.find(i.id).price * i.qty, 0);
+      const entrega = s.delivery === 'domicilio' ? 'Entrega a domicilio (L 90.00)' : 'Retiro en Food Market, San Pedro Sula';
+      const datos = [];
+      if (s.form.nombre) datos.push('Nombre: ' + s.form.nombre);
+      if (s.form.telefono) datos.push('Teléfono: ' + s.form.telefono);
+      if (s.form.ciudad || s.form.colonia) datos.push('Ciudad: ' + [s.form.ciudad, s.form.colonia].filter(Boolean).join(', '));
+      if (s.form.direccion) datos.push('Dirección: ' + s.form.direccion);
+      if (s.form.referencias) datos.push('Referencias: ' + s.form.referencias);
+      if (s.form.notas) datos.push('Notas: ' + s.form.notas);
+      const texto = ['¡Hola Very Merry! Quiero hacer este pedido:', '', lineas.join('\n'), '', 'Subtotal: ' + this.money(sub), entrega, datos.length ? '\n' + datos.join('\n') : ''].join('\n');
+      return 'https://wa.me/' + wa + '?text=' + encodeURIComponent(texto);
+    })();
+    const freeFrom = props.envioGratisDesde || 2000;
+    const showSale = props.mostrarSale !== false;
+
+    const cartItems = s.cart.map(i => {
+      const p = this.find(i.id);
+      return {
+        name: p.name, photo: p.photo, qty: i.qty,
+        metaLabel: p.variants[0] + ' · ' + this.money(p.price),
+        lineLabel: this.money(p.price * i.qty),
+        inc: () => this.setQty(i.id, i.qty + 1),
+        dec: () => this.setQty(i.id, i.qty - 1),
+        remove: () => this.setQty(i.id, 0)
+      };
+    });
+    const subtotal = s.cart.reduce((t, i) => t + this.find(i.id).price * i.qty, 0);
+    const deliveryCost = s.delivery === 'domicilio' ? 90 : 0;
+    const count = s.cart.reduce((t, i) => t + i.qty, 0);
+    const falta = freeFrom - subtotal;
+
+    const p = this.find(s.productId);
+    const galleryPhotos = (p.photos || [p.photo].concat(this.P.filter(x => x.cat === p.cat && x.id !== p.id).map(x => x.photo))).slice(0, 5);
+    const shownPhoto = galleryPhotos[s.gallery] || p.photo;
+    const sale = p.old ? '−' + Math.round((1 - p.price / p.old) * 100) + '%' : '';
+
+    const q = s.query.trim().toLowerCase();
+    const results = q ? this.P.filter(x => (x.name + ' ' + x.cat + ' ' + x.sub).toLowerCase().indexOf(q) >= 0) : [];
+
+    const catNames = ['Todos'].concat(this.CATS.map(c => c.name));
+    const accItems = [
+      { id: 'entrega', title: 'Información de entrega', body: 'Entrega el mismo día en Tegucigalpa para pedidos antes de las 2:00 p.m. Envío nacional de 24 a 72 horas. Retiro sin costo en Food Market, San Pedro Sula, de lunes a sábado de 9:00 a 18:00.' },
+      { id: 'devoluciones', title: 'Cambios y devoluciones', body: 'Cambios dentro de 7 días con su empaque original y comprobante. No aplica a artículos personalizados.' },
+      { id: 'cuidado', title: 'Material y cuidado', body: 'Papel de alto gramaje con impresión a base de agua. No apto para microondas; limpia las piezas reutilizables con paño húmedo.' }
+    ];
+
+    return {
+      waLink: 'https://wa.me/' + wa,
+      dataReady: true,
+      waPedido: waPedido,
+      isHome: s.route === 'home', isCatalog: s.route === 'catalog', isProduct: s.route === 'product',
+      isCheckout: s.route === 'checkout', isConfirm: s.route === 'confirm', isFaq: s.route === 'faq',
+      showSale: showSale,
+
+      goHome: () => this.go('home'),
+      goCatalog: () => this.go('catalog', { cat: 'Todos', sort: 'recientes' }),
+      goCatalogFromCart: () => this.go('catalog'),
+      goNew: () => this.go('catalog', { cat: 'Nuevos' }),
+      goSale: () => this.go('catalog', { cat: 'Sale' }),
+      goFarm: () => this.go('catalog', { cat: 'Party Themes' }),
+      goFlorals: () => this.go('catalog', { cat: 'Florals' }),
+      goVelas: () => this.go('catalog', { cat: 'Birthday Candles & Toppers' }),
+      goFaq: () => this.go('faq'),
+      navLinks: [
+        { name: 'Inicio', on: s.route === 'home', go: () => this.go('home') },
+        { name: 'Todos los productos', on: s.route === 'catalog' && s.cat === 'Todos', go: () => this.go('catalog', { cat: 'Todos', sort: 'recientes' }) },
+        { name: 'New Arrivals', on: s.route === 'catalog' && s.cat === 'Nuevos', go: () => this.go('catalog', { cat: 'Nuevos' }) },
+        { name: 'Sale', on: s.route === 'catalog' && s.cat === 'Sale', go: () => this.go('catalog', { cat: 'Sale' }) },
+        { name: 'Preguntas frecuentes', on: s.route === 'faq', go: () => this.go('faq') }
+      ].map(l => ({ name: l.name, active: l.on, idle: !l.on, go: l.go })),
+      goCheckout: () => this.go('checkout'),
+      goBackCatalog: () => this.go('catalog', { cat: 'Todos' }),
+      toggleMenu: () => this.set({ menuOpen: !s.menuOpen }),
+      openCart: () => this.set({ cartOpen: true, toast: '' }),
+      closeCart: () => this.set({ cartOpen: false }),
+      toggleSearch: () => this.set({ searchOpen: !s.searchOpen }),
+      closeSearch: () => this.set({ searchOpen: false, query: '' }),
+
+      navCats: catNames.map(n => ({ name: n, active: s.route === 'catalog' && s.cat === n, idle: !(s.route === 'catalog' && s.cat === n), go: () => this.go('catalog', { cat: n }) })),
+      menuCats: this.CATS.map(c => ({ name: c.name, countLabel: this.count(c.name), go: () => this.go('catalog', { cat: c.name }) })),
+      homeCats: this.CATS.filter(c => this.P.filter(x => x.cat === c.name).length > 0).map(c => ({ name: c.name, photo: c.photo, countLabel: this.count(c.name), go: () => this.go('catalog', { cat: c.name }) })),
+
+      catA: this.catCard(0), catB: this.catCard(1), catC: this.catCard(2), catD: this.catCard(3),
+      catRest: this.CATS.filter((c, i) => i > 3 && this.P.filter(x => x.cat === c.name).length > 0).map(c => ({ name: c.name, photo: c.photo, countLabel: this.count(c.name), go: () => this.go('catalog', { cat: c.name }) })),
+      heroPeek: this.card(this.find('velas-mesa')),
+      newArrivals: this.P.filter(x => x.badge === 'Nuevo' || x.badge === 'Destacado').concat(this.P.filter(x => !x.badge && !x.old)).slice(0, 4).map(x => this.card(x)),
+      saleItems: this.P.filter(x => x.old).map(x => this.card(x)),
+      catalogItems: this.filtered().map(x => this.card(x)),
+      catalogEmpty: this.filtered().length === 0,
+      related: this.P.filter(x => x.id !== p.id).slice(0, 4).map(x => this.card(x)),
+
+      crumbs: 'Inicio / ' + (s.cat === 'Todos' ? 'Todos los productos' : s.cat),
+      catalogTitle: s.cat === 'Todos' ? 'Todos los productos' : (s.cat === 'Sale' ? 'Sale' : (s.cat === 'Nuevos' ? 'New Arrivals' : s.cat)),
+      catalogDesc: s.cat === 'Sale' ? 'Precios especiales por tiempo limitado en vajilla y sets de temporada.' : (s.cat === 'Nuevos' ? 'Lo último que llegó a la tienda, listo para tu próxima celebración.' : 'Piezas que combinan entre sí para armar la mesa en minutos.'),
+      resultsCountLabel: this.filtered().length === 1 ? '1 producto' : this.filtered().length + ' productos',
+      sorts: [
+        { name: 'Más recientes', key: 'recientes' },
+        { name: 'Precio menor', key: 'precio-asc' },
+        { name: 'Precio mayor', key: 'precio-desc' }
+      ].map(x => ({ name: x.name, active: s.sort === x.key, idle: s.sort !== x.key, go: () => this.set({ sort: x.key }) })),
+
+      detail: {
+        crumb: 'Volver a ' + (s.cat === 'Todos' ? 'todos los productos' : s.cat),
+        name: p.name, cat: p.cat, desc: p.desc, photo: shownPhoto,
+        priceLabel: this.money(p.price), oldPriceLabel: p.old ? this.money(p.old) : '',
+        hasOld: !!p.old, hasSale: !!sale, saleLabel: 'Sale ' + sale,
+        stockLabel: p.soldOut ? 'Agotado temporalmente' : (p.low ? 'Pocas unidades · quedan 4' : 'En existencia · listo para entrega'),
+        available: !p.soldOut, soldOut: !!p.soldOut,
+        lineLabel: this.money(p.price * s.qty)
+      },
+      gallery: galleryPhotos.map((ph, idx) => ({ photo: ph, active: idx === s.gallery, idle: idx !== s.gallery, go: () => this.set({ gallery: idx }) })),
+      variants: p.variants.map((v, idx) => ({ name: v, active: idx === s.variant, idle: idx !== s.variant, go: () => this.set({ variant: idx }) })),
+      qty: s.qty,
+      incQty: () => this.set({ qty: s.qty + 1 }),
+      decQty: () => this.set({ qty: Math.max(1, s.qty - 1) }),
+      addCurrent: () => this.addToCart(p.id, s.qty),
+      accordion: accItems.map(a => ({ title: a.title, body: a.body, open: s.openAcc === a.id, sign: s.openAcc === a.id ? '−' : '+', go: () => this.set({ openAcc: s.openAcc === a.id ? '' : a.id }) })),
+
+      cartItems: cartItems, cartCount: count, hasCart: count > 0, cartEmpty: count === 0,
+      cartTitle: count > 0 ? 'Tu carrito · ' + count : 'Tu carrito',
+      subtotalLabel: this.money(subtotal),
+      deliveryLabel: deliveryCost ? this.money(deliveryCost) : 'Sin costo',
+      totalLabel: this.money(subtotal + deliveryCost),
+      freeShippingLabel: falta > 0 ? 'Te faltan ' + this.money(falta) + ' para envío gratis en Tegucigalpa.' : 'Tu pedido ya tiene envío gratis en Tegucigalpa.',
+
+      deliveryOptions: [
+        { key: 'domicilio', name: 'Entrega a domicilio', note: 'Tegucigalpa mismo día · L 90.00' },
+        { key: 'tienda', name: 'Retiro en tienda', note: 'Food Market, San Pedro Sula · sin costo' }
+      ].map(d => ({ name: d.name, note: d.note, active: s.delivery === d.key, idle: s.delivery !== d.key, go: () => this.set({ delivery: d.key }) })),
+
+      esDomicilio: s.delivery === 'domicilio', esRetiro: s.delivery === 'tienda',
+      form: s.form,
+      onNombre: e => this.set({ form: Object.assign({}, s.form, { nombre: e.target.value }) }),
+      onTelefono: e => this.set({ form: Object.assign({}, s.form, { telefono: e.target.value }) }),
+      onCorreo: e => this.set({ form: Object.assign({}, s.form, { correo: e.target.value }) }),
+      onCiudad: e => this.set({ form: Object.assign({}, s.form, { ciudad: e.target.value }) }),
+      onColonia: e => this.set({ form: Object.assign({}, s.form, { colonia: e.target.value }) }),
+      onDireccion: e => this.set({ form: Object.assign({}, s.form, { direccion: e.target.value }) }),
+      onReferencias: e => this.set({ form: Object.assign({}, s.form, { referencias: e.target.value }) }),
+      onNotas: e => this.set({ form: Object.assign({}, s.form, { notas: e.target.value }) }),
+      terms: s.terms, termsOff: !s.terms,
+      toggleTerms: () => this.set({ terms: !s.terms }),
+      termsHint: s.terms ? 'Recibirás la confirmación por WhatsApp y correo.' : 'Acepta las políticas para continuar (opcional en la demo).',
+      confirmOrder: () => {
+        const items = s.cart.map(i => {
+          const pr = this.find(i.id);
+          return { label: pr.name + ' · ' + i.qty, lineLabel: this.money(pr.price * i.qty) };
+        });
+        this.go('confirm', {
+          order: {
+            number: 'VM-2026-' + (1400 + Math.floor(Math.random() * 99)),
+            items: items,
+            subtotalLabel: this.money(subtotal),
+            deliveryName: s.delivery === 'domicilio' ? 'Entrega a domicilio · Tegucigalpa' : 'Retiro en tienda',
+            deliveryLabel: deliveryCost ? this.money(deliveryCost) : 'Sin costo',
+            totalLabel: this.money(subtotal + deliveryCost),
+            deliveryDetail: s.delivery === 'domicilio'
+              ? 'Entrega estimada: hoy entre 3:00 y 6:00 p.m. · ' + (s.form.nombre || 'a nombre del pedido') + (s.form.direccion ? ', ' + s.form.direccion : '')
+              : 'Retiro en tienda: Food Market, San Pedro Sula, de lunes a sábado de 9:00 a 18:00.'
+          },
+          cart: []
+        });
+      },
+      order: s.order || { number: '', items: [], subtotalLabel: '', deliveryName: '', deliveryLabel: '', totalLabel: '', deliveryDetail: '' },
+
+      cartOpen: s.cartOpen, menuOpen: s.menuOpen,
+      query: s.query, searchOpen: s.searchOpen,
+      onQuery: e => this.set({ query: e.target.value }),
+      queryEmpty: q.length === 0,
+      hasResults: q.length > 0 && results.length > 0,
+      noResults: q.length > 0 && results.length === 0,
+      noResultsTitle: 'No encontramos “' + s.query + '”',
+      resultsLabel: 'Productos · ' + results.length,
+      results: results.slice(0, 4).map(x => ({ name: x.name, cat: x.cat, photo: x.photo, priceLabel: this.money(x.price), open: () => this.openProduct(x.id) })),
+      populares: ['platos flor', 'granja', 'toppers', 'servilletas florales'].map(t => ({ name: t, go: () => this.set({ query: t }) })),
+      goSearchAll: () => this.go('catalog', { cat: 'Todos' }),
+
+      faq: this.FAQ.map(f => ({ q: f.q, a: f.a, open: s.openFaq === f.id, sign: s.openFaq === f.id ? '−' : '+', go: () => this.set({ openFaq: s.openFaq === f.id ? '' : f.id }) })),
+
+      news: s.news,
+      onNews: e => this.set({ news: e.target.value }),
+      subscribe: () => this.flash('¡Gracias! Te avisamos de las novedades.'),
+      toast: s.toast, hasToast: !!s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

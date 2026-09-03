@@ -1,0 +1,4 @@
+# Solo se despliega lo que produce build.mjs (carpeta dist/)
+uploads/
+.thumbnail
+node_modules/

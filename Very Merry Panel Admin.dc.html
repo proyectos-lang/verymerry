@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#F7F4F5;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#29262A}
+a{color:#963568;text-decoration:none}
+a:hover{color:#E87FAF}
+input,textarea,select,button{font-family:'Jost',system-ui,sans-serif}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
+@keyframes vmIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes vmSlide{from{transform:translateX(100%)}to{transform:none}}
+</style>
+</helmet>
+
+<sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
+<div style="min-height:100vh;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))">
+<div style="background:#FFF1F6;display:flex;align-items:center;justify-content:center;padding:48px 32px">
+<div style="width:100%;max-width:380px">
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:180px;display:block;mix-blend-mode:multiply;margin-bottom:34px">
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:14px">Panel administrativo</div>
+<h1 style="font:500 40px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Inicia sesión</h1>
+<p style="font:300 14px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.65);margin:0 0 28px">Administra los productos, las fotos y los textos de la tienda.</p>
+<label style="display:block;margin-bottom:14px"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Correo</span><input value="{{ loginUser }}" onChange="{{ onLoginUser }}" placeholder="hola@verymerry.hn" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block;margin-bottom:20px"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Contraseña</span><input type="password" value="{{ loginPass }}" onChange="{{ onLoginPass }}" placeholder="••••••••" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<button onClick="{{ login }}" style="width:100%;font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:18px;cursor:pointer">Entrar al panel</button>
+<div style="display:flex;justify-content:space-between;margin-top:18px;font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.55)">
+<span>¿Olvidaste tu contraseña?</span>
+<a href="Very Merry Tienda Prototipo.dc.html">Ver la tienda</a>
+</div>
+<div style="margin-top:26px;padding-top:18px;border-top:1px solid #F5DCE7;font:300 12px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.5)">Demo: entra con cualquier dato para ver el panel.</div>
+</div>
+</div>
+<div style="position:relative;background:#F5DCE7;min-height:340px">
+<image-slot id="admin-login-art" shape="rect" src="assets/coleccion-carita.jpg" placeholder="Foto de portada del panel"></image-slot>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
+<div style="min-height:100vh;display:flex;align-items:stretch">
+
+<aside style="width:250px;flex:none;background:#FFFCFA;border-right:1px solid #E9E3E6;display:flex;flex-direction:column;padding:24px 18px">
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:132px;display:block;mix-blend-mode:multiply;margin:0 6px 8px">
+<div style="font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#963568;margin:0 6px 22px">Panel</div>
+<div style="display:flex;flex-direction:column;gap:4px;flex:1">
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+<sc-if value="{{ n.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ n.go }}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;background:#FFF1F6;border:0;border-radius:9px;padding:13px 14px;cursor:pointer;font:500 13.5px/1.2 'Jost',sans-serif;color:#963568">{{ n.name }}<span style="font:400 11px/1 'Jost',sans-serif;color:rgba(150,53,104,.6)">{{ n.badge }}</span></button></sc-if>
+<sc-if value="{{ n.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ n.go }}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;background:transparent;border:0;border-radius:9px;padding:13px 14px;cursor:pointer;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A">{{ n.name }}<span style="font:400 11px/1 'Jost',sans-serif;color:rgba(41,38,42,.35)">{{ n.badge }}</span></button></sc-if>
+</sc-for>
+</div>
+<div style="border-top:1px solid #E9E3E6;padding-top:16px;margin-top:16px">
+<div style="display:flex;align-items:center;gap:11px;padding:0 6px 14px">
+<span style="width:34px;height:34px;border-radius:999px;background:#F5DCE7;color:#963568;display:flex;align-items:center;justify-content:center;font:500 13px/1 'Jost',sans-serif">VM</span>
+<span style="display:block"><span style="display:block;font:400 13px/1.2 'Jost',sans-serif;color:#29262A">Very Merry</span><span style="display:block;font:300 11px/1.2 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">Administradora</span></span>
+</div>
+<a href="Very Merry Tienda Prototipo.dc.html" style="display:block;font:400 12.5px/1 'Jost',sans-serif;padding:9px 6px">Ver la tienda ↗</a>
+<button onClick="{{ logout }}" style="background:transparent;border:0;padding:9px 6px;cursor:pointer;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.55)">Cerrar sesión</button>
+</div>
+</aside>
+
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<header style="background:#FFFCFA;border-bottom:1px solid #E9E3E6;padding:18px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:sticky;top:0;z-index:20">
+<div>
+<h1 style="font:500 26px/1.15 'Cormorant Garamond',serif;color:#29262A;margin:0">{{ sectionTitle }}</h1>
+<div style="font:300 12.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:4px">{{ sectionHint }}</div>
+</div>
+<div style="display:flex;align-items:center;gap:12px">
+<span style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">{{ savedLabel }}</span>
+<button onClick="{{ save }}" style="font:500 13.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:14px 26px;cursor:pointer">Guardar cambios</button>
+</div>
+</header>
+
+<main style="flex:1;padding:26px 30px 60px">
+
+<sc-if value="{{ isInicio }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:22px;max-width:1100px">
+
+<section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:20px">
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Bloque 1</div>
+<h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0">Banner principal</h2>
+</div>
+<span style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Se muestra al abrir la tienda</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px">
+<div>
+<div style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:9px">Fotografía del banner</div>
+<div style="position:relative;height:230px;border-radius:10px;overflow:hidden;background:#F5DCE7">
+<image-slot id="admin-hero" shape="rect" src="assets/hero-granja.jpg" placeholder="Arrastra la foto del banner (1440×620)"></image-slot>
+</div>
+<div style="font:300 11.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:9px">Arrastra una imagen sobre el marco para reemplazarla. Recomendado: horizontal, mínimo 1600 px de ancho.</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Etiqueta superior</span><input value="{{ hero.eyebrow }}" onChange="{{ onHeroEyebrow }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Título</span><textarea value="{{ hero.title }}" onChange="{{ onHeroTitle }}" rows="2" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.5 'Jost',sans-serif;color:#29262A;resize:vertical"></textarea></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Texto corto</span><textarea value="{{ hero.text }}" onChange="{{ onHeroText }}" rows="2" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.5 'Jost',sans-serif;color:#29262A;resize:vertical"></textarea></label>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Texto del botón</span><input value="{{ hero.cta }}" onChange="{{ onHeroCta }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">El botón lleva a</span><input value="{{ hero.link }}" onChange="{{ onHeroLink }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+</div>
+</div>
+</div>
+<div style="margin-top:22px;padding-top:20px;border-top:1px solid #E9E3E6">
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:14px">Vista previa</div>
+<div style="background:#FFF1F6;border-radius:10px;padding:30px 32px;max-width:520px">
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">{{ hero.eyebrow }}</div>
+<div style="font:500 34px/1.06 'Cormorant Garamond',serif;color:#29262A;margin-bottom:10px">{{ hero.title }}</div>
+<div style="font:300 14px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.7);margin-bottom:18px">{{ hero.text }}</div>
+<span style="display:inline-block;font:500 13px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border-radius:999px;padding:14px 26px">{{ hero.cta }}</span>
+</div>
+</div>
+</section>
+
+<section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Bloque 2</div>
+<h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 18px">Cinta de mensajes</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Mensaje 1</span><input value="{{ ribbon.a }}" onChange="{{ onRibbonA }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Mensaje 2</span><input value="{{ ribbon.b }}" onChange="{{ onRibbonB }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Mensaje 3</span><input value="{{ ribbon.c }}" onChange="{{ onRibbonC }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+</div>
+<div style="margin-top:16px;background:#963568;border-radius:999px;padding:12px 22px;display:flex;gap:26px;overflow:hidden;white-space:nowrap;font:400 11.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#FFFCFA">
+<span>{{ ribbon.a }}</span><span>✽</span><span>{{ ribbon.b }}</span><span>✽</span><span>{{ ribbon.c }}</span>
+</div>
+</section>
+
+<section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Bloque 3</div>
+<h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 18px">Banner de temporada</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px">
+<div style="position:relative;height:210px;border-radius:10px;overflow:hidden;background:#F5DCE7">
+<image-slot id="admin-temporada" shape="rect" src="assets/pasteles-rosa.jpg" placeholder="Foto de la campaña de temporada"></image-slot>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Temporada</span><input value="{{ season.tag }}" onChange="{{ onSeasonTag }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Texto del botón</span><input value="{{ season.cta }}" onChange="{{ onSeasonCta }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+</div>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Título</span><input value="{{ season.title }}" onChange="{{ onSeasonTitle }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Texto</span><textarea value="{{ season.text }}" onChange="{{ onSeasonText }}" rows="3" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.5 'Jost',sans-serif;color:#29262A;resize:vertical"></textarea></label>
+</div>
+</div>
+</section>
+
+<section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Bloque 4</div>
+<h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 6px">Galería de la tienda</h2>
+<p style="font:300 12.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.55);margin:0 0 18px">Seis fotos de fiestas reales. Arrastra una imagen sobre cualquier marco para cambiarla.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px">
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-1" shape="rect" src="assets/pasteles-rosa.jpg" placeholder="Foto 1"></image-slot></div>
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-2" shape="rect" src="assets/platos-cerdito.jpg" placeholder="Foto 2"></image-slot></div>
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-3" shape="rect" src="assets/mesa-flores.jpg" placeholder="Foto 3"></image-slot></div>
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-4" shape="rect" src="assets/velas-mesa.jpg" placeholder="Foto 4"></image-slot></div>
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-5" shape="rect" src="assets/gorritos-fiesta.jpg" placeholder="Foto 5"></image-slot></div>
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-6" shape="rect" src="assets/toppers-hadas.jpg" placeholder="Foto 6"></image-slot></div>
+</div>
+</section>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isProductos }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1100px">
+<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:18px">
+<div style="display:flex;align-items:center;gap:10px;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:999px;padding:12px 18px;min-width:280px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#963568" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<input value="{{ search }}" onChange="{{ onSearch }}" placeholder="Buscar producto" style="flex:1;min-width:0;border:0;background:transparent;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A">
+</div>
+<div style="display:flex;gap:10px;align-items:center">
+<span style="font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.55)">{{ prodCountLabel }}</span>
+<button onClick="{{ newProduct }}" style="font:500 13px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1px solid #963568;border-radius:999px;padding:12px 22px;cursor:pointer">+ Nuevo producto</button>
+</div>
+</div>
+<div style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;overflow-x:auto">
+<div style="min-width:880px;display:grid;grid-template-columns:58px 64px minmax(220px,1fr) 180px 110px 128px 88px;gap:12px;padding:14px 20px;background:#FFF1F6;font:500 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#963568">
+<span>Orden</span><span>Foto</span><span>Producto</span><span>Categorías</span><span>Precio</span><span>Existencia</span><span></span>
+</div>
+<sc-for list="{{ prods }}" as="p" hint-placeholder-count="6">
+<div draggable="{{ p.draggable }}" onDragStart="{{ p.onDragStart }}" onDragOver="{{ p.onDragOver }}" onDrop="{{ p.onDrop }}" onDragEnd="{{ p.onDragEnd }}" style="min-width:880px;display:grid;grid-template-columns:58px 64px minmax(220px,1fr) 180px 110px 128px 88px;gap:12px;padding:14px 20px;align-items:center;border-top:1px solid #E9E3E6">
+<div style="display:flex;align-items:center;gap:8px;background:{{ p.handleBg }};border-radius:8px;padding:4px 2px;cursor:grab">
+<span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.35);letter-spacing:-.05em">⠿</span>
+<span style="display:block">
+<span style="display:block;font:500 11px/1 'Jost',sans-serif;color:#963568">{{ p.pos }}</span>
+<span style="display:flex;gap:3px;margin-top:3px">
+<button onClick="{{ p.up }}" aria-label="Subir" style="background:transparent;border:0;padding:0 2px;cursor:pointer;font:400 10px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">▲</button>
+<button onClick="{{ p.down }}" aria-label="Bajar" style="background:transparent;border:0;padding:0 2px;cursor:pointer;font:400 10px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">▼</button>
+</span>
+</span>
+</div>
+<div style="position:relative;width:52px;height:52px;border-radius:8px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ p.slotId }}" shape="rect" src="{{ p.photo }}" placeholder="Foto"></image-slot></div>
+<div style="min-width:0"><div style="font:400 14px/1.3 'Jost',sans-serif;color:#29262A">{{ p.name }}</div><div style="font:300 11.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">{{ p.sub }}</div></div>
+<div style="font:300 12.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.7)">{{ p.cat }}</div>
+<div style="font:500 13.5px/1.3 'Jost',sans-serif;color:#29262A">{{ p.priceLabel }}<sc-if value="{{ p.hasOld }}" hint-placeholder-val="{{ false }}"><span style="display:block;font:300 11.5px/1.3 'Jost',sans-serif;color:rgba(41,38,42,.45);text-decoration:line-through;margin-top:3px">{{ p.oldPriceLabel }}</span></sc-if></div>
+<div><span style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:{{ p.stockColor }};background:{{ p.stockBg }};border-radius:999px;padding:7px 11px">{{ p.stockLabel }}</span></div>
+<button onClick="{{ p.edit }}" style="justify-self:end;font:500 12.5px/1 'Jost',sans-serif;color:#963568;background:#FFF1F6;border:0;border-radius:999px;padding:11px 18px;cursor:pointer">Editar</button>
+</div>
+</sc-for>
+</div>
+<div style="font:300 12px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:14px">{{ reorderHint }} · El orden de esta lista es el orden en que se muestran en la tienda. Para cambiar una foto: arrástrala sobre la miniatura, o abre Editar.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCategorias }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1100px">
+<div style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:20px 22px;margin-bottom:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+<label style="flex:1;min-width:240px;display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Nueva categoría</span><input value="{{ newCat }}" onChange="{{ onNewCat }}" placeholder="Ej. Baby shower" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<button onClick="{{ addCat }}" style="flex:none;font:500 13px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:14px 24px;cursor:pointer">+ Agregar categoría</button>
+<div style="flex:1 1 100%;font:300 12px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.5)">Mantén presionado el punteado (⠿) y arrastra una categoría para elegir cuál va primero en el menú y en la página de inicio.</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px">
+<sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
+<div draggable="true" onDragStart="{{ c.onDragStart }}" onDragOver="{{ c.onDragOver }}" onDrop="{{ c.onDrop }}" onDragEnd="{{ c.onDragEnd }}" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:18px;display:flex;gap:14px">
+<div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:5px;background:{{ c.handleBg }};border-radius:8px;padding:4px 5px;cursor:grab">
+<span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.35);letter-spacing:-.05em">⠿</span>
+<span style="font:500 11px/1 'Jost',sans-serif;color:#963568">{{ c.pos }}</span>
+<button onClick="{{ c.up }}" aria-label="Subir" style="background:transparent;border:0;padding:1px;cursor:pointer;font:400 10px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">▲</button>
+<button onClick="{{ c.down }}" aria-label="Bajar" style="background:transparent;border:0;padding:1px;cursor:pointer;font:400 10px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">▼</button>
+</div>
+<div style="position:relative;width:88px;height:88px;flex:none;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ c.slotId }}" shape="rect" src="{{ c.photo }}" placeholder="Foto"></image-slot></div>
+<div style="flex:1;min-width:0">
+<div style="font:400 15px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">{{ c.name }}</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-bottom:12px">{{ c.countLabel }}</div>
+<div style="display:flex;gap:8px;align-items:center">
+<sc-if value="{{ c.visible }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.toggle }}" style="font:500 11.5px/1 'Jost',sans-serif;color:#963568;background:#FFF1F6;border:0;border-radius:999px;padding:9px 14px;cursor:pointer">Visible en la tienda</button></sc-if>
+<sc-if value="{{ c.hidden }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.toggle }}" style="font:500 11.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.5);background:#EFE9EC;border:0;border-radius:999px;padding:9px 14px;cursor:pointer">Oculta</button></sc-if>
+<sc-if value="{{ c.canDelete }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.remove }}" style="font:500 11.5px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1px solid #F5DCE7;border-radius:999px;padding:8px 13px;cursor:pointer">Eliminar</button></sc-if>
+<sc-if value="{{ c.blocked }}" hint-placeholder-val="{{ false }}"><span style="font:300 11px/1.3 'Jost',sans-serif;color:rgba(41,38,42,.4)">Con productos</span></sc-if>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPedidos }}" hint-placeholder-val="{{ false }}">
+<div style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;overflow-x:auto;max-width:1000px">
+<div style="min-width:740px;display:grid;grid-template-columns:150px minmax(180px,1fr) 130px 120px 150px;gap:14px;padding:14px 20px;background:#FFF1F6;font:500 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#963568">
+<span>Pedido</span><span>Cliente</span><span>Fecha</span><span>Total</span><span>Estado</span>
+</div>
+<sc-for list="{{ orders }}" as="o" hint-placeholder-count="4">
+<div style="min-width:740px;display:grid;grid-template-columns:150px minmax(180px,1fr) 130px 120px 150px;gap:14px;padding:16px 20px;align-items:center;border-top:1px solid #E9E3E6;font:400 13.5px/1.3 'Jost',sans-serif;color:#29262A">
+<span style="letter-spacing:.04em">{{ o.number }}</span>
+<span><span style="display:block">{{ o.client }}</span><span style="display:block;font:300 11.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">{{ o.items }}</span></span>
+<span style="font-weight:300;color:rgba(41,38,42,.65)">{{ o.date }}</span>
+<span style="font-weight:500">{{ o.total }}</span>
+<span><span style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:{{ o.color }};background:{{ o.bg }};border-radius:999px;padding:8px 12px">{{ o.status }}</span></span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAjustes }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;max-width:1100px">
+<section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
+<h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 18px">Contacto y entregas</h2>
+<div style="display:flex;flex-direction:column;gap:14px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">WhatsApp</span><input value="{{ shop.wa }}" onChange="{{ onShopWa }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Horario</span><input value="{{ shop.hours }}" onChange="{{ onShopHours }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Costo de entrega (L)</span><input value="{{ shop.delivery }}" onChange="{{ onShopDelivery }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Envío gratis desde (L)</span><input value="{{ shop.free }}" onChange="{{ onShopFree }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+</div>
+</div>
+</section>
+<section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
+<h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 18px">Logotipo y marca</h2>
+<div style="position:relative;height:150px;border-radius:10px;overflow:hidden;background:#FFF1F6;margin-bottom:14px"><image-slot id="admin-logo" shape="rect" src="assets/very-merry-logo.jpg" placeholder="Logotipo (PNG con fondo transparente)"></image-slot></div>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Frase de la barra superior</span><input value="{{ shop.tagline }}" onChange="{{ onShopTagline }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<div style="font:300 11.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:12px">Sube el logotipo vectorial o en PNG sin fondo para que se vea limpio en el encabezado y en el pie oscuro.</div>
+</section>
+</div>
+</sc-if>
+
+</main>
+</div>
+
+<sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:60;background:rgba(41,38,42,.35);display:flex;justify-content:flex-end">
+<button onClick="{{ closeDrawer }}" aria-label="Cerrar" style="flex:1;background:transparent;border:0;cursor:pointer"></button>
+<div style="width:520px;max-width:94vw;height:100%;background:#FFFCFA;display:flex;flex-direction:column;animation:vmSlide .22s ease-out;box-shadow:-16px 0 44px rgba(41,38,42,.22)">
+<div style="padding:22px 26px;border-bottom:1px solid #E9E3E6;display:flex;align-items:center;justify-content:space-between;gap:14px">
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:8px">{{ drawerTitle }}</div>
+<div style="font:500 20px/1.2 'Cormorant Garamond',serif;color:#29262A">{{ edit.name }}</div>
+</div>
+<button onClick="{{ closeDrawer }}" aria-label="Cerrar" style="background:transparent;border:0;cursor:pointer;font:300 22px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">×</button>
+</div>
+<div style="flex:1;overflow-y:auto;padding:22px 26px;display:flex;flex-direction:column;gap:16px">
+<div>
+<div style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:9px">Imagen principal</div>
+<div style="position:relative;height:240px;border-radius:10px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ edit.mainSlot }}" shape="rect" src="{{ edit.photo }}" placeholder="Arrastra la foto principal del producto"></image-slot></div>
+</div>
+<div>
+<div style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:9px">Galería (hasta 3 fotos más)</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ edit.g1 }}" shape="rect" placeholder="Foto 2"></image-slot></div>
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ edit.g2 }}" shape="rect" placeholder="Foto 3"></image-slot></div>
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ edit.g3 }}" shape="rect" placeholder="Foto 4"></image-slot></div>
+</div>
+</div>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Nombre del producto</span><input value="{{ edit.name }}" onChange="{{ onEditName }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Texto bajo el nombre</span><input value="{{ edit.sub }}" onChange="{{ onEditSub }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:9px">
+<span style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6)">Categorías</span>
+<span style="font:400 11.5px/1 'Jost',sans-serif;color:#963568">{{ editCatsLabel }}</span>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ catOptions }}" as="c" hint-placeholder-count="6">
+<sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.go }}" style="display:flex;align-items:center;gap:7px;font:500 12.5px/1.2 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:12px 18px;cursor:pointer;text-align:left"><span style="font:500 10px/1 'Jost',sans-serif">✓</span>{{ c.name }}{{ c.tag }}</button></sc-if>
+<sc-if value="{{ c.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.go }}" style="font:500 12.5px/1.2 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:11px 17px;cursor:pointer;text-align:left">{{ c.name }}</button></sc-if>
+</sc-for>
+</div>
+<div style="font:300 11.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:9px">Presiona todas las categorías donde quieras que aparezca el producto; púlsalas de nuevo para quitarlas. La primera seleccionada es la principal y es la que se muestra en la ficha.</div>
+</div>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Descripción</span><textarea value="{{ edit.desc }}" onChange="{{ onEditDesc }}" rows="5" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.6 'Jost',sans-serif;color:#29262A;resize:vertical"></textarea></label>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Precio (L)</span><input value="{{ edit.price }}" onChange="{{ onEditPrice }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Precio anterior (L)</span><input value="{{ edit.old }}" onChange="{{ onEditOld }}" placeholder="vacío = sin oferta" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
+</div>
+<div>
+<div style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:9px">Disponibilidad</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ stockOptions }}" as="s" hint-placeholder-count="3">
+<sc-if value="{{ s.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ s.go }}" style="font:500 12.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:12px 18px;cursor:pointer">{{ s.name }}</button></sc-if>
+<sc-if value="{{ s.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ s.go }}" style="font:500 12.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:11px 17px;cursor:pointer">{{ s.name }}</button></sc-if>
+</sc-for>
+</div>
+</div>
+<div>
+<div style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:9px">Etiqueta en la tarjeta</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ badgeOptions }}" as="b" hint-placeholder-count="4">
+<sc-if value="{{ b.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ b.go }}" style="font:500 12.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:12px 18px;cursor:pointer">{{ b.name }}</button></sc-if>
+<sc-if value="{{ b.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ b.go }}" style="font:500 12.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:11px 17px;cursor:pointer">{{ b.name }}</button></sc-if>
+</sc-for>
+</div>
+</div>
+</div>
+<div style="padding:18px 26px 22px;border-top:1px solid #E9E3E6;display:flex;gap:12px;align-items:center">
+<button onClick="{{ saveProduct }}" style="flex:1;font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:17px;cursor:pointer">Guardar producto</button>
+<button onClick="{{ closeDrawer }}" style="font:500 13px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:16px 22px;cursor:pointer">Cancelar</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:90;background:#963568;color:#FFFCFA;border-radius:999px;padding:15px 28px;font:400 13.5px/1 'Jost',sans-serif;box-shadow:0 12px 34px rgba(150,53,104,.34);animation:vmIn .18s ease-out">{{ toast }}</div>
+</sc-if>
+
+</div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = {
+    logged: false, loginUser: '', loginPass: '',
+    section: 'inicio', search: '', editId: '', toast: '', saved: 'Sin cambios sin guardar',
+    hero: {
+      eyebrow: 'Nueva temporada',
+      title: 'Haz de cada celebración algo inolvidable',
+      text: 'Encuentra todos los detalles para crear momentos muy merry.',
+      cta: 'Comprar ahora', link: 'Todos los productos'
+    },
+    ribbon: { a: 'Have a very merry party', b: 'Entrega el mismo día en Tegucigalpa', c: 'Armamos tu mesa por WhatsApp' },
+    season: { tag: 'Temporada · Cumpleaños', title: 'Velas altas y bases festoneadas', text: 'El pastel se ve mejor sobre una base con pie y rodeado de velas de colores.', cta: 'Ver la mesa de pastel' },
+    shop: { wa: '+504 9000-0000', hours: 'Lunes a sábado · 9:00 a 18:00', delivery: '90', free: '2000', tagline: 'Have a VERY MERRY party' },
+    hiddenCats: [],
+    prods: [
+      { id: 'coleccion-carita', name: 'Colección Happy Face completa', cat: 'Party Themes', price: 1150, old: null, sub: '8 puestos · platos, vasos y servilletas', stock: 'existencia', badge: 'Destacado', photo: 'assets/coleccion-carita.jpg', desc: 'Todo el tema en una caja: platos flor con carita, platos base estampados, vasos con flor y corazón de papel nido de abeja, servilletas de arcoíris y caritas.' },
+      { id: 'platos-carita', name: 'Platos flor Happy Face', cat: 'Mix and Match Tableware', price: 395, old: null, sub: '8 platos flor + 8 de base', stock: 'existencia', badge: 'Nuevo', photo: 'assets/platos-carita.jpg', desc: 'Platos troquelados en forma de flor rosa con carita dorada, sobre platos base de estampado de cerezas, arcoíris y fresas.' },
+      { id: 'set-granja', name: 'Set completo Fiesta en la Granja', cat: 'Party Themes', price: 1150, old: null, sub: '8 puestos · platos, vasos y servilletas', stock: 'existencia', badge: 'Destacado', photo: 'assets/set-granja.jpg', desc: 'Platos grandes y de postre, vasos de gallo, servilletas ilustradas y coronas de orejas para ocho invitados.' },
+      { id: 'guirnalda-granja', name: 'Guirnalda de granja', cat: 'Celebrations', price: 395, old: null, sub: '2.5 m · 9 figuras', stock: 'existencia', badge: 'Nuevo', photo: 'assets/guirnalda-granja.jpg', desc: 'Nueve figuras de papel ilustradas a mano unidas con cordel de yute. Llega lista para colgar.' },
+      { id: 'toppers-hadas', name: 'Toppers de hadas para pastel', cat: 'Birthday Candles & Toppers', price: 325, old: null, sub: '12 piezas · papel nido de abeja', stock: 'existencia', badge: 'Nuevo', photo: 'assets/toppers-hadas.jpg', desc: 'Hadas de papel con faldas plisadas y globos de nido de abeja en menta, rosa y mostaza.' },
+      { id: 'toppers-granja', name: 'Toppers de granja para cupcakes', cat: 'Birthday Candles & Toppers', price: 295, old: null, sub: '24 piezas · 6 diseños', stock: 'existencia', badge: '', photo: 'assets/toppers-granja.jpg', desc: 'Veinticuatro toppers en palillo de madera con seis animales de la granja y el tractor.' },
+      { id: 'gorritos-fiesta', name: 'Gorritos de fiesta a rayas', cat: 'Accessories', price: 245, old: null, sub: '8 piezas · con pompón', stock: 'existencia', badge: '', photo: 'assets/gorritos-fiesta.jpg', desc: 'Gorritos cónicos de papel a rayas en menta, rosa y durazno con pompón rojo y elástico suave.' },
+      { id: 'coronas-granja', name: 'Coronas de orejas de granja', cat: 'Accessories', price: 245, old: null, sub: '8 piezas', stock: 'agotado', badge: '', photo: 'assets/coronas-granja.jpg', desc: 'Ocho coronas de papel con orejas de vaca, cerdito y oveja, con elástico plateado ajustable.' },
+      { id: 'matasuegras-granja', name: 'Matasuegras de granja', cat: 'Accessories', price: 195, old: null, sub: '8 piezas', stock: 'pocas', badge: '', photo: 'assets/matasuegras-granja.jpg', desc: 'Ocho matasuegras con cabecitas de oveja, cerdito, vaca y caballo.' },
+      { id: 'platos-flor', name: 'Platos flor grandes', cat: 'Mix and Match Tableware', price: 450, old: 645, sub: '8 piezas · 4 colores', stock: 'existencia', badge: '', photo: 'assets/platos-flor.jpg', desc: 'Platos troquelados en forma de flor con centro esponjado en amarillo, rosa, azul y marfil.' },
+      { id: 'mesa-flores', name: 'Set de mesa Jardín en Flor', cat: 'Florals', price: 725, old: 950, sub: '8 puestos', stock: 'existencia', badge: '', photo: 'assets/mesa-flores.jpg', desc: 'Platos flor grandes y pequeños en tonos pastel con servilletas a juego.' },
+      { id: 'coleccion-floral', name: 'Colección floral inglesa', cat: 'Mix and Match Tableware', price: 1450, old: 1795, sub: '12 puestos', stock: 'existencia', badge: '', photo: 'assets/coleccion-floral.jpg', desc: 'Vajilla completa con borde dorado en cuatro estampados florales.' },
+      { id: 'velas-mesa', name: 'Velas acanaladas de mesa 25 cm', cat: 'Home Decor, Serveware & Scented Candles', price: 450, old: null, sub: '2 piezas · 4 colores', stock: 'existencia', badge: 'Nuevo', photo: 'assets/velas-mesa.jpg', desc: 'Par de velas acanaladas de 25 cm en cera sin aroma, para candelabro o portavelas.' },
+      { id: 'velas-largas', name: 'Velas altas para pastel Rosa Party', cat: 'Birthday Candles & Toppers', price: 295, old: 395, sub: '24 velas · 3 tonos', stock: 'existencia', badge: '', photo: 'assets/pasteles-rosa.jpg', desc: 'Velas altas de cera teñida en coral, fucsia y rosa pálido con base dorada.' },
+      { id: 'base-rosa', name: 'Base para pastel festoneada rosa', cat: 'Home Decor, Serveware & Scented Candles', price: 725, old: null, sub: '30 cm · melamina', stock: 'existencia', badge: 'Nuevo', photo: 'assets/base-pastel-rosa.jpg', desc: 'Base con pie y borde festoneado en rosa pastel, de melamina resistente y reutilizable.' },
+      { id: 'base-marfil', name: 'Base para pastel festoneada marfil', cat: 'Home Decor, Serveware & Scented Candles', price: 725, old: null, sub: '30 cm · melamina', stock: 'existencia', badge: '', photo: 'assets/base-pastel-marfil.jpg', desc: 'La misma base festoneada en marfil, para mesas neutras o para combinar en pares.' },
+      { id: 'platos-cerdito', name: 'Platos cerdito y servilletas tractor', cat: 'Party Themes', price: 395, old: null, sub: '8 platos + 20 servilletas', stock: 'pocas', badge: '', photo: 'assets/platos-cerdito.jpg', desc: 'Platos troquelados con forma de cerdito en rosa pastel y servilletas de tractor rojo.' }
+    ]
+  };
+
+  CATS = [
+    { name: 'Party Themes', photo: 'assets/coleccion-carita.jpg' },
+    { name: 'Accessories', photo: 'assets/gorritos-fiesta.jpg' },
+    { name: 'Florals', photo: 'assets/mesa-flores.jpg' },
+    { name: 'Home Decor, Serveware & Scented Candles', photo: 'assets/velas-mesa.jpg' },
+    { name: 'Mix and Match Tableware', photo: 'assets/platos-carita.jpg' },
+    { name: 'Celebrations', photo: 'assets/guirnalda-granja.jpg' },
+    { name: 'Birthday Candles & Toppers', photo: 'assets/toppers-hadas.jpg' },
+    { name: "Valentine's Day", photo: 'assets/pasteles-rosa.jpg' },
+    { name: 'Sports', photo: 'assets/platos-cerdito.jpg' },
+    { name: 'Planners and Notepads', photo: 'assets/coleccion-floral.jpg' }
+  ];
+
+  ORDERS = [
+    { number: 'VM-2026-1487', client: 'María Fernanda López', items: 'Colección Happy Face · 2 más', date: '26 ago 2026', total: 'L 1,880.00', status: 'Nuevo' },
+    { number: 'VM-2026-1486', client: 'Andrea Zelaya', items: 'Guirnalda de granja · 1 más', date: '26 ago 2026', total: 'L 640.00', status: 'Preparando' },
+    { number: 'VM-2026-1485', client: 'Sofía Mejía', items: 'Velas acanaladas · 3 más', date: '25 ago 2026', total: 'L 2,350.00', status: 'Entregado' },
+    { number: 'VM-2026-1484', client: 'Gabriela Cruz', items: 'Set Fiesta en la Granja', date: '25 ago 2026', total: 'L 1,240.00', status: 'Entregado' }
+  ];
+
+  money(n) { return 'L ' + Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  set(o) { this.setState(Object.assign({ saved: 'Cambios sin guardar' }, o)); }
+  patch(key, field, value) { this.set({ [key]: Object.assign({}, this.state[key], { [field]: value }) }); }
+  flash(msg) {
+    this.setState({ toast: msg });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: '' }), 2600);
+  }
+  catsOf(p) { return (p && p.cats && p.cats.length) ? p.cats : [(p && p.cat) || '']; }
+  toggleCat(name) {
+    const s = this.state;
+    const p = s.prods.filter(x => x.id === s.editId)[0];
+    if (!p) return;
+    const list = this.catsOf(p).slice();
+    const i = list.indexOf(name);
+    if (i >= 0) {
+      if (list.length === 1) { this.flash('El producto debe estar en al menos una categoría'); return; }
+      list.splice(i, 1);
+    } else list.push(name);
+    this.set({ prods: s.prods.map(x => x.id === s.editId ? Object.assign({}, x, { cats: list, cat: list[0] }) : x) });
+  }
+  editProd(field, value) {
+    this.set({ prods: this.state.prods.map(p => p.id === this.state.editId ? Object.assign({}, p, { [field]: value }) : p) });
+  }
+  reorder(fromId, toId) {
+    if (!fromId || fromId === toId) return;
+    const list = this.state.prods.slice();
+    const from = list.map(p => p.id).indexOf(fromId);
+    const to = list.map(p => p.id).indexOf(toId);
+    if (from < 0 || to < 0) return;
+    list.splice(to, 0, list.splice(from, 1)[0]);
+    this.set({ prods: list });
+  }
+  move(id, dir) {
+    const list = this.state.prods.slice();
+    const i = list.map(p => p.id).indexOf(id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= list.length) return;
+    const tmp = list[i]; list[i] = list[j]; list[j] = tmp;
+    this.set({ prods: list });
+  }
+  stockChip(stock) {
+    if (stock === 'agotado') return { label: 'Agotado', color: 'rgba(41,38,42,.5)', bg: '#EFE9EC' };
+    if (stock === 'pocas') return { label: 'Pocas unidades', color: '#963568', bg: '#F5DCE7' };
+    return { label: 'En existencia', color: '#963568', bg: '#FFF1F6' };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const q = s.search.trim().toLowerCase();
+    const list = q ? s.prods.filter(p => (p.name + ' ' + this.catsOf(p).join(' ')).toLowerCase().indexOf(q) >= 0) : s.prods;
+    const edit = s.prods.filter(p => p.id === s.editId)[0] || s.prods[0];
+    const cats = s.cats || this.CATS;
+
+    const sections = {
+      inicio: ['Página de inicio', 'Cambia las fotos y los textos de cada bloque de la tienda'],
+      productos: ['Productos', 'Fotos, precios, descripciones y disponibilidad'],
+      categorias: ['Categorías', 'Foto de portada y visibilidad de cada categoría'],
+      pedidos: ['Pedidos', 'Últimos pedidos recibidos desde la tienda'],
+      ajustes: ['Ajustes de la tienda', 'Contacto, entregas y logotipo']
+    };
+
+    return {
+      loggedIn: s.logged, loggedOut: !s.logged,
+      loginUser: s.loginUser, loginPass: s.loginPass,
+      onLoginUser: e => this.setState({ loginUser: e.target.value }),
+      onLoginPass: e => this.setState({ loginPass: e.target.value }),
+      login: () => { this.setState({ logged: true, saved: 'Todo guardado' }); window.scrollTo(0, 0); },
+      logout: () => this.setState({ logged: false, loginPass: '' }),
+
+      nav: [
+        { key: 'inicio', name: 'Página de inicio', badge: '4 bloques' },
+        { key: 'productos', name: 'Productos', badge: String(s.prods.length) },
+        { key: 'categorias', name: 'Categorías', badge: String(cats.length) },
+        { key: 'pedidos', name: 'Pedidos', badge: String(this.ORDERS.length) },
+        { key: 'ajustes', name: 'Ajustes de la tienda', badge: '' }
+      ].map(n => ({ name: n.name, badge: n.badge, active: s.section === n.key, idle: s.section !== n.key, go: () => { this.setState({ section: n.key, editId: '' }); window.scrollTo(0, 0); } })),
+
+      isInicio: s.section === 'inicio', isProductos: s.section === 'productos',
+      isCategorias: s.section === 'categorias', isPedidos: s.section === 'pedidos', isAjustes: s.section === 'ajustes',
+      sectionTitle: (sections[s.section] || sections.inicio)[0],
+      sectionHint: (sections[s.section] || sections.inicio)[1],
+      savedLabel: s.saved,
+      save: () => { this.setState({ saved: 'Todo guardado · hace un momento' }); this.flash('Cambios publicados en la tienda'); },
+
+      hero: s.hero,
+      onHeroEyebrow: e => this.patch('hero', 'eyebrow', e.target.value),
+      onHeroTitle: e => this.patch('hero', 'title', e.target.value),
+      onHeroText: e => this.patch('hero', 'text', e.target.value),
+      onHeroCta: e => this.patch('hero', 'cta', e.target.value),
+      onHeroLink: e => this.patch('hero', 'link', e.target.value),
+
+      ribbon: s.ribbon,
+      onRibbonA: e => this.patch('ribbon', 'a', e.target.value),
+      onRibbonB: e => this.patch('ribbon', 'b', e.target.value),
+      onRibbonC: e => this.patch('ribbon', 'c', e.target.value),
+
+      season: s.season,
+      onSeasonTag: e => this.patch('season', 'tag', e.target.value),
+      onSeasonTitle: e => this.patch('season', 'title', e.target.value),
+      onSeasonText: e => this.patch('season', 'text', e.target.value),
+      onSeasonCta: e => this.patch('season', 'cta', e.target.value),
+
+      shop: s.shop,
+      onShopWa: e => this.patch('shop', 'wa', e.target.value),
+      onShopHours: e => this.patch('shop', 'hours', e.target.value),
+      onShopDelivery: e => this.patch('shop', 'delivery', e.target.value),
+      onShopFree: e => this.patch('shop', 'free', e.target.value),
+      onShopTagline: e => this.patch('shop', 'tagline', e.target.value),
+
+      search: s.search,
+      onSearch: e => this.setState({ search: e.target.value }),
+      prodCountLabel: list.length === 1 ? '1 producto' : list.length + ' productos',
+      newProduct: () => {
+        const id = 'nuevo-' + Date.now();
+        const nuevo = { id: id, name: 'Producto nuevo', cat: 'Party Themes', price: 0, old: null, sub: 'Presentación · piezas', stock: 'existencia', badge: 'Nuevo', photo: '', desc: '', isNew: true };
+        this.setState({ prods: [nuevo].concat(this.state.prods), editId: id, search: '', section: 'productos', saved: 'Cambios sin guardar' });
+      },
+      canReorder: !q, reorderHint: q ? 'Limpia la búsqueda para reordenar arrastrando' : 'Mantén presionado el punteado y arrastra para elegir qué producto va primero en la tienda',
+      prods: list.map((p, i) => {
+        const chip = this.stockChip(p.stock);
+        return {
+          name: p.name, sub: p.sub, cat: this.catsOf(p).join(' · '), photo: p.photo, slotId: 'prod-' + p.id,
+          pos: (i + 1 < 10 ? '0' : '') + (i + 1),
+          draggable: !q,
+          handleBg: s.dragId === p.id ? '#F5DCE7' : 'transparent',
+          onDragStart: () => this.setState({ dragId: p.id }),
+          onDragOver: e => { e.preventDefault(); this.reorder(s.dragId, p.id); },
+          onDrop: e => { e.preventDefault(); this.setState({ dragId: '' }); this.flash('Nuevo orden guardado'); },
+          onDragEnd: () => this.setState({ dragId: '' }),
+          up: () => this.move(p.id, -1),
+          down: () => this.move(p.id, 1),
+          priceLabel: this.money(p.price), oldPriceLabel: p.old ? this.money(p.old) : '', hasOld: !!p.old,
+          stockLabel: chip.label, stockColor: chip.color, stockBg: chip.bg,
+          edit: () => this.setState({ editId: p.id })
+        };
+      }),
+
+      cats: cats.map((c, i) => ({
+        name: c.name, photo: c.photo, slotId: 'cat-' + c.name.toLowerCase().replace(/[^a-z]+/g, '-'),
+        pos: (i + 1 < 10 ? '0' : '') + (i + 1),
+        handleBg: s.dragCat === c.name ? '#F5DCE7' : 'transparent',
+        onDragStart: () => this.setState({ dragCat: c.name }),
+        onDragOver: e => {
+          e.preventDefault();
+          const from = s.dragCat;
+          if (!from || from === c.name) return;
+          const list = cats.slice();
+          const fi = list.map(x => x.name).indexOf(from);
+          const ti = list.map(x => x.name).indexOf(c.name);
+          if (fi < 0 || ti < 0) return;
+          list.splice(ti, 0, list.splice(fi, 1)[0]);
+          this.set({ cats: list });
+        },
+        onDrop: e => { e.preventDefault(); this.setState({ dragCat: '' }); this.flash('Nuevo orden de categorías guardado'); },
+        onDragEnd: () => this.setState({ dragCat: '' }),
+        up: () => {
+          const list = cats.slice(); const i2 = list.map(x => x.name).indexOf(c.name);
+          if (i2 <= 0) return; const t = list[i2 - 1]; list[i2 - 1] = list[i2]; list[i2] = t; this.set({ cats: list });
+        },
+        down: () => {
+          const list = cats.slice(); const i2 = list.map(x => x.name).indexOf(c.name);
+          if (i2 < 0 || i2 >= list.length - 1) return; const t = list[i2 + 1]; list[i2 + 1] = list[i2]; list[i2] = t; this.set({ cats: list });
+        },
+        countLabel: (() => { const n = s.prods.filter(p => this.catsOf(p).indexOf(c.name) >= 0).length; return n === 0 ? 'Sin productos' : (n === 1 ? '1 producto' : n + ' productos'); })(),
+        visible: s.hiddenCats.indexOf(c.name) < 0, hidden: s.hiddenCats.indexOf(c.name) >= 0,
+        toggle: () => this.set({ hiddenCats: s.hiddenCats.indexOf(c.name) >= 0 ? s.hiddenCats.filter(x => x !== c.name) : s.hiddenCats.concat([c.name]) }),
+        canDelete: s.prods.filter(p => this.catsOf(p).indexOf(c.name) >= 0).length === 0,
+        blocked: s.prods.filter(p => this.catsOf(p).indexOf(c.name) >= 0).length > 0,
+        remove: () => this.set({ cats: cats.filter(x => x.name !== c.name) })
+      })),
+      newCat: s.newCat || '',
+      onNewCat: e => this.setState({ newCat: e.target.value }),
+      addCat: () => {
+        const name = (s.newCat || '').trim();
+        if (!name) { this.flash('Escribe el nombre de la categoría'); return; }
+        if (cats.filter(c => c.name.toLowerCase() === name.toLowerCase()).length) { this.flash('Esa categoría ya existe'); return; }
+        this.set({ cats: cats.concat([{ name: name, photo: '' }]), newCat: '' });
+        this.flash('Categoría "' + name + '" agregada');
+      },
+      catOptions: cats.map(c => {
+        const on = this.catsOf(edit).indexOf(c.name) >= 0;
+        const principal = this.catsOf(edit)[0] === c.name;
+        return { name: c.name, tag: principal ? ' · principal' : '', active: on, idle: !on, go: () => this.toggleCat(c.name) };
+      }),
+      editCatsLabel: this.catsOf(edit).length === 1 ? 'Aparece en 1 categoría' : 'Aparece en ' + this.catsOf(edit).length + ' categorías · la primera es la principal',
+
+      orders: this.ORDERS.map(o => Object.assign({}, o, {
+        color: o.status === 'Nuevo' ? '#FFFCFA' : (o.status === 'Preparando' ? '#963568' : 'rgba(41,38,42,.55)'),
+        bg: o.status === 'Nuevo' ? '#963568' : (o.status === 'Preparando' ? '#F5DCE7' : '#EFE9EC')
+      })),
+
+      drawerOpen: !!s.editId,
+      drawerTitle: edit.isNew ? 'Nuevo producto' : 'Editar producto',
+      closeDrawer: () => this.setState({ editId: '', prods: s.prods.filter(p => !(p.isNew && p.name === 'Producto nuevo' && !p.price)) }),
+      edit: {
+        name: edit.name, sub: edit.sub, desc: edit.desc, photo: edit.photo,
+        price: String(edit.price), old: edit.old ? String(edit.old) : '',
+        mainSlot: 'edit-main-' + edit.id, g1: 'edit-g1-' + edit.id, g2: 'edit-g2-' + edit.id, g3: 'edit-g3-' + edit.id
+      },
+      onEditName: e => this.editProd('name', e.target.value),
+      onEditSub: e => this.editProd('sub', e.target.value),
+      onEditDesc: e => this.editProd('desc', e.target.value),
+      onEditPrice: e => this.editProd('price', Number(e.target.value.replace(/[^0-9.]/g, '')) || 0),
+      onEditOld: e => this.editProd('old', e.target.value ? (Number(e.target.value.replace(/[^0-9.]/g, '')) || null) : null),
+      stockOptions: [
+        { key: 'existencia', name: 'En existencia' },
+        { key: 'pocas', name: 'Pocas unidades' },
+        { key: 'agotado', name: 'Agotado' }
+      ].map(o => ({ name: o.name, active: edit.stock === o.key, idle: edit.stock !== o.key, go: () => this.editProd('stock', o.key) })),
+      badgeOptions: [
+        { key: '', name: 'Sin etiqueta' },
+        { key: 'Nuevo', name: 'Nuevo' },
+        { key: 'Destacado', name: 'Destacado' },
+        { key: 'Sale', name: 'Sale' }
+      ].map(o => ({ name: o.name, active: edit.badge === o.key, idle: edit.badge !== o.key, go: () => this.editProd('badge', o.key) })),
+      saveProduct: () => {
+        const wasNew = edit.isNew;
+        this.setState({ editId: '', saved: 'Todo guardado · hace un momento', prods: s.prods.map(p => p.id === s.editId ? Object.assign({}, p, { isNew: false }) : p) });
+        this.flash(wasNew ? 'Producto creado y publicado' : 'Producto actualizado');
+      },
+
+      toast: s.toast, hasToast: !!s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

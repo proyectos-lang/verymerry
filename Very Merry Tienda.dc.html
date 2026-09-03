@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EFE9EC;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#963568;text-decoration:none}
+a:hover{color:#E87FAF}
+.vm-sec{padding:56px 60px;border-bottom:1px solid rgba(41,38,42,.09);scroll-margin-top:16px}
+.vm-shd{display:flex;align-items:baseline;gap:12px;margin:0 0 26px}
+.vm-num{font:600 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;padding:5px 8px;background:#29262A;color:#fff;border-radius:5px;text-decoration:none}
+.vm-nm{font:500 15px/1.2 'Jost',sans-serif;letter-spacing:.02em;color:#29262A}
+.vm-sub{font:300 13px/1.2 'Jost',sans-serif;color:rgba(41,38,42,.5)}
+.vm-row{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start}
+.vm-card{background:#FFFCFA;border:1px solid rgba(41,38,42,.1);border-radius:10px;box-shadow:0 2px 14px rgba(41,38,42,.07);overflow:hidden;flex:none}
+.vm-row{min-width:0}
+.vm-lbl{font:400 11px/1.3 ui-monospace,Menlo,monospace;color:rgba(41,38,42,.5);letter-spacing:.03em;margin:0 0 9px}
+</style>
+</helmet>
+
+<section class="vm-sec" id="t0" style="background:#FFFCFA">
+<div class="vm-shd"><a class="vm-num" href="#t0">00</a><span class="vm-nm">Very Merry · Propuesta de tienda virtual</span><span class="vm-sub">Diseño visual — cliente final</span></div>
+<div style="display:flex;flex-wrap:wrap;gap:40px;max-width:1440px">
+<div style="flex:1 1 420px;min-width:340px">
+<h1 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 14px;letter-spacing:-.01em">Alegre y delicado, sin ser infantil</h1>
+<p style="font:300 15px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.72);margin:0 0 18px;text-wrap:pretty">La propuesta apoya el rosa de la marca sobre una base de blanco cálido y gris tinta: el rosa aparece en acentos, etiquetas y bandas de sección, no como fondo dominante. Los títulos usan una serif alta y elegante; todo el resto del sistema (precios, menús, botones, filtros) usa una sans geométrica limpia para que el catálogo se lea rápido.</p>
+<p style="font:300 15px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.72);margin:0;text-wrap:pretty">Los detalles de fiesta son geométricos y discretos: puntos de confeti, guirnaldas finas de círculos, banderines simples. Nada de ilustración pesada — la fotografía del producto es la protagonista.</p>
+</div>
+<div style="flex:1 1 380px;min-width:320px;background:#FFF1F6;border:1px solid #E9E3E6;border-radius:10px;padding:26px 28px">
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#963568;margin-bottom:16px">Supuestos que tomé</div>
+<div style="display:flex;flex-direction:column;gap:11px;font:300 14px/1.55 'Jost',sans-serif;color:rgba(41,38,42,.78)">
+<div>· Fotografía: todos los espacios de imagen están como marcadores rayados con la nota de qué foto va ahí. Con fotos reales sube muchísimo la calidad.</div>
+<div>· Precios en lempiras (L) con dos decimales y separador de miles.</div>
+<div>· Categorías en inglés como en la marca actual; interfaz y textos de compra en español.</div>
+<div>· Escritorio a 1440 px, móvil a 390 px.</div>
+<div>· Sin panel administrativo ni integración con EasyCount en esta etapa; los bloques editables están marcados.</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="vm-sec" id="t1">
+<div class="vm-shd"><a class="vm-num" href="#t1">01</a><span class="vm-nm">Sistema visual</span><span class="vm-sub">Color, tipografía, botones, etiquetas, tarjetas</span></div>
+<div class="vm-row">
+
+<div style="flex:0 0 auto">
+<p class="vm-lbl">logotipo</p>
+<div class="vm-card" style="width:420px;padding:34px 30px;display:flex;flex-direction:column;gap:22px">
+<div style="background:#FFF1F6;border-radius:8px;padding:26px;display:flex;align-items:center;justify-content:center"><img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:280px;mix-blend-mode:multiply"></div>
+<div style="background:#963568;border-radius:8px;padding:26px;display:flex;align-items:center;justify-content:center"><img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:280px;filter:invert(1) grayscale(1) brightness(1.9);mix-blend-mode:screen"></div>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6)">El logotipo va en rosa vino sobre fondos claros y en blanco sobre magenta. Nunca sobre fotografía sin una capa de contraste.</div>
+</div>
+</div>
+
+<div style="flex:0 0 auto">
+<p class="vm-lbl">paleta</p>
+<div class="vm-card" style="width:420px;padding:28px 30px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+<div><div style="height:64px;border-radius:7px;background:#963568"></div><div style="font:500 12px/1.5 'Jost',sans-serif;color:#29262A;margin-top:7px">Rosa vino</div><div style="font:400 11px/1.4 ui-monospace,monospace;color:rgba(41,38,42,.5)">#963568</div></div>
+<div><div style="height:64px;border-radius:7px;background:#E87FAF"></div><div style="font:500 12px/1.5 'Jost',sans-serif;color:#29262A;margin-top:7px">Rosa principal</div><div style="font:400 11px/1.4 ui-monospace,monospace;color:rgba(41,38,42,.5)">#E87FAF</div></div>
+<div><div style="height:64px;border-radius:7px;background:#F5DCE7"></div><div style="font:500 12px/1.5 'Jost',sans-serif;color:#29262A;margin-top:7px">Rosa claro</div><div style="font:400 11px/1.4 ui-monospace,monospace;color:rgba(41,38,42,.5)">#F5DCE7</div></div>
+<div><div style="height:64px;border-radius:7px;background:#FFF1F6;border:1px solid #E9E3E6"></div><div style="font:500 12px/1.5 'Jost',sans-serif;color:#29262A;margin-top:7px">Rosa muy pálido</div><div style="font:400 11px/1.4 ui-monospace,monospace;color:rgba(41,38,42,.5)">#FFF1F6</div></div>
+<div><div style="height:64px;border-radius:7px;background:#FFFCFA;border:1px solid #E9E3E6"></div><div style="font:500 12px/1.5 'Jost',sans-serif;color:#29262A;margin-top:7px">Blanco cálido</div><div style="font:400 11px/1.4 ui-monospace,monospace;color:rgba(41,38,42,.5)">#FFFCFA</div></div>
+<div><div style="height:64px;border-radius:7px;background:#29262A"></div><div style="font:500 12px/1.5 'Jost',sans-serif;color:#29262A;margin-top:7px">Gris tinta</div><div style="font:400 11px/1.4 ui-monospace,monospace;color:rgba(41,38,42,.5)">#29262A</div></div>
+</div>
+<div style="margin-top:18px;padding-top:16px;border-top:1px solid #E9E3E6;font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6)">Regla: máximo dos fondos rosas por pantalla. El magenta se reserva para acciones y acentos.</div>
+</div>
+</div>
+
+<div style="flex:0 0 auto">
+<p class="vm-lbl">tipografía</p>
+<div class="vm-card" style="width:460px;padding:30px 32px">
+<div style="border-bottom:1px solid #E9E3E6;padding-bottom:20px;margin-bottom:20px">
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:12px">Cormorant Garamond · títulos</div>
+<div style="font:500 46px/1.05 'Cormorant Garamond',serif;color:#29262A;letter-spacing:-.01em">Haz de cada celebración</div>
+<div style="font:400 22px/1.3 'Cormorant Garamond',serif;font-style:italic;color:#963568;margin-top:6px">algo inolvidable</div>
+</div>
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:12px">Jost · texto, precios, interfaz</div>
+<div style="font:300 15px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.75)">Encuentra todos los detalles para crear momentos muy merry. Globos, velas, vajilla y flores para cada fiesta.</div>
+<div style="display:flex;gap:22px;align-items:baseline;margin-top:16px">
+<span style="font:500 22px/1 'Jost',sans-serif;color:#29262A">L 725.00</span>
+<span style="font:400 15px/1 'Jost',sans-serif;color:rgba(41,38,42,.45);text-decoration:line-through">L 950.00</span>
+<span style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#963568">Nuevo · Sale · Agotado</span>
+</div>
+</div>
+</div>
+</div>
+
+<div style="flex:0 0 auto">
+<p class="vm-lbl">botones · campos · etiquetas</p>
+<div class="vm-card" style="width:440px;padding:30px 32px;display:flex;flex-direction:column;gap:22px">
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+<button style="font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:15px 30px;cursor:pointer;letter-spacing:.02em">Comprar ahora</button>
+<button style="font:500 14px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1px solid #963568;border-radius:999px;padding:14px 26px;cursor:pointer">Ver más</button>
+<button style="font:500 13px/1 'Jost',sans-serif;color:#29262A;background:#F5DCE7;border:0;border-radius:999px;padding:13px 22px;cursor:pointer">Agregar al carrito</button>
+<button disabled style="font:500 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.35);background:#E9E3E6;border:0;border-radius:999px;padding:13px 22px">Agotado</button>
+</div>
+<div style="display:flex;gap:10px;align-items:center">
+<div style="flex:1;display:flex;align-items:center;gap:10px;background:#FFF1F6;border:1px solid #E9E3E6;border-radius:999px;padding:13px 18px">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#963568" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<span style="font:300 14px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Buscar globos, velas, vajilla…</span>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:9px">
+<span style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:7px 12px">Nuevo</span>
+<span style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 12px">Sale −30%</span>
+<span style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#963568;background:#F5DCE7;border-radius:999px;padding:7px 12px">Destacado</span>
+<span style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#29262A;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:999px;padding:7px 12px">Pocas unidades</span>
+<span style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(41,38,42,.5);background:#E9E3E6;border-radius:999px;padding:7px 12px">Agotado</span>
+</div>
+<div style="display:flex;gap:20px;align-items:center;padding-top:18px;border-top:1px solid #E9E3E6;color:#963568">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20.5c0-3.6 3.4-5.6 7.5-5.6s7.5 2 7.5 5.6"></path></svg>
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg>
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.5 12a8.5 8.5 0 1 1-4.1-7.3"></path><path d="M20.5 3.5v5h-5"></path></svg>
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path><path d="M8.6 9.4c.4 3 3 5.6 6 6l1.1-1.6 2 .9-.4 1.9c-3.9.6-8.3-3.8-7.7-7.7l1.9-.4.9 2Z" fill="currentColor" stroke="none"></path></svg>
+<span style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5)">búsqueda · cuenta · carrito · devoluciones · WhatsApp</span>
+</div>
+</div>
+</div>
+
+<div style="flex:0 0 auto">
+<p class="vm-lbl">tarjeta de producto · estados</p>
+<div class="vm-card" style="padding:28px 30px">
+<div style="display:flex;gap:20px">
+<div style="width:220px">
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.7);text-align:center">foto producto<br>4:5</span>
+<span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:7px 11px">Nuevo</span>
+<span style="position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 8px rgba(41,38,42,.14);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Set de globos pastel Confetti</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">12 piezas · Party Themes</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:9px">L 295.00</div>
+</div>
+<div style="width:220px">
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.7);text-align:center">foto producto<br>4:5</span>
+<span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 11px">−30%</span>
+</div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Vajilla de papel Rosa Fiesta</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">8 puestos · Serveware</div>
+<div style="display:flex;gap:10px;align-items:baseline;margin-top:9px"><span style="font:500 16px/1 'Jost',sans-serif;color:#963568">L 450.00</span><span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">L 645.00</span></div>
+</div>
+<div style="width:220px">
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#EFE9EC 0 9px,#F7F4F5 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(41,38,42,.4);text-align:center">foto producto<br>4:5</span>
+<div style="position:absolute;inset:0;background:rgba(255,252,250,.55)"></div>
+<span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:500 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#29262A;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:999px;padding:9px 16px">Agotado</span>
+</div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:13px">Piñata estrella dorada</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.4);margin-top:3px">Celebrations</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:rgba(41,38,42,.45);margin-top:9px">L 725.00</div>
+</div>
+</div>
+<div style="margin-top:20px;padding-top:16px;border-top:1px solid #E9E3E6;font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);max-width:700px">Al pasar el cursor: la foto hace zoom suave, aparece la segunda imagen y el botón redondo de carrito sube 4 px. Sombra apenas perceptible — la tarjeta no tiene borde, la separa el aire.</div>
+</div>
+</div>
+
+</div>
+</section>
+
+
+<section class="vm-sec" id="t2">
+<div class="vm-shd"><a class="vm-num" href="#t2">02</a><span class="vm-nm">Página de inicio · escritorio</span><span class="vm-sub">1440 px</span></div>
+<div class="vm-card" style="width:1440px" data-screen-label="Home escritorio">
+
+<div style="background:#963568;color:#FFFCFA;padding:0 40px;height:42px;display:flex;align-items:center;justify-content:space-between">
+<span style="font:300 12px/1 'Jost',sans-serif;letter-spacing:.04em;opacity:.85">Entregas en Tegucigalpa y envíos a todo Honduras</span>
+<span style="font:400 12px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase">Have a very merry party</span>
+<span style="display:flex;gap:18px;font:300 12px/1 'Jost',sans-serif;opacity:.85"><span>Instagram</span><span>Facebook</span></span>
+</div>
+
+<div style="background:#FFFCFA;padding:0 40px;height:92px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid #E9E3E6">
+<nav style="display:flex;gap:26px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A;letter-spacing:.03em">
+<span>Categorías</span><span>New Arrivals</span><span style="color:#963568;font-weight:500">Sale</span><span>Contacto</span>
+</nav>
+<a href="#t2" style="justify-self:center"><img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:186px;display:block;mix-blend-mode:multiply"></a>
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:20px;color:#29262A">
+<div style="display:flex;align-items:center;gap:7px;background:#F5DCE7;border-radius:999px;padding:9px 16px;color:#963568">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>
+<span style="font:500 12.5px/1 'Jost',sans-serif">WhatsApp</span>
+</div>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20.5c0-3.6 3.4-5.6 7.5-5.6s7.5 2 7.5 5.6"></path></svg>
+<div style="position:relative">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg>
+<span style="position:absolute;top:-6px;right:-8px;min-width:17px;height:17px;border-radius:999px;background:#963568;color:#FFFCFA;font:500 10px/17px 'Jost',sans-serif;text-align:center;padding:0 4px;box-sizing:border-box">3</span>
+</div>
+</div>
+</div>
+
+<div style="background:#FFFCFA;padding:0 40px;height:52px;display:flex;align-items:center;justify-content:center;gap:30px;border-bottom:1px solid #E9E3E6;font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.8);letter-spacing:.02em">
+<span>Party Themes</span><span>Accessories</span><span>Florals</span><span>Home Decor</span><span>Serveware</span><span>Scented Candles</span><span>Tableware</span><span>Celebrations</span><span style="color:rgba(41,38,42,.45)">Ver todas +</span>
+</div>
+
+<div style="position:relative;height:600px;background:repeating-linear-gradient(135deg,#F5DCE7 0 12px,#FFF1F6 12px 24px);display:flex;align-items:center">
+<span style="position:absolute;top:20px;right:24px;font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.65);background:rgba(255,252,250,.7);border-radius:5px;padding:6px 9px">banner editable · foto mesa de fiesta 1440×600</span>
+<div style="margin-left:96px;background:rgba(255,252,250,.94);border-radius:12px;padding:52px 56px;max-width:560px;box-shadow:0 18px 50px rgba(41,38,42,.09)">
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:20px">
+<span style="width:6px;height:6px;border-radius:999px;background:#E87FAF"></span>
+<span style="width:6px;height:6px;border-radius:999px;background:#963568"></span>
+<span style="width:6px;height:6px;border-radius:999px;background:#F5DCE7"></span>
+<span style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568">Nueva temporada</span>
+</div>
+<h2 style="font:500 60px/1.03 'Cormorant Garamond',serif;color:#29262A;margin:0 0 18px;letter-spacing:-.015em">Haz de cada celebración algo inolvidable</h2>
+<p style="font:300 16.5px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.7);margin:0 0 30px;max-width:420px;text-wrap:pretty">Encuentra todos los detalles para crear momentos muy merry.</p>
+<div style="display:flex;gap:14px;align-items:center">
+<button style="font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:17px 36px;cursor:pointer;letter-spacing:.02em">Comprar ahora</button>
+<a href="#t4" style="font:400 14px/1 'Jost',sans-serif;color:#29262A;border-bottom:1px solid rgba(41,38,42,.25);padding-bottom:3px">Ver New Arrivals</a>
+</div>
+</div>
+</div>
+
+<div style="padding:84px 96px 20px;background:#FFFCFA">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:34px">
+<div>
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Explora</div>
+<h3 style="font:500 42px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Categorías principales</h3>
+</div>
+<a href="#t6" style="font:400 13.5px/1 'Jost',sans-serif;color:#29262A;border-bottom:1px solid rgba(41,38,42,.25);padding-bottom:3px">Ver todos los productos</a>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+<div style="grid-column:span 2;position:relative;height:340px;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px);display:flex;align-items:flex-end;padding:26px">
+<span style="position:absolute;top:14px;left:16px;font:400 10px/1 ui-monospace,monospace;color:rgba(150,53,104,.6)">foto categoría 700×340</span>
+<div style="background:rgba(255,252,250,.94);border-radius:8px;padding:15px 22px">
+<div style="font:500 20px/1.2 'Cormorant Garamond',serif;color:#29262A">Party Themes</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:3px">48 productos</div>
+</div>
+</div>
+<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+<div style="position:relative;height:160px;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px);display:flex;align-items:flex-end;padding:16px"><span style="font:500 16px/1.2 'Cormorant Garamond',serif;color:#29262A;background:rgba(255,252,250,.94);border-radius:6px;padding:8px 14px">Accessories</span></div>
+<div style="position:relative;height:160px;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px);display:flex;align-items:flex-end;padding:16px"><span style="font:500 16px/1.2 'Cormorant Garamond',serif;color:#29262A;background:rgba(255,252,250,.94);border-radius:6px;padding:8px 14px">Florals</span></div>
+<div style="position:relative;height:160px;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px);display:flex;align-items:flex-end;padding:16px"><span style="font:500 16px/1.2 'Cormorant Garamond',serif;color:#29262A;background:rgba(255,252,250,.94);border-radius:6px;padding:8px 14px">Home Decor</span></div>
+<div style="position:relative;height:160px;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px);display:flex;align-items:flex-end;padding:16px"><span style="font:500 16px/1.2 'Cormorant Garamond',serif;color:#29262A;background:rgba(255,252,250,.94);border-radius:6px;padding:8px 14px">Serveware</span></div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:20px;margin-top:20px">
+<div style="text-align:center"><div style="aspect-ratio:1;border-radius:999px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div><div style="font:400 13.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:12px">Scented Candles</div></div>
+<div style="text-align:center"><div style="aspect-ratio:1;border-radius:999px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div><div style="font:400 13.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:12px">Mix &amp; Match Tableware</div></div>
+<div style="text-align:center"><div style="aspect-ratio:1;border-radius:999px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div><div style="font:400 13.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:12px">Celebrations</div></div>
+<div style="text-align:center"><div style="aspect-ratio:1;border-radius:999px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div><div style="font:400 13.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:12px">Birthday Candles &amp; Toppers</div></div>
+<div style="text-align:center"><div style="aspect-ratio:1;border-radius:999px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div><div style="font:400 13.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:12px">Sports</div></div>
+<div style="text-align:center"><div style="aspect-ratio:1;border-radius:999px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div><div style="font:400 13.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:12px">Planners &amp; Notepads</div></div>
+</div>
+</div>
+
+<div style="padding:78px 96px 0;background:#FFFCFA">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px">
+<div>
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Recién llegado</div>
+<h3 style="font:500 42px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">New Arrivals</h3>
+</div>
+<div style="display:flex;gap:10px">
+<span style="width:40px;height:40px;border-radius:999px;border:1px solid #E9E3E6;display:flex;align-items:center;justify-content:center;color:rgba(41,38,42,.4);font:400 15px/1 'Jost',sans-serif">←</span>
+<span style="width:40px;height:40px;border-radius:999px;border:1px solid #963568;display:flex;align-items:center;justify-content:center;color:#963568;font:400 15px/1 'Jost',sans-serif">→</span>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.6);text-align:center">globos confetti</span>
+<span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:7px 11px">Nuevo</span>
+<span style="position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 8px rgba(41,38,42,.14);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:14px">Set de globos pastel Confetti</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">12 piezas</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:9px">L 295.00</div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.6);text-align:center">vela aromática</span>
+<span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:7px 11px">Nuevo</span>
+<span style="position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 8px rgba(41,38,42,.14);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:14px">Vela aromática Vanilla Bloom</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">Cera de soya · 40 h</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:9px">L 450.00</div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.6);text-align:center">servilletas</span>
+<span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:7px 11px">Nuevo</span>
+<span style="position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 8px rgba(41,38,42,.14);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:14px">Servilletas florales Bloom</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">20 piezas</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:9px">L 165.00</div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.6);text-align:center">arco de globos</span>
+<span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#963568;background:#F5DCE7;border-radius:999px;padding:7px 11px">Pocas unidades</span>
+<span style="position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 8px rgba(41,38,42,.14);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:14px">Arco de globos Blush Garden</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">Kit armable · 90 piezas</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:9px">L 1,150.00</div>
+</div>
+</div>
+</div>
+
+<div style="padding:78px 96px;background:#FFFCFA">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px">
+<div>
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Selección Very Merry</div>
+<h3 style="font:500 42px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Productos destacados</h3>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1.45fr 1fr;gap:26px">
+<div style="position:relative;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 11px,#FFF1F6 11px 22px);min-height:460px;display:flex;align-items:flex-end;padding:34px">
+<span style="position:absolute;top:16px;left:18px;font:400 10px/1 ui-monospace,monospace;color:rgba(150,53,104,.6)">foto editorial 760×460</span>
+<span style="position:absolute;top:22px;right:22px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#963568;background:#FFFCFA;border-radius:999px;padding:8px 13px">Destacado</span>
+<div style="background:rgba(255,252,250,.95);border-radius:10px;padding:26px 30px;max-width:380px">
+<h4 style="font:500 30px/1.15 'Cormorant Garamond',serif;color:#29262A;margin:0 0 8px">Mesa de dulces Blush</h4>
+<p style="font:300 13.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.65);margin:0 0 16px">Bandejas doradas, base para pastel y flores de papel para armar la mesa completa.</p>
+<div style="display:flex;align-items:center;gap:16px"><span style="font:500 19px/1 'Jost',sans-serif;color:#29262A">L 1,150.00</span><button style="font:500 13px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:13px 24px;cursor:pointer">Agregar al carrito</button></div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:26px">
+<div style="display:flex;gap:20px;align-items:center;background:#FFF1F6;border-radius:10px;padding:20px">
+<div style="width:150px;height:170px;flex:none;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFFCFA 9px 18px)"></div>
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#963568;margin-bottom:9px">Birthday Candles</div>
+<div style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:7px">Velas número doradas</div>
+<div style="font:300 12.5px/1.55 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:12px">Del 0 al 9 · acabado mate</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A">L 95.00</div>
+</div>
+</div>
+<div style="display:flex;gap:20px;align-items:center;background:#FFF1F6;border-radius:10px;padding:20px">
+<div style="width:150px;height:170px;flex:none;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFFCFA 9px 18px)"></div>
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#963568;margin-bottom:9px">Florals</div>
+<div style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:7px">Peonías de tela marfil</div>
+<div style="font:300 12.5px/1.55 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:12px">Ramo de 6 tallos largos</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A">L 725.00</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div style="padding:78px 96px;background:#FFF1F6">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px">
+<div>
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Hasta 40% menos</div>
+<h3 style="font:500 42px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Sale</h3>
+</div>
+<a href="#t6" style="font:400 13.5px/1 'Jost',sans-serif;color:#963568;border-bottom:1px solid rgba(150,53,104,.3);padding-bottom:3px">Ver toda la promoción</a>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
+<div style="background:#FFFCFA;border-radius:10px;padding:16px">
+<div style="position:relative;aspect-ratio:1;border-radius:7px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)">
+<span style="position:absolute;top:11px;left:11px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 11px">Sale −30%</span>
+</div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Vajilla de papel Rosa Fiesta</div>
+<div style="display:flex;gap:9px;align-items:baseline;margin-top:8px"><span style="font:500 16px/1 'Jost',sans-serif;color:#963568">L 450.00</span><span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">L 645.00</span></div>
+</div>
+<div style="background:#FFFCFA;border-radius:10px;padding:16px">
+<div style="position:relative;aspect-ratio:1;border-radius:7px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)">
+<span style="position:absolute;top:11px;left:11px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 11px">Sale −25%</span>
+</div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Guirnalda de banderines lino</div>
+<div style="display:flex;gap:9px;align-items:baseline;margin-top:8px"><span style="font:500 16px/1 'Jost',sans-serif;color:#963568">L 295.00</span><span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">L 395.00</span></div>
+</div>
+<div style="background:#FFFCFA;border-radius:10px;padding:16px">
+<div style="position:relative;aspect-ratio:1;border-radius:7px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)">
+<span style="position:absolute;top:11px;left:11px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 11px">Sale −40%</span>
+</div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Charola de servir dorada</div>
+<div style="display:flex;gap:9px;align-items:baseline;margin-top:8px"><span style="font:500 16px/1 'Jost',sans-serif;color:#963568">L 725.00</span><span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">L 1,205.00</span></div>
+</div>
+<div style="background:#FFFCFA;border-radius:10px;padding:16px">
+<div style="position:relative;aspect-ratio:1;border-radius:7px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)">
+<span style="position:absolute;top:11px;left:11px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 11px">Sale −20%</span>
+</div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Planificador semanal Merry Days</div>
+<div style="display:flex;gap:9px;align-items:baseline;margin-top:8px"><span style="font:500 16px/1 'Jost',sans-serif;color:#963568">L 236.00</span><span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">L 295.00</span></div>
+</div>
+</div>
+</div>
+
+<div style="padding:78px 96px;background:#FFFCFA;display:grid;grid-template-columns:1.6fr 1fr;gap:24px">
+<div style="position:relative;height:400px;border-radius:12px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 12px,#FFF1F6 12px 24px);display:flex;flex-direction:column;justify-content:center;padding:0 60px">
+<span style="position:absolute;top:16px;right:18px;font:400 10px/1 ui-monospace,monospace;color:rgba(150,53,104,.6)">banner de temporada editable</span>
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:14px">Temporada · Baby shower</div>
+<h3 style="font:500 46px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 14px;max-width:420px">Bienvenida en tonos suaves</h3>
+<p style="font:300 15px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.7);margin:0 0 26px;max-width:360px">Globos, centros de mesa y detalles para las visitas.</p>
+<button style="align-self:flex-start;font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:16px 32px;cursor:pointer">Ver colección</button>
+</div>
+<div style="display:flex;flex-direction:column;gap:24px">
+<div style="flex:1;border-radius:12px;background:#963568;padding:32px;display:flex;flex-direction:column;justify-content:space-between">
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,252,250,.7);margin-bottom:12px">Próximamente</div>
+<h4 style="font:500 30px/1.12 'Cormorant Garamond',serif;color:#FFFCFA;margin:0">Navidad<br>Very Merry</h4>
+</div>
+<span style="font:400 13px/1 'Jost',sans-serif;color:#FFFCFA;border-bottom:1px solid rgba(255,252,250,.4);padding-bottom:3px;align-self:flex-start">Avísame primero</span>
+</div>
+<div style="flex:1;border-radius:12px;background:#F5DCE7;padding:32px;display:flex;flex-direction:column;justify-content:space-between">
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Todo el año</div>
+<h4 style="font:500 30px/1.12 'Cormorant Garamond',serif;color:#29262A;margin:0">Cumpleaños<br>a tu medida</h4>
+</div>
+<span style="font:400 13px/1 'Jost',sans-serif;color:#963568;border-bottom:1px solid rgba(150,53,104,.35);padding-bottom:3px;align-self:flex-start">Armar mi fiesta</span>
+</div>
+</div>
+</div>
+
+<div style="padding:56px 96px;background:#FFF1F6;display:grid;grid-template-columns:repeat(4,1fr);gap:34px">
+<div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.4"></circle></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Variedad para cada celebración</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Más de 600 artículos entre temas, vajilla, velas y flores.</div></div>
+<div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Atención personalizada</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Te ayudamos a armar la fiesta por WhatsApp, de 9 a 6.</div></div>
+<div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="12" height="9" rx="1.4"></rect><path d="M15 10h3.4l2.6 3v3H15z"></path><circle cx="7" cy="18" r="1.8"></circle><circle cx="17.4" cy="18" r="1.8"></circle></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Entregas disponibles</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Mismo día en la capital y envío nacional en 24–72 h.</div></div>
+<div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3.2 19.5 6v6.2c0 4.4-3.1 7.3-7.5 8.6-4.4-1.3-7.5-4.2-7.5-8.6V6z"></path><path d="M9 12.2l2.2 2.2 4-4.2"></path></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Compra fácil y segura</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Pedido en tres pasos y confirmación inmediata.</div></div>
+</div>
+
+<div style="padding:78px 96px 60px;background:#FFFCFA;text-align:center">
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">@verymerryhn</div>
+<h3 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 30px">Fiestas muy merry</h3>
+<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px">
+<div style="aspect-ratio:1;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="aspect-ratio:1;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="aspect-ratio:1;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="aspect-ratio:1;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="aspect-ratio:1;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="aspect-ratio:1;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+</div>
+</div>
+
+<div style="background:#29262A;padding:64px 96px 30px">
+<div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1.4fr;gap:44px;padding-bottom:44px;border-bottom:1px solid rgba(255,252,250,.13)">
+<div>
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:170px;display:block;filter:invert(1) grayscale(1) brightness(1.9);mix-blend-mode:screen;margin-bottom:20px">
+<div style="font:300 13px/1.8 'Jost',sans-serif;color:rgba(255,252,250,.62)">Tegucigalpa, Honduras<br>+504 9000-0000<br>hola@verymerry.hn</div>
+<div style="display:flex;gap:12px;margin-top:20px">
+<span style="width:36px;height:36px;border-radius:999px;border:1px solid rgba(255,252,250,.25);display:flex;align-items:center;justify-content:center;color:#FFFCFA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17" cy="7" r="1" fill="currentColor"></circle></svg></span>
+<span style="width:36px;height:36px;border-radius:999px;border:1px solid rgba(255,252,250,.25);display:flex;align-items:center;justify-content:center;color:#FFFCFA;font:500 14px/1 'Jost',sans-serif">f</span>
+<span style="width:36px;height:36px;border-radius:999px;border:1px solid rgba(255,252,250,.25);display:flex;align-items:center;justify-content:center;color:#FFFCFA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg></span>
+</div>
+</div>
+<div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E87FAF;margin-bottom:18px">Tienda</div>
+<div style="display:flex;flex-direction:column;gap:11px;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.72)"><span>New Arrivals</span><span>Sale</span><span>Todos los productos</span><span>Categorías</span><span>Tarjetas de regalo</span></div>
+</div>
+<div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E87FAF;margin-bottom:18px">Ayuda</div>
+<div style="display:flex;flex-direction:column;gap:11px;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(255,252,250,.72)"><span>Políticas de compra</span><span>Información de entregas</span><span>Cambios y devoluciones</span><span>Preguntas frecuentes</span><span>Horario: L–S 9:00 a 18:00</span></div>
+</div>
+<div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E87FAF;margin-bottom:18px">Novedades</div>
+<div style="font:300 13.5px/1.6 'Jost',sans-serif;color:rgba(255,252,250,.72);margin-bottom:18px">Recibe lanzamientos y promociones antes que nadie.</div>
+<div style="display:flex;gap:8px;background:rgba(255,252,250,.08);border:1px solid rgba(255,252,250,.2);border-radius:999px;padding:6px 6px 6px 20px;align-items:center">
+<span style="flex:1;font:300 13.5px/1 'Jost',sans-serif;color:rgba(255,252,250,.45)">tu@correo.com</span>
+<button style="font:500 12.5px/1 'Jost',sans-serif;color:#29262A;background:#FFFCFA;border:0;border-radius:999px;padding:12px 20px;cursor:pointer">Suscribirme</button>
+</div>
+</div>
+</div>
+<div style="display:flex;justify-content:space-between;padding-top:24px;font:300 12px/1 'Jost',sans-serif;color:rgba(255,252,250,.4)">
+<span>© 2026 Very Merry · Todos los derechos reservados</span>
+<span>Have a very merry party</span>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="vm-sec" id="t3" style="background:#FFFCFA">
+<div class="vm-shd"><a class="vm-num" href="#t3">03</a><span class="vm-nm">Página de inicio · celular &amp; menú de categorías</span><span class="vm-sub">390 px</span></div>
+<div class="vm-row" style="gap:40px">
+
+<div>
+<p class="vm-lbl">home móvil</p>
+<div style="width:406px;background:#29262A;border-radius:38px;padding:8px;box-shadow:0 12px 40px rgba(41,38,42,.18)">
+<div style="width:390px;height:1700px;background:#FFFCFA;border-radius:31px;overflow:hidden" data-screen-label="Home móvil">
+<div style="height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font:500 11.5px/1 'Jost',sans-serif;color:#29262A"><span>9:41</span><span style="display:flex;gap:5px;align-items:center"><span style="width:16px;height:8px;border:1px solid #29262A;border-radius:2px;display:block"></span></span></div>
+<div style="background:#963568;color:#FFFCFA;height:32px;display:flex;align-items:center;justify-content:center;font:400 10px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase">Have a very merry party</div>
+<div style="height:60px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E9E3E6">
+<span style="display:flex;flex-direction:column;gap:4.5px"><span style="width:20px;height:1.6px;background:#29262A;display:block"></span><span style="width:20px;height:1.6px;background:#29262A;display:block"></span><span style="width:13px;height:1.6px;background:#29262A;display:block"></span></span>
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:124px;display:block;mix-blend-mode:multiply">
+<div style="display:flex;gap:14px;color:#29262A;align-items:center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<span style="position:relative;display:block"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg><span style="position:absolute;top:-5px;right:-7px;min-width:15px;height:15px;border-radius:999px;background:#963568;color:#FFFCFA;font:500 9px/15px 'Jost',sans-serif;text-align:center;padding:0 3px;box-sizing:border-box">3</span></span>
+</div>
+</div>
+<div style="position:relative;height:420px;background:repeating-linear-gradient(135deg,#F5DCE7 0 11px,#FFF1F6 11px 22px);display:flex;align-items:flex-end">
+<span style="position:absolute;top:12px;right:14px;font:400 9px/1 ui-monospace,monospace;color:rgba(150,53,104,.6)">foto 390×420</span>
+<div style="margin:18px;background:rgba(255,252,250,.95);border-radius:11px;padding:24px 22px">
+<div style="font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Nueva temporada</div>
+<h2 style="font:500 34px/1.06 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Haz de cada celebración algo inolvidable</h2>
+<p style="font:300 13.5px/1.55 'Jost',sans-serif;color:rgba(41,38,42,.68);margin:0 0 18px">Encuentra todos los detalles para crear momentos muy merry.</p>
+<button style="width:100%;font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:16px;cursor:pointer">Comprar ahora</button>
+</div>
+</div>
+<div style="padding:28px 18px 22px">
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:14px">Categorías</div>
+<div style="display:flex;gap:12px;overflow:hidden">
+<div style="flex:none;width:107px"><div style="aspect-ratio:1;border-radius:999px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div><div style="font:400 12.5px/1.3 'Jost',sans-serif;color:#29262A;text-align:center;margin-top:9px">Party Themes</div></div>
+<div style="flex:none;width:107px"><div style="aspect-ratio:1;border-radius:999px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div><div style="font:400 12.5px/1.3 'Jost',sans-serif;color:#29262A;text-align:center;margin-top:9px">Florals</div></div>
+<div style="flex:none;width:107px"><div style="aspect-ratio:1;border-radius:999px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div><div style="font:400 12.5px/1.3 'Jost',sans-serif;color:#29262A;text-align:center;margin-top:9px">Serveware</div></div>
+</div>
+</div>
+<div style="padding:8px 18px 26px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+<span style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A">New Arrivals</span>
+<span style="font:400 12.5px/1 'Jost',sans-serif;color:#963568">Ver todo</span>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)">
+<span style="position:absolute;top:9px;left:9px;font:500 9px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:6px 9px">Nuevo</span>
+<span style="position:absolute;bottom:9px;right:9px;width:34px;height:34px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 7px rgba(41,38,42,.16);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 13.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:10px">Set de globos pastel Confetti</div>
+<div style="font:500 14px/1 'Jost',sans-serif;color:#29262A;margin-top:6px">L 295.00</div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)">
+<span style="position:absolute;top:9px;left:9px;font:500 9px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:6px 9px">Nuevo</span>
+<span style="position:absolute;bottom:9px;right:9px;width:34px;height:34px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 7px rgba(41,38,42,.16);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 13.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:10px">Vela aromática Vanilla Bloom</div>
+<div style="font:500 14px/1 'Jost',sans-serif;color:#29262A;margin-top:6px">L 450.00</div>
+</div>
+</div>
+</div>
+<div style="margin:0 18px 26px;border-radius:11px;background:#FFF1F6;padding:26px 22px">
+<div style="font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:10px">Hasta 40% menos</div>
+<div style="font:500 30px/1.1 'Cormorant Garamond',serif;color:#29262A;margin-bottom:14px">Sale de temporada</div>
+<span style="font:500 13px/1 'Jost',sans-serif;color:#963568;border-bottom:1px solid rgba(150,53,104,.35);padding-bottom:3px">Ver promociones</span>
+</div>
+<div style="padding:0 18px 26px;display:grid;grid-template-columns:1fr 1fr;gap:18px">
+<div><div style="color:#963568;margin-bottom:9px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.4"></circle></svg></div><div style="font:500 13.5px/1.3 'Jost',sans-serif;color:#29262A">Variedad para cada celebración</div></div>
+<div><div style="color:#963568;margin-bottom:9px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg></div><div style="font:500 13.5px/1.3 'Jost',sans-serif;color:#29262A">Atención personalizada</div></div>
+<div><div style="color:#963568;margin-bottom:9px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="12" height="9" rx="1.4"></rect><path d="M15 10h3.4l2.6 3v3H15z"></path></svg></div><div style="font:500 13.5px/1.3 'Jost',sans-serif;color:#29262A">Entregas disponibles</div></div>
+<div><div style="color:#963568;margin-bottom:9px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3.2 19.5 6v6.2c0 4.4-3.1 7.3-7.5 8.6-4.4-1.3-7.5-4.2-7.5-8.6V6z"></path></svg></div><div style="font:500 13.5px/1.3 'Jost',sans-serif;color:#29262A">Compra fácil y segura</div></div>
+</div>
+<div style="background:#29262A;padding:30px 18px 22px">
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:130px;display:block;filter:invert(1) grayscale(1) brightness(1.9);mix-blend-mode:screen;margin-bottom:16px">
+<div style="font:300 12.5px/1.8 'Jost',sans-serif;color:rgba(255,252,250,.6)">+504 9000-0000 · L–S 9:00 a 18:00<br>Políticas · Entregas · Devoluciones</div>
+<div style="display:flex;gap:8px;margin-top:16px;background:rgba(255,252,250,.08);border:1px solid rgba(255,252,250,.2);border-radius:999px;padding:5px 5px 5px 16px;align-items:center">
+<span style="flex:1;font:300 12.5px/1 'Jost',sans-serif;color:rgba(255,252,250,.45)">tu@correo.com</span>
+<button style="font:500 11.5px/1 'Jost',sans-serif;color:#29262A;background:#FFFCFA;border:0;border-radius:999px;padding:11px 16px">Suscribirme</button>
+</div>
+</div>
+</div>
+</div>
+<div style="margin-top:14px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.5);width:406px">Botón flotante de WhatsApp fijo abajo a la derecha en todo el sitio móvil.</div>
+</div>
+
+<div>
+<p class="vm-lbl">menú lateral (móvil)</p>
+<div style="width:406px;background:#29262A;border-radius:38px;padding:8px;box-shadow:0 12px 40px rgba(41,38,42,.18)">
+<div style="width:390px;height:820px;background:#FFFCFA;border-radius:31px;overflow:hidden;position:relative" data-screen-label="Menú móvil">
+<div style="position:absolute;inset:0;background:rgba(41,38,42,.35)"></div>
+<div style="position:absolute;top:0;left:0;bottom:0;width:326px;background:#FFFCFA;display:flex;flex-direction:column;box-shadow:14px 0 40px rgba(41,38,42,.18)">
+<div style="padding:20px 22px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E9E3E6">
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:118px;display:block;mix-blend-mode:multiply">
+<span style="font:300 20px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">×</span>
+</div>
+<div style="padding:16px 22px 0">
+<div style="display:flex;align-items:center;gap:9px;background:#FFF1F6;border:1px solid #E9E3E6;border-radius:999px;padding:12px 16px">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#963568" stroke-width="1.8"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<span style="font:300 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Buscar en la tienda</span>
+</div>
+</div>
+<div style="padding:20px 22px 0;flex:1;overflow:hidden">
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #E9E3E6"><span style="font:500 15.5px/1 'Jost',sans-serif;color:#963568">New Arrivals</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #E9E3E6"><span style="font:500 15.5px/1 'Jost',sans-serif;color:#E87FAF">Sale</span><span style="font:500 9px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:6px 9px">−40%</span></div>
+<div style="padding:14px 0;border-bottom:1px solid #E9E3E6">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:400 15.5px/1 'Jost',sans-serif;color:#29262A">Party Themes</span><span style="font:300 16px/1 'Jost',sans-serif;color:#963568">−</span></div>
+<div style="display:flex;flex-direction:column;gap:12px;padding:14px 0 2px 14px;font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.66)"><span>Cumpleaños</span><span>Baby shower</span><span>Navidad</span><span>San Valentín</span><span>Regreso a clases</span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #E9E3E6"><span style="font:400 15.5px/1 'Jost',sans-serif;color:#29262A">Accessories</span><span style="font:300 16px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">+</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #E9E3E6"><span style="font:400 15.5px/1 'Jost',sans-serif;color:#29262A">Florals</span><span style="font:300 16px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">+</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #E9E3E6"><span style="font:400 15.5px/1 'Jost',sans-serif;color:#29262A">Home Decor · Serveware</span><span style="font:300 16px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">+</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #E9E3E6"><span style="font:400 15.5px/1 'Jost',sans-serif;color:#29262A">Todos los productos</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0"><span style="font:400 15.5px/1 'Jost',sans-serif;color:#29262A">Contacto</span></div>
+</div>
+</div>
+<div style="padding:18px 22px 26px;background:#FFF1F6">
+<button style="width:100%;display:flex;align-items:center;justify-content:center;gap:9px;font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:15px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Escríbenos por WhatsApp</button>
+<div style="display:flex;gap:18px;justify-content:center;margin-top:16px;font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6)"><span>Instagram</span><span>Facebook</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<p class="vm-lbl">menú de categorías (escritorio · desplegable)</p>
+<div class="vm-card" style="width:900px" data-screen-label="Mega menú escritorio">
+<div style="background:#FFFCFA;padding:0 32px;height:70px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E9E3E6">
+<nav style="display:flex;gap:22px;font:400 13px/1 'Jost',sans-serif;color:#29262A"><span style="color:#963568;border-bottom:1.5px solid #963568;padding-bottom:5px">Categorías</span><span>New Arrivals</span><span style="color:#963568">Sale</span><span>Contacto</span></nav>
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:130px;display:block;mix-blend-mode:multiply">
+<div style="display:flex;gap:16px;color:#29262A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 250px;gap:34px;padding:34px 32px 38px;background:#FFFCFA">
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:16px">Fiesta</div>
+<div style="display:flex;flex-direction:column;gap:11px;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.78)"><span>Party Themes</span><span>Celebrations</span><span>Birthday Candles &amp; Toppers</span><span>Mix and Match Tableware</span><span>Serveware</span></div>
+</div>
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:16px">Casa &amp; regalo</div>
+<div style="display:flex;flex-direction:column;gap:11px;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.78)"><span>Home Decor</span><span>Florals</span><span>Scented Candles</span><span>Planners &amp; Notepads</span><span>Accessories</span></div>
+</div>
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:16px">Temporada</div>
+<div style="display:flex;flex-direction:column;gap:11px;font:300 13.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.78)"><span>Cumpleaños</span><span>Baby shower</span><span>San Valentín</span><span>Navidad</span><span>Sports</span><span>Regreso a clases</span></div>
+</div>
+<div style="background:#FFF1F6;border-radius:9px;padding:18px">
+<div style="aspect-ratio:4/3;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFFCFA 9px 18px);margin-bottom:14px"></div>
+<div style="font:500 18px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:6px">Kit de fiesta completo</div>
+<div style="font:300 12.5px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:12px">Todo lo necesario para 12 invitados</div>
+<span style="font:500 12.5px/1 'Jost',sans-serif;color:#963568;border-bottom:1px solid rgba(150,53,104,.35);padding-bottom:3px">Ver kit</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="vm-sec" id="t4">
+<div class="vm-shd"><a class="vm-num" href="#t4">04</a><span class="vm-nm">Catálogo de productos</span><span class="vm-sub">Escritorio + celular</span></div>
+<div class="vm-row" style="gap:40px">
+
+<div class="vm-card" style="width:1440px" data-screen-label="Catálogo escritorio">
+<div style="background:#963568;color:#FFFCFA;height:42px;display:flex;align-items:center;justify-content:center;font:400 12px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase">Have a very merry party</div>
+<div style="background:#FFFCFA;padding:0 40px;height:84px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid #E9E3E6">
+<nav style="display:flex;gap:24px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A"><span style="color:#963568">Categorías</span><span>New Arrivals</span><span style="color:#963568">Sale</span><span>Contacto</span></nav>
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:170px;display:block;justify-self:center;mix-blend-mode:multiply">
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:20px;color:#29262A">
+<div style="display:flex;align-items:center;gap:7px;background:#F5DCE7;border-radius:999px;padding:9px 15px;color:#963568"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg><span style="font:500 12px/1 'Jost',sans-serif">WhatsApp</span></div>
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20.5c0-3.6 3.4-5.6 7.5-5.6s7.5 2 7.5 5.6"></path></svg>
+<span style="position:relative;display:block"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg><span style="position:absolute;top:-6px;right:-8px;min-width:17px;height:17px;border-radius:999px;background:#963568;color:#FFFCFA;font:500 10px/17px 'Jost',sans-serif;text-align:center;padding:0 4px;box-sizing:border-box">3</span></span>
+</div>
+</div>
+
+<div style="background:#FFF1F6;padding:34px 96px 40px">
+<div style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-bottom:16px">Inicio / Categorías / Party Themes</div>
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px">
+<div style="max-width:620px">
+<h1 style="font:500 48px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 12px">Party Themes</h1>
+<p style="font:300 15px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.68);margin:0;text-wrap:pretty">Colecciones completas por temática: globos, vajilla, servilletas y decoración que combinan entre sí para armar la mesa en minutos.</p>
+</div>
+<div style="display:flex;align-items:center;gap:10px;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:999px;padding:14px 20px;width:330px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#963568" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<span style="font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Buscar en Party Themes</span>
+</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:262px 1fr;gap:44px;padding:38px 96px 70px;background:#FFFCFA">
+<aside>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px">
+<span style="font:500 13px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#29262A">Filtros</span>
+<span style="font:300 12px/1 'Jost',sans-serif;color:#963568">Limpiar</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px">
+<span style="font:400 11.5px/1 'Jost',sans-serif;color:#963568;background:#F5DCE7;border-radius:999px;padding:8px 12px">Cumpleaños ×</span>
+<span style="font:400 11.5px/1 'Jost',sans-serif;color:#963568;background:#F5DCE7;border-radius:999px;padding:8px 12px">Rosa ×</span>
+</div>
+<div style="border-top:1px solid #E9E3E6;padding:20px 0">
+<div style="font:500 12.5px/1 'Jost',sans-serif;color:#29262A;margin-bottom:14px;display:flex;justify-content:space-between">Categoría<span style="color:rgba(41,38,42,.4);font-weight:300">−</span></div>
+<div style="display:flex;flex-direction:column;gap:11px;font:300 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.72)">
+<span style="display:flex;gap:10px;align-items:center"><span style="width:15px;height:15px;border-radius:4px;border:1px solid #963568;background:#963568;display:flex;align-items:center;justify-content:center;color:#FFFCFA;font-size:9px">✓</span>Cumpleaños <span style="margin-left:auto;color:rgba(41,38,42,.4)">24</span></span>
+<span style="display:flex;gap:10px;align-items:center"><span style="width:15px;height:15px;border-radius:4px;border:1px solid #E9E3E6"></span>Baby shower <span style="margin-left:auto;color:rgba(41,38,42,.4)">12</span></span>
+<span style="display:flex;gap:10px;align-items:center"><span style="width:15px;height:15px;border-radius:4px;border:1px solid #E9E3E6"></span>Navidad <span style="margin-left:auto;color:rgba(41,38,42,.4)">18</span></span>
+<span style="display:flex;gap:10px;align-items:center"><span style="width:15px;height:15px;border-radius:4px;border:1px solid #E9E3E6"></span>San Valentín <span style="margin-left:auto;color:rgba(41,38,42,.4)">9</span></span>
+</div>
+</div>
+<div style="border-top:1px solid #E9E3E6;padding:20px 0">
+<div style="font:500 12.5px/1 'Jost',sans-serif;color:#29262A;margin-bottom:16px;display:flex;justify-content:space-between">Precio<span style="color:rgba(41,38,42,.4);font-weight:300">−</span></div>
+<div style="height:3px;background:#E9E3E6;border-radius:999px;position:relative;margin:0 4px 14px">
+<span style="position:absolute;left:12%;right:34%;top:0;bottom:0;background:#963568;border-radius:999px"></span>
+<span style="position:absolute;left:12%;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:999px;background:#FFFCFA;border:1.5px solid #963568"></span>
+<span style="position:absolute;left:66%;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:999px;background:#FFFCFA;border:1.5px solid #963568"></span>
+</div>
+<div style="display:flex;justify-content:space-between;font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.65)"><span>L 95.00</span><span>L 1,150.00</span></div>
+</div>
+<div style="border-top:1px solid #E9E3E6;padding:20px 0">
+<div style="font:500 12.5px/1 'Jost',sans-serif;color:#29262A;margin-bottom:14px">Disponibilidad</div>
+<div style="display:flex;flex-direction:column;gap:11px;font:300 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.72)">
+<span style="display:flex;gap:10px;align-items:center"><span style="width:15px;height:15px;border-radius:4px;border:1px solid #E9E3E6"></span>En existencia <span style="margin-left:auto;color:rgba(41,38,42,.4)">41</span></span>
+<span style="display:flex;gap:10px;align-items:center"><span style="width:15px;height:15px;border-radius:4px;border:1px solid #E9E3E6"></span>Pocas unidades <span style="margin-left:auto;color:rgba(41,38,42,.4)">7</span></span>
+</div>
+</div>
+<div style="border-top:1px solid #E9E3E6;padding:20px 0">
+<div style="font:500 12.5px/1 'Jost',sans-serif;color:#29262A;margin-bottom:14px">Color</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<span style="width:26px;height:26px;border-radius:999px;background:#E87FAF;box-shadow:0 0 0 1.5px #FFFCFA,0 0 0 3px #963568"></span>
+<span style="width:26px;height:26px;border-radius:999px;background:#963568"></span>
+<span style="width:26px;height:26px;border-radius:999px;background:#F5DCE7;border:1px solid #E9E3E6"></span>
+<span style="width:26px;height:26px;border-radius:999px;background:#D9C07A"></span>
+<span style="width:26px;height:26px;border-radius:999px;background:#FFFCFA;border:1px solid #E9E3E6"></span>
+<span style="width:26px;height:26px;border-radius:999px;background:#29262A"></span>
+</div>
+</div>
+<div style="border-top:1px solid #E9E3E6;padding:20px 0">
+<div style="font:500 12.5px/1 'Jost',sans-serif;color:#29262A;margin-bottom:14px">Presentación</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.72)">
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:9px 13px">Individual</span>
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:9px 13px">Set de 8</span>
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:9px 13px">Set de 12</span>
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:9px 13px">Kit completo</span>
+</div>
+</div>
+</aside>
+
+<div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid #E9E3E6;margin-bottom:28px">
+<span style="font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6)">48 productos</span>
+<div style="display:flex;gap:10px;align-items:center;font:400 13px/1 'Jost',sans-serif;color:#29262A">
+<span style="color:rgba(41,38,42,.5);font-weight:300">Ordenar por</span>
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:11px 18px;display:flex;gap:20px;align-items:center">Más recientes <span style="color:rgba(41,38,42,.4)">▾</span></span>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px 26px">
+
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.55)">globos confetti</span>
+<span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:7px 11px">Nuevo</span>
+<span style="position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 8px rgba(41,38,42,.14);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:14px">Set de globos pastel Confetti</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">12 piezas · En existencia</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:9px">L 295.00</div>
+</div>
+
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.55)">vajilla papel</span>
+<span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 11px">Sale −30%</span>
+<span style="position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 8px rgba(41,38,42,.14);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:14px">Vajilla de papel Rosa Fiesta</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">8 puestos · En existencia</div>
+<div style="display:flex;gap:10px;align-items:baseline;margin-top:9px"><span style="font:500 16px/1 'Jost',sans-serif;color:#963568">L 450.00</span><span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">L 645.00</span></div>
+</div>
+
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.55)">arco de globos</span>
+<span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#963568;background:#F5DCE7;border-radius:999px;padding:7px 11px">Destacado</span>
+<span style="position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 8px rgba(41,38,42,.14);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:14px">Arco de globos Blush Garden</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(150,53,104,.85);margin-top:3px">Kit armable · Pocas unidades</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:9px">L 1,150.00</div>
+</div>
+
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.55)">servilletas</span>
+<span style="position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 8px rgba(41,38,42,.14);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:14px">Servilletas florales Bloom</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">20 piezas · En existencia</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:9px">L 165.00</div>
+</div>
+
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#EFE9EC 0 9px,#F7F4F5 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(41,38,42,.35)">piñata estrella</span>
+<div style="position:absolute;inset:0;background:rgba(255,252,250,.5)"></div>
+<span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:500 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#29262A;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:999px;padding:9px 16px">Agotado</span>
+</div>
+<div style="font:400 15.5px/1.35 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:14px">Piñata estrella dorada</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.4);margin-top:3px">Grande · Agotado</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:rgba(41,38,42,.45);margin-top:9px">L 725.00</div>
+</div>
+
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 10px/1.4 ui-monospace,monospace;color:rgba(150,53,104,.55)">velas número</span>
+<span style="position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:999px;background:#FFFCFA;box-shadow:0 2px 8px rgba(41,38,42,.14);display:flex;align-items:center;justify-content:center;color:#963568"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></span>
+</div>
+<div style="font:400 15.5px/1.35 'Jost',sans-serif;color:#29262A;margin-top:14px">Velas número doradas</div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">Del 0 al 9 · En existencia</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:9px">L 95.00</div>
+</div>
+
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:22px;margin-top:52px">
+<div style="width:190px;height:3px;background:#E9E3E6;border-radius:999px;position:relative"><span style="position:absolute;left:0;top:0;bottom:0;width:38%;background:#963568;border-radius:999px"></span></div>
+<span style="font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.55)">Mostrando 18 de 48 productos</span>
+<button style="font:500 14px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1px solid #963568;border-radius:999px;padding:15px 40px;cursor:pointer">Ver más</button>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<p class="vm-lbl">catálogo móvil · filtros en hoja inferior</p>
+<div style="width:406px;background:#29262A;border-radius:38px;padding:8px;box-shadow:0 12px 40px rgba(41,38,42,.18)">
+<div style="width:390px;height:844px;background:#FFFCFA;border-radius:31px;overflow:hidden;position:relative" data-screen-label="Catálogo móvil">
+<div style="height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font:500 11.5px/1 'Jost',sans-serif;color:#29262A"><span>9:41</span><span style="width:16px;height:8px;border:1px solid #29262A;border-radius:2px;display:block"></span></div>
+<div style="height:56px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E9E3E6">
+<span style="font:300 19px/1 'Jost',sans-serif;color:#29262A">←</span>
+<span style="font:500 15px/1 'Jost',sans-serif;color:#29262A">Party Themes</span>
+<div style="display:flex;gap:13px;color:#29262A"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg></div>
+</div>
+<div style="padding:16px 18px 12px;display:flex;gap:8px;overflow:hidden;border-bottom:1px solid #E9E3E6">
+<span style="flex:none;font:400 12px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border-radius:999px;padding:10px 15px">Filtros · 2</span>
+<span style="flex:none;font:400 12px/1 'Jost',sans-serif;color:#29262A;border:1px solid #E9E3E6;border-radius:999px;padding:10px 15px">Más recientes ▾</span>
+<span style="flex:none;font:400 12px/1 'Jost',sans-serif;color:#963568;background:#F5DCE7;border-radius:999px;padding:10px 15px">Rosa ×</span>
+</div>
+<div style="padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"><span style="position:absolute;top:9px;left:9px;font:500 9px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:6px 9px">Nuevo</span></div>
+<div style="font:400 13px/1.35 'Jost',sans-serif;color:#29262A;margin-top:9px">Set de globos pastel Confetti</div>
+<div style="font:500 14px/1 'Jost',sans-serif;color:#29262A;margin-top:5px">L 295.00</div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"><span style="position:absolute;top:9px;left:9px;font:500 9px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:6px 9px">−30%</span></div>
+<div style="font:400 13px/1.35 'Jost',sans-serif;color:#29262A;margin-top:9px">Vajilla de papel Rosa Fiesta</div>
+<div style="display:flex;gap:7px;align-items:baseline;margin-top:5px"><span style="font:500 14px/1 'Jost',sans-serif;color:#963568">L 450.00</span><span style="font:400 11.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">L 645.00</span></div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="font:400 13px/1.35 'Jost',sans-serif;color:#29262A;margin-top:9px">Servilletas florales Bloom</div>
+<div style="font:500 14px/1 'Jost',sans-serif;color:#29262A;margin-top:5px">L 165.00</div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#EFE9EC 0 9px,#F7F4F5 9px 18px)"><div style="position:absolute;inset:0;background:rgba(255,252,250,.5)"></div><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:500 9px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#29262A;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:999px;padding:8px 13px">Agotado</span></div>
+<div style="font:400 13px/1.35 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:9px">Piñata estrella dorada</div>
+<div style="font:500 14px/1 'Jost',sans-serif;color:rgba(41,38,42,.45);margin-top:5px">L 725.00</div>
+</div>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;background:#FFFCFA;border-top:1px solid #E9E3E6;border-radius:22px 22px 31px 31px;padding:22px 18px 26px;box-shadow:0 -14px 40px rgba(41,38,42,.1)">
+<div style="width:38px;height:4px;border-radius:999px;background:#E9E3E6;margin:0 auto 18px"></div>
+<div style="font:500 20px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:16px">Filtrar productos</div>
+<div style="display:flex;flex-direction:column;gap:2px;font:400 14px/1 'Jost',sans-serif;color:#29262A">
+<div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #E9E3E6">Categoría<span style="color:#963568;font-weight:300">Cumpleaños ›</span></div>
+<div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #E9E3E6">Precio<span style="color:rgba(41,38,42,.45);font-weight:300">L 95 – 1,150 ›</span></div>
+<div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #E9E3E6">Disponibilidad<span style="color:rgba(41,38,42,.45);font-weight:300">Todas ›</span></div>
+<div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #E9E3E6">Color<span style="color:#963568;font-weight:300">Rosa ›</span></div>
+<div style="display:flex;justify-content:space-between;padding:14px 0">Presentación<span style="color:rgba(41,38,42,.45);font-weight:300">Todas ›</span></div>
+</div>
+<div style="display:flex;gap:10px;margin-top:18px">
+<button style="flex:none;font:500 13.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:15px 22px">Limpiar</button>
+<button style="flex:1;font:500 13.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:15px">Ver 32 productos</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="vm-sec" id="t5" style="background:#FFFCFA">
+<div class="vm-shd"><a class="vm-num" href="#t5">05</a><span class="vm-nm">Ficha de producto</span><span class="vm-sub">Disponible y agotado</span></div>
+<div class="vm-row" style="gap:40px">
+<div class="vm-card" style="width:1440px" data-screen-label="Ficha de producto">
+<div style="background:#963568;color:#FFFCFA;height:42px;display:flex;align-items:center;justify-content:center;font:400 12px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase">Have a very merry party</div>
+<div style="background:#FFFCFA;padding:0 40px;height:84px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid #E9E3E6">
+<nav style="display:flex;gap:24px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A"><span>Categorías</span><span>New Arrivals</span><span style="color:#963568">Sale</span><span>Contacto</span></nav>
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:170px;display:block;justify-self:center;mix-blend-mode:multiply">
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:20px;color:#29262A">
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20.5c0-3.6 3.4-5.6 7.5-5.6s7.5 2 7.5 5.6"></path></svg>
+<span style="position:relative;display:block"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg><span style="position:absolute;top:-6px;right:-8px;min-width:17px;height:17px;border-radius:999px;background:#963568;color:#FFFCFA;font:500 10px/17px 'Jost',sans-serif;text-align:center;padding:0 4px;box-sizing:border-box">3</span></span>
+</div>
+</div>
+
+<div style="padding:26px 96px 0;font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Inicio / Party Themes / Arco de globos Blush Garden</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;padding:26px 96px 70px">
+<div style="display:flex;gap:16px">
+<div style="display:flex;flex-direction:column;gap:12px;width:86px;flex:none">
+<div style="aspect-ratio:1;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px);box-shadow:0 0 0 1.5px #963568"></div>
+<div style="aspect-ratio:1;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div>
+<div style="aspect-ratio:1;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div>
+<div style="aspect-ratio:1;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div>
+</div>
+<div style="flex:1;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 11px,#FFF1F6 11px 22px);display:flex;align-items:center;justify-content:center">
+<span style="font:400 11px/1.5 ui-monospace,monospace;color:rgba(150,53,104,.6);text-align:center">foto principal<br>ampliable al pasar el cursor</span>
+<span style="position:absolute;top:16px;left:16px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#963568;background:#FFFCFA;border-radius:999px;padding:8px 13px">Destacado</span>
+<span style="position:absolute;bottom:16px;right:16px;width:40px;height:40px;border-radius:999px;background:#FFFCFA;display:flex;align-items:center;justify-content:center;color:#963568;box-shadow:0 2px 8px rgba(41,38,42,.14)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line><line x1="8.5" y1="11" x2="13.5" y2="11"></line><line x1="11" y1="8.5" x2="11" y2="13.5"></line></svg></span>
+</div>
+</div>
+
+<div style="padding-top:6px">
+<div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:14px">Party Themes · Cumpleaños</div>
+<h1 style="font:500 46px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 14px">Arco de globos Blush Garden</h1>
+<div style="display:flex;align-items:baseline;gap:14px;margin-bottom:10px">
+<span style="font:500 30px/1 'Jost',sans-serif;color:#29262A">L 1,150.00</span>
+<span style="font:400 16px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">L 1,395.00</span>
+<span style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 11px">Sale −18%</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;font:400 12.5px/1 'Jost',sans-serif;color:#963568;margin-bottom:26px"><span style="width:7px;height:7px;border-radius:999px;background:#963568"></span>Pocas unidades · quedan 4</div>
+<p style="font:300 15px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.72);margin:0 0 28px;max-width:520px;text-wrap:pretty">Kit de 90 globos en tonos blush, marfil y magenta con cinta guía, ganchos y bomba manual. Rinde un arco de 2.5 metros y se arma sin herramientas: ideal para cumpleaños, baby shower y sesiones de fotos.</p>
+
+<div style="margin-bottom:22px">
+<div style="font:500 12px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#29262A;margin-bottom:12px">Color</div>
+<div style="display:flex;gap:12px;align-items:center">
+<span style="width:34px;height:34px;border-radius:999px;background:#E87FAF;box-shadow:0 0 0 2px #FFFCFA,0 0 0 3.5px #963568"></span>
+<span style="width:34px;height:34px;border-radius:999px;background:#F5DCE7;border:1px solid #E9E3E6"></span>
+<span style="width:34px;height:34px;border-radius:999px;background:#963568"></span>
+<span style="width:34px;height:34px;border-radius:999px;background:#D9C07A"></span>
+<span style="font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-left:6px">Blush</span>
+</div>
+</div>
+<div style="margin-bottom:28px">
+<div style="font:500 12px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#29262A;margin-bottom:12px">Presentación</div>
+<div style="display:flex;gap:10px;font:400 13px/1 'Jost',sans-serif">
+<span style="border:1.5px solid #963568;color:#963568;border-radius:999px;padding:12px 20px">90 globos · 2.5 m</span>
+<span style="border:1px solid #E9E3E6;color:#29262A;border-radius:999px;padding:12px 20px">140 globos · 4 m</span>
+<span style="border:1px solid #E9E3E6;color:rgba(41,38,42,.35);border-radius:999px;padding:12px 20px;text-decoration:line-through">Solo cinta guía</span>
+</div>
+</div>
+
+<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">
+<div style="display:flex;align-items:center;gap:20px;border:1px solid #E9E3E6;border-radius:999px;padding:14px 20px">
+<span style="font:300 16px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">−</span>
+<span style="font:500 15px/1 'Jost',sans-serif;color:#29262A">1</span>
+<span style="font:300 16px/1 'Jost',sans-serif;color:#29262A">+</span>
+</div>
+<button style="flex:1;font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:18px;cursor:pointer;letter-spacing:.02em">Agregar al carrito · L 1,150.00</button>
+</div>
+<button style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;font:500 14px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1px solid #963568;border-radius:999px;padding:17px;cursor:pointer;margin-bottom:30px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Consultar por WhatsApp</button>
+
+<div style="border-top:1px solid #E9E3E6">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid #E9E3E6;font:400 14px/1 'Jost',sans-serif;color:#29262A">Información de entrega<span style="color:#963568;font-weight:300">−</span></div>
+<div style="font:300 13.5px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.68);padding:14px 0 18px;border-bottom:1px solid #E9E3E6">Entrega el mismo día en Tegucigalpa para pedidos antes de las 2:00 p.m. Envío nacional de 24 a 72 horas. Retiro en tienda sin costo, de lunes a sábado de 9:00 a 18:00.</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid #E9E3E6;font:400 14px/1 'Jost',sans-serif;color:#29262A">Cambios y devoluciones<span style="color:rgba(41,38,42,.4);font-weight:300">+</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;font:400 14px/1 'Jost',sans-serif;color:#29262A">Cómo armar el arco<span style="color:rgba(41,38,42,.4);font-weight:300">+</span></div>
+</div>
+</div>
+</div>
+
+<div style="background:#FFF1F6;padding:64px 96px">
+<h3 style="font:500 36px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 30px">Combina muy merry</h3>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
+<div><div style="aspect-ratio:1;border-radius:9px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFFCFA 9px 18px)"></div><div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Servilletas florales Bloom</div><div style="font:500 15.5px/1 'Jost',sans-serif;color:#29262A;margin-top:7px">L 165.00</div></div>
+<div><div style="aspect-ratio:1;border-radius:9px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFFCFA 9px 18px)"></div><div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Vajilla de papel Rosa Fiesta</div><div style="font:500 15.5px/1 'Jost',sans-serif;color:#29262A;margin-top:7px">L 450.00</div></div>
+<div><div style="aspect-ratio:1;border-radius:9px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFFCFA 9px 18px)"></div><div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Peonías de tela marfil</div><div style="font:500 15.5px/1 'Jost',sans-serif;color:#29262A;margin-top:7px">L 725.00</div></div>
+<div><div style="aspect-ratio:1;border-radius:9px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFFCFA 9px 18px)"></div><div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Velas número doradas</div><div style="font:500 15.5px/1 'Jost',sans-serif;color:#29262A;margin-top:7px">L 95.00</div></div>
+</div>
+</div>
+</div>
+
+<div>
+<p class="vm-lbl">producto agotado · botón desactivado</p>
+<div class="vm-card" style="width:560px;padding:34px" data-screen-label="Producto agotado">
+<div style="display:flex;gap:26px">
+<div style="width:200px;flex:none;position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#EFE9EC 0 9px,#F7F4F5 9px 18px)">
+<div style="position:absolute;inset:0;background:rgba(255,252,250,.5)"></div>
+<span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:500 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#29262A;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:999px;padding:9px 16px">Agotado</span>
+</div>
+<div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#963568;margin-bottom:12px">Celebrations</div>
+<h2 style="font:500 30px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Piñata estrella dorada</h2>
+<div style="font:500 22px/1 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-bottom:12px">L 725.00</div>
+<div style="display:flex;align-items:center;gap:8px;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-bottom:20px"><span style="width:7px;height:7px;border-radius:999px;background:rgba(41,38,42,.3)"></span>Agotado temporalmente</div>
+<button disabled style="width:100%;font:500 14px/1 'Jost',sans-serif;color:rgba(41,38,42,.35);background:#E9E3E6;border:0;border-radius:999px;padding:17px;margin-bottom:10px">Agregar al carrito</button>
+<button style="width:100%;display:flex;align-items:center;justify-content:center;gap:9px;font:500 13.5px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1px solid #963568;border-radius:999px;padding:16px;cursor:pointer;margin-bottom:14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Preguntar cuándo llega</button>
+<div style="font:300 12.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6)">Avísame cuando esté disponible: dejamos el correo en un campo bajo el botón.</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="vm-sec" id="t6">
+<div class="vm-shd"><a class="vm-num" href="#t6">06</a><span class="vm-nm">Buscador</span><span class="vm-sub">Sugerencias, resultados y sin resultados</span></div>
+<div class="vm-row" style="gap:40px">
+
+<div>
+<p class="vm-lbl">panel de búsqueda al escribir</p>
+<div class="vm-card" style="width:820px" data-screen-label="Buscador sugerencias">
+<div style="background:#FFFCFA;padding:22px 30px;border-bottom:1px solid #E9E3E6;display:flex;align-items:center;gap:16px">
+<div style="flex:1;display:flex;align-items:center;gap:12px;background:#FFF1F6;border:1px solid #F5DCE7;border-radius:999px;padding:16px 22px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#963568" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<span style="font:400 15px/1 'Jost',sans-serif;color:#29262A">glob</span><span style="width:1px;height:17px;background:#963568;display:block"></span>
+</div>
+<span style="font:300 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Cerrar</span>
+</div>
+<div style="display:grid;grid-template-columns:250px 1fr;gap:0;background:#FFFCFA">
+<div style="padding:24px 26px;border-right:1px solid #E9E3E6">
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:16px">Sugerencias</div>
+<div style="display:flex;flex-direction:column;gap:14px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A">
+<span><strong style="font-weight:500">glob</strong>os de látex</span>
+<span><strong style="font-weight:500">glob</strong>os cromados</span>
+<span><strong style="font-weight:500">glob</strong>os de número</span>
+<span>arco de <strong style="font-weight:500">glob</strong>os</span>
+</div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin:26px 0 14px">Búsquedas populares</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.7)">
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:8px 12px">velas</span>
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:8px 12px">baby shower</span>
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:8px 12px">servilletas</span>
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:8px 12px">toppers</span>
+</div>
+<div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(41,38,42,.4);margin:26px 0 14px">Recientes</div>
+<div style="display:flex;flex-direction:column;gap:12px;font:300 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.6)"><span>vajilla rosa</span><span>flores de tela</span></div>
+</div>
+<div style="padding:24px 26px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px">
+<span style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568">Productos · 14</span>
+<span style="font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.55)">Ver todos los resultados</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:14px;align-items:center">
+<div style="width:62px;height:62px;flex:none;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div>
+<div style="flex:1"><div style="font:400 14.5px/1.3 'Jost',sans-serif;color:#29262A">Set de globos pastel Confetti</div><div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">Party Themes · 12 piezas</div></div>
+<div style="font:500 14.5px/1 'Jost',sans-serif;color:#29262A">L 295.00</div>
+</div>
+<div style="display:flex;gap:14px;align-items:center">
+<div style="width:62px;height:62px;flex:none;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div>
+<div style="flex:1"><div style="font:400 14.5px/1.3 'Jost',sans-serif;color:#29262A">Arco de globos Blush Garden</div><div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(150,53,104,.85);margin-top:3px">Pocas unidades</div></div>
+<div style="font:500 14.5px/1 'Jost',sans-serif;color:#29262A">L 1,150.00</div>
+</div>
+<div style="display:flex;gap:14px;align-items:center">
+<div style="width:62px;height:62px;flex:none;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div>
+<div style="flex:1"><div style="font:400 14.5px/1.3 'Jost',sans-serif;color:#29262A">Globos cromados dorados</div><div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">Accessories · 24 piezas</div></div>
+<div style="font:500 14.5px/1 'Jost',sans-serif;color:#29262A">L 450.00</div>
+</div>
+<div style="display:flex;gap:14px;align-items:center">
+<div style="width:62px;height:62px;flex:none;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div>
+<div style="flex:1"><div style="font:400 14.5px/1.3 'Jost',sans-serif;color:#29262A">Globos de número dorado 0–9</div><div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">Celebrations</div></div>
+<div style="font:500 14.5px/1 'Jost',sans-serif;color:#29262A">L 165.00</div>
+</div>
+</div>
+<div style="margin-top:22px;padding-top:18px;border-top:1px solid #E9E3E6;display:flex;gap:10px;flex-wrap:wrap;font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6)">
+<span style="color:rgba(41,38,42,.45)">En categorías:</span><span style="color:#963568">Party Themes</span><span style="color:#963568">Accessories</span><span style="color:#963568">Celebrations</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<p class="vm-lbl">pantalla de resultados</p>
+<div class="vm-card" style="width:560px" data-screen-label="Resultados de búsqueda">
+<div style="padding:30px 30px 22px;background:#FFF1F6">
+<div style="display:flex;align-items:center;gap:11px;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:999px;padding:15px 20px;margin-bottom:18px">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#963568" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<span style="flex:1;font:400 14px/1 'Jost',sans-serif;color:#29262A">globos</span>
+<span style="font:300 15px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">×</span>
+</div>
+<h2 style="font:500 30px/1.15 'Cormorant Garamond',serif;color:#29262A;margin:0 0 6px">14 resultados para “globos”</h2>
+<div style="font:300 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.6)">Ordenado por relevancia</div>
+</div>
+<div style="padding:24px 30px 30px;display:grid;grid-template-columns:1fr 1fr;gap:22px">
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"><span style="position:absolute;top:10px;left:10px;font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:6px 10px">Nuevo</span></div>
+<div style="font:400 14px/1.35 'Jost',sans-serif;color:#29262A;margin-top:11px">Set de globos pastel Confetti</div>
+<div style="font:500 15px/1 'Jost',sans-serif;color:#29262A;margin-top:6px">L 295.00</div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="font:400 14px/1.35 'Jost',sans-serif;color:#29262A;margin-top:11px">Arco de globos Blush Garden</div>
+<div style="font:500 15px/1 'Jost',sans-serif;color:#29262A;margin-top:6px">L 1,150.00</div>
+</div>
+</div>
+</div>
+<div style="margin-top:24px">
+<p class="vm-lbl">sin resultados</p>
+<div class="vm-card" style="width:560px;padding:44px 40px;text-align:center" data-screen-label="Búsqueda sin resultados">
+<div style="display:flex;gap:7px;justify-content:center;margin-bottom:20px"><span style="width:8px;height:8px;border-radius:999px;background:#F5DCE7"></span><span style="width:8px;height:8px;border-radius:999px;background:#E87FAF"></span><span style="width:8px;height:8px;border-radius:999px;background:#963568"></span></div>
+<h3 style="font:500 30px/1.15 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">No encontramos “piñata unicornio”</h3>
+<p style="font:300 14px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.65);margin:0 auto 24px;max-width:380px">Puede que aún no lo tengamos en línea. Escríbenos y lo buscamos por ti, o mira estas ideas parecidas.</p>
+<div style="display:flex;gap:10px;justify-content:center;margin-bottom:26px">
+<button style="font:500 13.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:15px 26px;cursor:pointer">Preguntar por WhatsApp</button>
+<button style="font:500 13.5px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1px solid #963568;border-radius:999px;padding:14px 24px;cursor:pointer">Ver todo el catálogo</button>
+</div>
+<div style="display:flex;gap:9px;justify-content:center;flex-wrap:wrap;font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.7)">
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:9px 14px">piñatas</span>
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:9px 14px">cumpleaños niña</span>
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:9px 14px">toppers</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="vm-sec" id="t7" style="background:#FFFCFA">
+<div class="vm-shd"><a class="vm-num" href="#t7">07</a><span class="vm-nm">Carrito</span><span class="vm-sub">Panel lateral y página completa</span></div>
+<div class="vm-row" style="gap:40px">
+
+<div>
+<p class="vm-lbl">carrito lateral</p>
+<div class="vm-card" style="width:440px;height:760px;display:flex;flex-direction:column" data-screen-label="Carrito lateral">
+<div style="padding:24px 26px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E9E3E6">
+<span style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A">Tu carrito · 3</span>
+<span style="font:300 20px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">×</span>
+</div>
+<div style="background:#FFF1F6;padding:14px 26px;font:300 12.5px/1.5 'Jost',sans-serif;color:#963568">Te faltan L 350.00 para envío gratis en Tegucigalpa.</div>
+<div style="flex:1;padding:22px 26px;display:flex;flex-direction:column;gap:22px;overflow:hidden">
+<div style="display:flex;gap:14px">
+<div style="width:78px;height:96px;flex:none;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div>
+<div style="flex:1">
+<div style="display:flex;justify-content:space-between;gap:10px"><span style="font:400 14.5px/1.35 'Jost',sans-serif;color:#29262A">Arco de globos Blush Garden</span><span style="font:300 15px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">×</span></div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:4px">Blush · 90 globos</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+<div style="display:flex;align-items:center;gap:14px;border:1px solid #E9E3E6;border-radius:999px;padding:8px 14px;font:400 13px/1 'Jost',sans-serif;color:#29262A"><span style="color:rgba(41,38,42,.5)">−</span>1<span>+</span></div>
+<span style="font:500 15px/1 'Jost',sans-serif;color:#29262A">L 1,150.00</span>
+</div>
+</div>
+</div>
+<div style="display:flex;gap:14px">
+<div style="width:78px;height:96px;flex:none;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div>
+<div style="flex:1">
+<div style="display:flex;justify-content:space-between;gap:10px"><span style="font:400 14.5px/1.35 'Jost',sans-serif;color:#29262A">Vajilla de papel Rosa Fiesta</span><span style="font:300 15px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">×</span></div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:4px">8 puestos</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+<div style="display:flex;align-items:center;gap:14px;border:1px solid #E9E3E6;border-radius:999px;padding:8px 14px;font:400 13px/1 'Jost',sans-serif;color:#29262A"><span style="color:rgba(41,38,42,.5)">−</span>1<span>+</span></div>
+<div style="display:flex;gap:8px;align-items:baseline"><span style="font:500 15px/1 'Jost',sans-serif;color:#963568">L 450.00</span><span style="font:400 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">L 645.00</span></div>
+</div>
+</div>
+</div>
+<div style="display:flex;gap:14px">
+<div style="width:78px;height:96px;flex:none;border-radius:7px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFF1F6 8px 16px)"></div>
+<div style="flex:1">
+<div style="display:flex;justify-content:space-between;gap:10px"><span style="font:400 14.5px/1.35 'Jost',sans-serif;color:#29262A">Velas número doradas</span><span style="font:300 15px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">×</span></div>
+<div style="font:300 12px/1.4 'Jost',sans-serif;color:#963568;margin-top:4px">Número 3 · quedan 2</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+<div style="display:flex;align-items:center;gap:14px;border:1px solid #E9E3E6;border-radius:999px;padding:8px 14px;font:400 13px/1 'Jost',sans-serif;color:#29262A"><span style="color:rgba(41,38,42,.5)">−</span>2<span>+</span></div>
+<span style="font:500 15px/1 'Jost',sans-serif;color:#29262A">L 190.00</span>
+</div>
+</div>
+</div>
+</div>
+<div style="padding:22px 26px 26px;border-top:1px solid #E9E3E6">
+<div style="display:flex;justify-content:space-between;font:400 14px/1 'Jost',sans-serif;color:#29262A;margin-bottom:9px"><span>Subtotal</span><span style="font-weight:500">L 1,790.00</span></div>
+<div style="font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-bottom:18px">El costo de entrega se calcula en el siguiente paso.</div>
+<button style="width:100%;font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:18px;cursor:pointer;margin-bottom:10px">Finalizar pedido</button>
+<button style="width:100%;font:500 13.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:16px;cursor:pointer">Continuar comprando</button>
+</div>
+</div>
+</div>
+
+<div>
+<p class="vm-lbl">página de carrito</p>
+<div class="vm-card" style="width:940px" data-screen-label="Carrito página">
+<div style="background:#963568;color:#FFFCFA;height:38px;display:flex;align-items:center;justify-content:center;font:400 11px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase">Have a very merry party</div>
+<div style="padding:0 40px;height:76px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #E9E3E6"><img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:158px;display:block;mix-blend-mode:multiply"></div>
+<div style="padding:38px 44px 20px">
+<h1 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 6px">Tu carrito</h1>
+<div style="font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6)">3 productos · guardado por 48 horas</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 320px;gap:36px;padding:16px 44px 48px">
+<div>
+<div style="display:flex;gap:18px;padding:22px 0;border-top:1px solid #E9E3E6">
+<div style="width:104px;height:126px;flex:none;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="flex:1">
+<div style="font:400 16px/1.3 'Jost',sans-serif;color:#29262A">Arco de globos Blush Garden</div>
+<div style="font:300 12.5px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:5px">Blush · 90 globos · 2.5 m</div>
+<div style="font:300 12.5px/1.5 'Jost',sans-serif;color:#963568;margin-top:3px">Pocas unidades</div>
+<div style="display:flex;align-items:center;gap:16px;margin-top:14px">
+<div style="display:flex;align-items:center;gap:16px;border:1px solid #E9E3E6;border-radius:999px;padding:10px 16px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A"><span style="color:rgba(41,38,42,.5)">−</span>1<span>+</span></div>
+<span style="font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Eliminar</span>
+</div>
+</div>
+<div style="font:500 17px/1 'Jost',sans-serif;color:#29262A">L 1,150.00</div>
+</div>
+<div style="display:flex;gap:18px;padding:22px 0;border-top:1px solid #E9E3E6">
+<div style="width:104px;height:126px;flex:none;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="flex:1">
+<div style="font:400 16px/1.3 'Jost',sans-serif;color:#29262A">Vajilla de papel Rosa Fiesta</div>
+<div style="font:300 12.5px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:5px">8 puestos · Rosa</div>
+<div style="display:flex;align-items:center;gap:16px;margin-top:14px">
+<div style="display:flex;align-items:center;gap:16px;border:1px solid #E9E3E6;border-radius:999px;padding:10px 16px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A"><span style="color:rgba(41,38,42,.5)">−</span>1<span>+</span></div>
+<span style="font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Eliminar</span>
+</div>
+</div>
+<div style="text-align:right"><div style="font:500 17px/1 'Jost',sans-serif;color:#963568">L 450.00</div><div style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through;margin-top:5px">L 645.00</div></div>
+</div>
+<div style="display:flex;gap:18px;padding:22px 0;border-top:1px solid #E9E3E6;border-bottom:1px solid #E9E3E6">
+<div style="width:104px;height:126px;flex:none;border-radius:8px;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="flex:1">
+<div style="font:400 16px/1.3 'Jost',sans-serif;color:#29262A">Velas número doradas</div>
+<div style="font:300 12.5px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:5px">Número 3 · dorado mate</div>
+<div style="display:flex;align-items:center;gap:16px;margin-top:14px">
+<div style="display:flex;align-items:center;gap:16px;border:1px solid #E9E3E6;border-radius:999px;padding:10px 16px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A"><span style="color:rgba(41,38,42,.5)">−</span>2<span>+</span></div>
+<span style="font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Eliminar</span>
+</div>
+</div>
+<div style="font:500 17px/1 'Jost',sans-serif;color:#29262A">L 190.00</div>
+</div>
+<div style="margin-top:26px;display:flex;gap:12px;align-items:center">
+<span style="font:400 13.5px/1 'Jost',sans-serif;color:#963568;border-bottom:1px solid rgba(150,53,104,.3);padding-bottom:3px">← Continuar comprando</span>
+</div>
+</div>
+<aside style="background:#FFF1F6;border-radius:11px;padding:26px;height:fit-content">
+<div style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:20px">Resumen</div>
+<div style="display:flex;flex-direction:column;gap:12px;font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.75)">
+<div style="display:flex;justify-content:space-between"><span>Subtotal</span><span style="color:#29262A;font-weight:400">L 1,790.00</span></div>
+<div style="display:flex;justify-content:space-between"><span>Descuentos</span><span style="color:#963568">− L 195.00</span></div>
+<div style="display:flex;justify-content:space-between"><span>Entrega</span><span style="color:rgba(41,38,42,.5)">Se calcula al finalizar</span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin:20px 0;padding-top:16px;border-top:1px solid #F5DCE7"><span style="font:400 15px/1 'Jost',sans-serif;color:#29262A">Total estimado</span><span style="font:500 24px/1 'Jost',sans-serif;color:#29262A">L 1,790.00</span></div>
+<button style="width:100%;font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:18px;cursor:pointer;margin-bottom:12px">Finalizar pedido</button>
+<button style="width:100%;display:flex;align-items:center;justify-content:center;gap:9px;font:500 13px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1px solid #963568;border-radius:999px;padding:15px;cursor:pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Pedir por WhatsApp</button>
+<div style="font:300 12px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:16px">Entrega el mismo día en Tegucigalpa para pedidos antes de las 2:00 p.m.</div>
+</aside>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="vm-sec" id="t8">
+<div class="vm-shd"><a class="vm-num" href="#t8">08</a><span class="vm-nm">Finalizar pedido &amp; confirmación</span><span class="vm-sub">Preparado para agregar pasarela de pagos</span></div>
+<div class="vm-row" style="gap:40px">
+
+<div class="vm-card" style="width:1080px" data-screen-label="Checkout">
+<div style="padding:0 44px;height:80px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E9E3E6">
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:150px;display:block;mix-blend-mode:multiply">
+<div style="display:flex;gap:22px;align-items:center;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">
+<span style="color:#963568">1 · Datos</span><span>2 · Entrega</span><span>3 · Confirmación</span>
+</div>
+<div style="display:flex;align-items:center;gap:7px;font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.55)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#963568" stroke-width="1.6"><path d="M12 3.2 19.5 6v6.2c0 4.4-3.1 7.3-7.5 8.6-4.4-1.3-7.5-4.2-7.5-8.6V6z"></path></svg>Compra segura</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 360px;gap:44px;padding:40px 44px 52px">
+<div>
+<h1 style="font:500 38px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 8px">Finalizar pedido</h1>
+<p style="font:300 14px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.65);margin:0 0 30px">Completa tus datos y confirmamos por WhatsApp en pocos minutos.</p>
+
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:18px">Tus datos</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Nombre completo</span><span style="display:block;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1 'Jost',sans-serif;color:#29262A">María Fernanda López</span></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Teléfono / WhatsApp</span><span style="display:block;background:#FFFCFA;border:1px solid #963568;border-radius:10px;padding:15px 16px;font:400 14px/1 'Jost',sans-serif;color:#29262A">+504 9876-5432</span></label>
+<label style="display:block;grid-column:span 2"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Correo electrónico</span><span style="display:block;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:300 14px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">para enviarte la confirmación del pedido</span></label>
+</div>
+
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:18px">Entrega</div>
+<div style="display:flex;gap:12px;margin-bottom:18px">
+<div style="flex:1;border:1.5px solid #963568;background:#FFF1F6;border-radius:10px;padding:16px 18px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:500 14px/1 'Jost',sans-serif;color:#29262A">Entrega a domicilio</span><span style="width:16px;height:16px;border-radius:999px;border:4px solid #963568;background:#FFFCFA;display:block"></span></div>
+<div style="font:300 12.5px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:7px">Tegucigalpa mismo día · L 90.00</div>
+</div>
+<div style="flex:1;border:1px solid #E9E3E6;border-radius:10px;padding:16px 18px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:500 14px/1 'Jost',sans-serif;color:#29262A">Retiro en tienda</span><span style="width:16px;height:16px;border-radius:999px;border:1px solid #E9E3E6;display:block"></span></div>
+<div style="font:300 12.5px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:7px">Col. Las Lomas · sin costo</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px">
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Ciudad</span><span style="display:block;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1 'Jost',sans-serif;color:#29262A;display:flex;justify-content:space-between">Tegucigalpa<span style="color:rgba(41,38,42,.4)">▾</span></span></label>
+<label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Colonia / zona</span><span style="display:block;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1 'Jost',sans-serif;color:#29262A">Col. Tepeyac</span></label>
+<label style="display:block;grid-column:span 2"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Dirección de entrega</span><span style="display:block;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1 'Jost',sans-serif;color:#29262A">Calle principal, casa #24, portón blanco</span></label>
+<label style="display:block;grid-column:span 2"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Referencias de la dirección</span><span style="display:block;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:300 14px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">Frente al parque, portón color crema…</span></label>
+<label style="display:block;grid-column:span 2"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Notas del pedido</span><span style="display:block;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px 40px;font:300 14px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">Es para un cumpleaños el sábado, si pueden envolver para regalo…</span></label>
+</div>
+
+<div style="background:#FFF1F6;border-radius:10px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start">
+<span style="width:18px;height:18px;border-radius:5px;border:1px solid #963568;flex:none;margin-top:2px"></span>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.7)">Acepto las <a href="#t8">políticas de compra</a> y la información de entregas, cambios y devoluciones.</div>
+</div>
+<div style="margin-top:24px;border:1px dashed #E9E3E6;border-radius:10px;padding:18px 20px;font:300 12.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.5)">Espacio reservado para la pasarela de pagos (tarjeta / transferencia). Por ahora el pedido se confirma por WhatsApp.</div>
+</div>
+
+<aside style="height:fit-content">
+<div style="background:#FFF1F6;border-radius:11px;padding:26px">
+<div style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:20px">Tu pedido</div>
+<div style="display:flex;flex-direction:column;gap:16px;padding-bottom:20px;border-bottom:1px solid #F5DCE7">
+<div style="display:flex;gap:12px;align-items:center">
+<div style="width:52px;height:64px;flex:none;border-radius:6px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFFCFA 8px 16px)"></div>
+<div style="flex:1"><div style="font:400 13.5px/1.3 'Jost',sans-serif;color:#29262A">Arco de globos Blush Garden</div><div style="font:300 11.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:3px">Blush · 1</div></div>
+<div style="font:500 13.5px/1 'Jost',sans-serif;color:#29262A">L 1,150.00</div>
+</div>
+<div style="display:flex;gap:12px;align-items:center">
+<div style="width:52px;height:64px;flex:none;border-radius:6px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFFCFA 8px 16px)"></div>
+<div style="flex:1"><div style="font:400 13.5px/1.3 'Jost',sans-serif;color:#29262A">Vajilla de papel Rosa Fiesta</div><div style="font:300 11.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:3px">8 puestos · 1</div></div>
+<div style="font:500 13.5px/1 'Jost',sans-serif;color:#963568">L 450.00</div>
+</div>
+<div style="display:flex;gap:12px;align-items:center">
+<div style="width:52px;height:64px;flex:none;border-radius:6px;background:repeating-linear-gradient(135deg,#F5DCE7 0 8px,#FFFCFA 8px 16px)"></div>
+<div style="flex:1"><div style="font:400 13.5px/1.3 'Jost',sans-serif;color:#29262A">Velas número doradas</div><div style="font:300 11.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:3px">Número 3 · 2</div></div>
+<div style="font:500 13.5px/1 'Jost',sans-serif;color:#29262A">L 190.00</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:11px;padding:18px 0;font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.75);border-bottom:1px solid #F5DCE7">
+<div style="display:flex;justify-content:space-between"><span>Subtotal</span><span style="color:#29262A">L 1,790.00</span></div>
+<div style="display:flex;justify-content:space-between"><span>Costo de entrega</span><span style="color:#29262A">L 90.00</span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:18px 0 20px"><span style="font:400 15px/1 'Jost',sans-serif;color:#29262A">Total</span><span style="font:500 26px/1 'Jost',sans-serif;color:#29262A">L 1,880.00</span></div>
+<button style="width:100%;font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:18px;cursor:pointer">Confirmar pedido</button>
+<div style="font:300 12px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:14px;text-align:center">Recibirás la confirmación por WhatsApp y correo.</div>
+</div>
+</aside>
+</div>
+</div>
+
+<div>
+<p class="vm-lbl">pedido recibido</p>
+<div class="vm-card" style="width:620px" data-screen-label="Confirmación de pedido">
+<div style="background:#FFF1F6;padding:46px 44px 40px;text-align:center">
+<div style="width:58px;height:58px;border-radius:999px;background:#963568;display:flex;align-items:center;justify-content:center;margin:0 auto 22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFCFA" stroke-width="1.8"><path d="M6 12.4l4 4 8-8.4"></path></svg></div>
+<h1 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 12px">¡Tu pedido está en camino a ser muy merry!</h1>
+<p style="font:300 14.5px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.7);margin:0 auto;max-width:400px">Recibimos tu pedido y te escribimos por WhatsApp para coordinar la entrega.</p>
+<div style="display:inline-flex;gap:10px;align-items:center;background:#FFFCFA;border-radius:999px;padding:12px 22px;margin-top:22px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A"><span style="color:rgba(41,38,42,.5);font-weight:300">Pedido</span><span style="font-weight:500;letter-spacing:.06em">VM-2026-1487</span></div>
+</div>
+<div style="padding:34px 44px 40px">
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:18px">Resumen de la compra</div>
+<div style="display:flex;flex-direction:column;gap:14px;padding-bottom:18px;border-bottom:1px solid #E9E3E6">
+<div style="display:flex;justify-content:space-between;font:400 13.5px/1.4 'Jost',sans-serif;color:#29262A"><span>Arco de globos Blush Garden · 1</span><span>L 1,150.00</span></div>
+<div style="display:flex;justify-content:space-between;font:400 13.5px/1.4 'Jost',sans-serif;color:#29262A"><span>Vajilla de papel Rosa Fiesta · 1</span><span>L 450.00</span></div>
+<div style="display:flex;justify-content:space-between;font:400 13.5px/1.4 'Jost',sans-serif;color:#29262A"><span>Velas número doradas · 2</span><span>L 190.00</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;padding:18px 0;font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.7);border-bottom:1px solid #E9E3E6">
+<div style="display:flex;justify-content:space-between"><span>Subtotal</span><span style="color:#29262A">L 1,790.00</span></div>
+<div style="display:flex;justify-content:space-between"><span>Entrega a domicilio · Tegucigalpa</span><span style="color:#29262A">L 90.00</span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:18px 0 4px"><span style="font:400 15px/1 'Jost',sans-serif;color:#29262A">Total</span><span style="font:500 26px/1 'Jost',sans-serif;color:#29262A">L 1,880.00</span></div>
+<div style="font:300 13px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.6);margin:16px 0 26px">Entrega estimada: hoy entre 3:00 y 6:00 p.m. · María Fernanda López, Col. Tepeyac, casa #24.</div>
+<div style="display:flex;gap:12px">
+<button style="flex:1;display:flex;align-items:center;justify-content:center;gap:9px;font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:17px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Contactar por WhatsApp</button>
+<button style="flex:none;font:500 13.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:16px 24px;cursor:pointer">Volver a la tienda</button>
+</div>
+</div>
+</div>
+<p style="max-width:620px;font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.55);margin:20px 0 0">Siguientes pasos posibles: variantes de la home (hero editorial vs. cuadrícula de categorías), estados de cuenta y pedidos del cliente, o el panel administrativo cuando lo quieras abordar.</p>
+</div>
+
+</div>
+</section>
+
+<section class="vm-sec" id="t9" style="background:#FFFCFA">
+<div class="vm-shd"><a class="vm-num" href="#t9">09</a><span class="vm-nm">Categorías, subcategorías y páginas de contenido</span><span class="vm-sub">Todo el sitio del cliente</span></div>
+<div class="vm-row" style="gap:40px">
+
+<div>
+<p class="vm-lbl">página: todas las categorías</p>
+<div class="vm-card" style="width:1440px" data-screen-label="Todas las categorías">
+<div style="background:#963568;color:#FFFCFA;height:42px;display:flex;align-items:center;justify-content:center;font:400 12px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase">Have a very merry party</div>
+<div style="background:#FFFCFA;padding:0 40px;height:84px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid #E9E3E6">
+<nav style="display:flex;gap:24px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A"><span style="color:#963568">Categorías</span><span>New Arrivals</span><span style="color:#963568">Sale</span><span>Contacto</span></nav>
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:170px;display:block;justify-self:center;mix-blend-mode:multiply">
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:20px;color:#29262A">
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20.5c0-3.6 3.4-5.6 7.5-5.6s7.5 2 7.5 5.6"></path></svg>
+<span style="position:relative;display:block"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg><span style="position:absolute;top:-6px;right:-8px;min-width:17px;height:17px;border-radius:999px;background:#963568;color:#FFFCFA;font:500 10px/17px 'Jost',sans-serif;text-align:center;padding:0 4px;box-sizing:border-box">3</span></span>
+</div>
+</div>
+<div style="background:#FFF1F6;padding:40px 96px 44px">
+<div style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-bottom:14px">Inicio / Categorías</div>
+<h1 style="font:500 48px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 12px">Todas las categorías</h1>
+<p style="font:300 15px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.68);margin:0;max-width:560px">Once colecciones para armar cualquier celebración: elige por tema, por producto o por temporada.</p>
+</div>
+<div style="padding:44px 96px 70px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px">
+<div>
+<div style="position:relative;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px);display:flex;align-items:center;justify-content:center"><span style="font:400 10px/1 ui-monospace,monospace;color:rgba(150,53,104,.55)">foto categoría</span></div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-top:16px">Party Themes</div>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:6px">48 productos</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font:300 12px/1 'Jost',sans-serif;color:#963568"><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Cumpleaños</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Baby shower</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Navidad</span></div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px)"></div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-top:16px">Accessories</div>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:6px">36 productos</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font:300 12px/1 'Jost',sans-serif;color:#963568"><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Coronas</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Cintas</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Bolsas de regalo</span></div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px)"></div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-top:16px">Florals</div>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:6px">22 productos</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font:300 12px/1 'Jost',sans-serif;color:#963568"><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Flores de tela</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Ramos</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Centros de mesa</span></div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px)"></div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-top:16px">Home Decor</div>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:6px">41 productos</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font:300 12px/1 'Jost',sans-serif;color:#963568"><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Cuadros</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Portarretratos</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Cojines</span></div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px)"></div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-top:16px">Serveware</div>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:6px">29 productos</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font:300 12px/1 'Jost',sans-serif;color:#963568"><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Bandejas</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Bases para pastel</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Copas</span></div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px)"></div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-top:16px">Scented Candles</div>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:6px">18 productos</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font:300 12px/1 'Jost',sans-serif;color:#963568"><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Frascos</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Difusores</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Sets de regalo</span></div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px)"></div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-top:16px">Mix and Match Tableware</div>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:6px">52 productos</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font:300 12px/1 'Jost',sans-serif;color:#963568"><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Platos</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Servilletas</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Vasos</span></div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px)"></div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-top:16px">Birthday Candles &amp; Toppers</div>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:6px">34 productos</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font:300 12px/1 'Jost',sans-serif;color:#963568"><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Velas número</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Toppers</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Chispas</span></div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 10px,#FFF1F6 10px 20px)"></div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-top:16px">Celebrations · Sports · Planners</div>
+<div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-top:6px">61 productos</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font:300 12px/1 'Jost',sans-serif;color:#963568"><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Graduación</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Equipos</span><span style="background:#FFF1F6;border-radius:999px;padding:8px 12px">Libretas</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<p class="vm-lbl">página de subcategoría · Cumpleaños (dentro de Party Themes)</p>
+<div class="vm-card" style="width:1440px" data-screen-label="Subcategoría">
+<div style="background:#FFFCFA;padding:0 40px;height:84px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid #E9E3E6">
+<nav style="display:flex;gap:24px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A"><span style="color:#963568">Categorías</span><span>New Arrivals</span><span style="color:#963568">Sale</span><span>Contacto</span></nav>
+<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:170px;display:block;justify-self:center;mix-blend-mode:multiply">
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:20px;color:#29262A">
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
+<span style="position:relative;display:block"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5.4 8h13.2l-1.1 12.2H6.5z"></path><path d="M9 8V6.2a3 3 0 0 1 6 0V8"></path></svg><span style="position:absolute;top:-6px;right:-8px;min-width:17px;height:17px;border-radius:999px;background:#963568;color:#FFFCFA;font:500 10px/17px 'Jost',sans-serif;text-align:center;padding:0 4px;box-sizing:border-box">3</span></span>
+</div>
+</div>
+<div style="position:relative;height:320px;background:repeating-linear-gradient(135deg,#F5DCE7 0 12px,#FFF1F6 12px 24px);display:flex;flex-direction:column;justify-content:center;padding:0 96px">
+<span style="position:absolute;top:16px;right:22px;font:400 10px/1 ui-monospace,monospace;color:rgba(150,53,104,.6)">foto de subcategoría 1440×320</span>
+<div style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-bottom:14px">Inicio / Categorías / Party Themes / Cumpleaños</div>
+<h1 style="font:500 46px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Cumpleaños</h1>
+<p style="font:300 15px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.7);margin:0;max-width:480px">Globos, velas, vajilla y toppers que combinan entre sí para armar la mesa en minutos.</p>
+</div>
+<div style="padding:26px 96px 0;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid #E9E3E6;padding-bottom:24px">
+<span style="font:400 13px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border-radius:999px;padding:12px 20px">Todo · 24</span>
+<span style="font:400 13px/1 'Jost',sans-serif;color:#29262A;border:1px solid #E9E3E6;border-radius:999px;padding:11px 19px">Niña</span>
+<span style="font:400 13px/1 'Jost',sans-serif;color:#29262A;border:1px solid #E9E3E6;border-radius:999px;padding:11px 19px">Niño</span>
+<span style="font:400 13px/1 'Jost',sans-serif;color:#29262A;border:1px solid #E9E3E6;border-radius:999px;padding:11px 19px">Adulto</span>
+<span style="font:400 13px/1 'Jost',sans-serif;color:#29262A;border:1px solid #E9E3E6;border-radius:999px;padding:11px 19px">Primer añito</span>
+<span style="font:400 13px/1 'Jost',sans-serif;color:#29262A;border:1px solid #E9E3E6;border-radius:999px;padding:11px 19px">Kits completos</span>
+<span style="font:400 13px/1 'Jost',sans-serif;color:#29262A;border:1px solid #E9E3E6;border-radius:999px;padding:11px 19px">Velas y toppers</span>
+</div>
+<div style="padding:30px 96px 60px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px">
+<span style="font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6)">24 productos en Cumpleaños</span>
+<span style="border:1px solid #E9E3E6;border-radius:999px;padding:11px 18px;font:400 13px/1 'Jost',sans-serif;color:#29262A;display:flex;gap:18px;align-items:center">Popularidad <span style="color:rgba(41,38,42,.4)">▾</span></span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"><span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#963568;border-radius:999px;padding:7px 11px">Nuevo</span></div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Set de globos pastel Confetti</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:8px">L 295.00</div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"></div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Velas número doradas</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:8px">L 95.00</div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"><span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FFFCFA;background:#E87FAF;border-radius:999px;padding:7px 11px">Sale −30%</span></div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Vajilla de papel Rosa Fiesta</div>
+<div style="display:flex;gap:9px;align-items:baseline;margin-top:8px"><span style="font:500 16px/1 'Jost',sans-serif;color:#963568">L 450.00</span><span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">L 645.00</span></div>
+</div>
+<div>
+<div style="position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(135deg,#F5DCE7 0 9px,#FFF1F6 9px 18px)"><span style="position:absolute;top:12px;left:12px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#963568;background:#F5DCE7;border-radius:999px;padding:7px 11px">Destacado</span></div>
+<div style="font:400 15px/1.35 'Jost',sans-serif;color:#29262A;margin-top:13px">Arco de globos Blush Garden</div>
+<div style="font:500 16px/1 'Jost',sans-serif;color:#29262A;margin-top:8px">L 1,150.00</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<p class="vm-lbl">preguntas frecuentes</p>
+<div class="vm-card" style="width:940px" data-screen-label="Preguntas frecuentes">
+<div style="background:#FFF1F6;padding:44px 56px 40px">
+<div style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-bottom:14px">Inicio / Ayuda / Preguntas frecuentes</div>
+<h1 style="font:500 44px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Preguntas frecuentes</h1>
+<p style="font:300 15px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.68);margin:0;max-width:520px">Si no encuentras tu respuesta, escríbenos por WhatsApp de lunes a sábado de 9:00 a 18:00.</p>
+<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:24px;font:400 12.5px/1 'Jost',sans-serif">
+<span style="color:#FFFCFA;background:#963568;border-radius:999px;padding:11px 17px">Pedidos</span>
+<span style="color:#29262A;background:#FFFCFA;border-radius:999px;padding:11px 17px">Entregas</span>
+<span style="color:#29262A;background:#FFFCFA;border-radius:999px;padding:11px 17px">Pagos</span>
+<span style="color:#29262A;background:#FFFCFA;border-radius:999px;padding:11px 17px">Cambios y devoluciones</span>
+<span style="color:#29262A;background:#FFFCFA;border-radius:999px;padding:11px 17px">Productos</span>
+</div>
+</div>
+<div style="padding:36px 56px 50px">
+<div style="border-bottom:1px solid #E9E3E6;padding-bottom:22px;margin-bottom:22px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:20px"><span style="font:400 18px/1.4 'Jost',sans-serif;color:#29262A">¿Cómo hago un pedido?</span><span style="font:300 20px/1 'Jost',sans-serif;color:#963568">−</span></div>
+<p style="font:300 14.5px/1.75 'Jost',sans-serif;color:rgba(41,38,42,.7);margin:14px 0 0;max-width:660px;text-wrap:pretty">Agrega los productos al carrito, presiona “Finalizar pedido” y completa tus datos de entrega. Te confirmamos por WhatsApp en pocos minutos con el total y la hora de entrega.</p>
+</div>
+<div style="border-bottom:1px solid #E9E3E6;padding-bottom:22px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;gap:20px"><span style="font:400 18px/1.4 'Jost',sans-serif;color:#29262A">¿Cuánto cuesta la entrega y en cuánto tiempo llega?</span><span style="font:300 20px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">+</span></div>
+<div style="border-bottom:1px solid #E9E3E6;padding-bottom:22px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;gap:20px"><span style="font:400 18px/1.4 'Jost',sans-serif;color:#29262A">¿Hacen envíos fuera de Tegucigalpa?</span><span style="font:300 20px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">+</span></div>
+<div style="border-bottom:1px solid #E9E3E6;padding-bottom:22px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;gap:20px"><span style="font:400 18px/1.4 'Jost',sans-serif;color:#29262A">¿Qué formas de pago aceptan?</span><span style="font:300 20px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">+</span></div>
+<div style="border-bottom:1px solid #E9E3E6;padding-bottom:22px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;gap:20px"><span style="font:400 18px/1.4 'Jost',sans-serif;color:#29262A">¿Puedo cambiar o devolver un producto?</span><span style="font:300 20px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">+</span></div>
+<div style="border-bottom:1px solid #E9E3E6;padding-bottom:22px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;gap:20px"><span style="font:400 18px/1.4 'Jost',sans-serif;color:#29262A">¿Arman kits o mesas de fiesta a la medida?</span><span style="font:300 20px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">+</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:20px"><span style="font:400 18px/1.4 'Jost',sans-serif;color:#29262A">¿Los globos vienen inflados?</span><span style="font:300 20px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">+</span></div>
+<div style="margin-top:40px;background:#FFF1F6;border-radius:11px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:26px">
+<div>
+<div style="font:500 24px/1.2 'Cormorant Garamond',serif;color:#29262A;margin-bottom:6px">¿Te quedó una duda?</div>
+<div style="font:300 13.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.65)">Escríbenos y te ayudamos a armar tu celebración.</div>
+</div>
+<button style="flex:none;display:flex;align-items:center;gap:9px;font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:16px 28px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>WhatsApp</button>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<p class="vm-lbl">contacto · políticas · entregas · devoluciones</p>
+<div class="vm-card" style="width:940px" data-screen-label="Contacto y políticas">
+<div style="display:grid;grid-template-columns:1fr 1fr">
+<div style="padding:44px 40px;border-right:1px solid #E9E3E6">
+<h2 style="font:500 36px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Contacto</h2>
+<p style="font:300 14px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.68);margin:0 0 26px">Cuéntanos qué celebras y te ayudamos a elegir.</p>
+<div style="display:flex;flex-direction:column;gap:14px">
+<span style="display:block;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:300 14px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">Nombre</span>
+<span style="display:block;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:300 14px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">WhatsApp o correo</span>
+<span style="display:block;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px 52px;font:300 14px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">Cuéntanos de tu celebración…</span>
+<button style="font:500 14px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:17px;cursor:pointer">Enviar mensaje</button>
+</div>
+<div style="margin-top:28px;padding-top:22px;border-top:1px solid #E9E3E6;font:300 13.5px/1.9 'Jost',sans-serif;color:rgba(41,38,42,.7)">+504 9000-0000 · hola@verymerry.hn<br>Col. Las Lomas, Tegucigalpa<br>Lunes a sábado · 9:00 a 18:00<br>Instagram @verymerryhn · Facebook</div>
+</div>
+<div style="padding:44px 40px;background:#FFF1F6">
+<h2 style="font:500 36px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 26px">Compra sin dudas</h2>
+<div style="display:flex;flex-direction:column;gap:22px">
+<div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Políticas de compra</div>
+<div style="font:300 13.5px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.72)">Los precios están en lempiras e incluyen impuestos. El pedido se reserva al confirmarlo por WhatsApp y se mantiene 24 horas.</div>
+</div>
+<div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Información de entregas</div>
+<div style="font:300 13.5px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.72)">Tegucigalpa: mismo día para pedidos antes de las 2:00 p.m. (L 90.00). Resto del país: 24 a 72 horas por encomienda. Retiro en tienda sin costo.</div>
+</div>
+<div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Cambios y devoluciones</div>
+<div style="font:300 13.5px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.72)">Cambios dentro de 7 días con su empaque original y comprobante. No aplica a artículos personalizados ni a globos inflados.</div>
+</div>
+<div>
+<div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Formas de pago</div>
+<div style="font:300 13.5px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.72)">Transferencia, efectivo contra entrega y tarjeta en tienda. La pasarela en línea queda lista para integrarse.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+</x-dc>
+</body>
+</html>

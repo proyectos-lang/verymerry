@@ -1,0 +1,10 @@
+{
+  "name": "very-merry-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tienda virtual Very Merry — prototipo, panel de administracion y sistema de diseno",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}

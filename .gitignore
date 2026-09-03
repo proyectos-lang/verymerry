@@ -1,0 +1,19 @@
+# Dependencias
+node_modules/
+
+# Salida de build / Vercel
+dist/
+.vercel/
+
+# Estado local del editor de canvas
+.thumbnail
+
+# Sistema operativo
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
