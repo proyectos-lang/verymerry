@@ -1108,16 +1108,19 @@ class Component extends DCLogic {
     // Un enlace wa.me no admite adjuntos: la unica via para mandar la imagen
     // es la hoja de compartir del sistema, donde WhatsApp aparece como opcion.
     if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+      // El boton se libera aqui, no despues de esperar la hoja: la promesa de
+      // share no se resuelve hasta que el usuario la cierra, y hay navegadores
+      // donde no se resuelve nunca. Esperarla dejaba el boton congelado en
+      // "Preparando la imagen…" sin forma de reintentar salvo recargar.
+      this.setState({ generando: false });
       try {
         await navigator.share({ files: [archivo], title: 'Mi pedido Very Merry' });
-        this.setState({ generando: false });
         return;
       } catch (e) {
         // Cerrar la hoja no es un error: no hay que insistir con una descarga.
-        if (e && e.name === 'AbortError') { this.setState({ generando: false }); return; }
-        // Hay navegadores que dicen poder compartir y luego fallan (por ejemplo
-        // si se perdio la interaccion del usuario). Se descarga en vez de dejar
-        // al usuario sin nada.
+        if (e && e.name === 'AbortError') return;
+        // Hay navegadores que dicen poder compartir y luego fallan. Se descarga
+        // en vez de dejar al usuario sin nada.
       }
     }
 
@@ -1126,8 +1129,8 @@ class Component extends DCLogic {
     a.href = url;
     a.download = 'pedido-very-merry.png';
     document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 5000);
-    this.flash('Imagen descargada. Adjúntala en WhatsApp.');
+    setTimeout(() => URL.revokeObjectURL(url), 8000);
+    this.flash('Foto guardada. Adjúntala en WhatsApp.');
     this.setState({ generando: false });
   }
 
