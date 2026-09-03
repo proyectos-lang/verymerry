@@ -204,13 +204,8 @@ img,svg{max-width:100%}
 <span style="position:absolute;top:11px;right:9px;background:{{ g.posBg }};color:#FFFCFA;border-radius:999px;padding:5px 10px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase">{{ g.posLabel }}</span>
 </div>
 
-<div style="display:flex;gap:6px;align-items:center;justify-content:space-between">
-<span style="display:flex;gap:6px">
-<sc-if value="{{ g.canLeft }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.left }}" aria-label="Mover antes" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:8px;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A;width:44px;height:38px;display:flex;align-items:center;justify-content:center;padding:0">←</button></sc-if>
-<sc-if value="{{ g.isFirst }}" hint-placeholder-val="{{ false }}"><span style="width:44px;height:38px;flex:none"></span></sc-if>
-<sc-if value="{{ g.canRight }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.right }}" aria-label="Mover después" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:8px;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A;width:44px;height:38px;display:flex;align-items:center;justify-content:center;padding:0">→</button></sc-if>
-</span>
-<sc-if value="{{ g.notFirst }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.first }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:400 11.5px/1.2 'Jost',sans-serif;color:#963568;text-align:right">Poner de<br>portada</button></sc-if>
+<div style="display:flex;align-items:center;justify-content:flex-end;min-height:17px">
+<sc-if value="{{ g.notFirst }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.first }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:400 11.5px/1.2 'Jost',sans-serif;color:#963568">Poner de portada</button></sc-if>
 </div>
 <label style="position:relative;display:flex;align-items:center;justify-content:center;gap:7px;background:#FFF1F6;border-radius:8px;height:38px;cursor:pointer;font:500 12px/1 'Jost',sans-serif;color:#963568">
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>Cambiar foto
@@ -458,7 +453,7 @@ class Component extends DCLogic {
     },
     ribbon: { a: 'Have a very merry party', b: 'Entrega el mismo día en Tegucigalpa', c: 'Armamos tu mesa por WhatsApp' },
     season: { tag: 'Temporada · Cumpleaños', title: 'Velas altas y bases festoneadas', text: 'El pastel se ve mejor sobre una base con pie y rodeado de velas de colores.', cta: 'Ver la mesa de pastel', photo: 'assets/pasteles-rosa.jpg' },
-    shop: { wa: '+504 9000-0000', hours: 'Lunes a sábado · 9:00 a 18:00', delivery: '90', free: '2000', tagline: 'Have a VERY MERRY party', logo: 'assets/very-merry-logo.jpg' },
+    shop: { wa: '+504 9969-5564', hours: 'Lunes a sábado · 9:00 a 18:00', delivery: '90', free: '2000', tagline: 'Have a VERY MERRY party', logo: 'assets/very-merry-logo.jpg' },
     hiddenCats: [],
     gallery: [
       { id: 'g1', photo: 'assets/pasteles-rosa.jpg' },
@@ -567,13 +562,6 @@ class Component extends DCLogic {
     this.set({ cats: list });
   }
   galIndex(id) { return this.state.gallery.map(g => g.id).indexOf(id); }
-  galMove(id, dir) {
-    const list = this.state.gallery.slice();
-    const i = this.galIndex(id), j = i + dir;
-    if (i < 0 || j < 0 || j >= list.length) return;
-    const t = list[i]; list[i] = list[j]; list[j] = t;
-    this.set({ gallery: list });
-  }
   galToFirst(id) {
     const list = this.state.gallery.slice();
     const i = this.galIndex(id);
@@ -838,7 +826,7 @@ class Component extends DCLogic {
 
       galHint: s.dragGal
         ? 'Suelta el asa sobre otra foto para colocarla ahí'
-        : 'Arrastra el asa ⠿ de una foto sobre otra, o usa las flechas. La primera es la portada.',
+        : 'Arrastra el asa ⠿ de una foto sobre otra para cambiar el orden. La primera es la portada.',
       galDown: e => {
         const grip = e.target.closest && e.target.closest('[data-gal-grip]');
         if (!grip) return;
@@ -873,10 +861,7 @@ class Component extends DCLogic {
         posLabel: i === 0 ? 'Portada' : String(i + 1),
         posBg: i === 0 ? '#963568' : 'rgba(41,38,42,.55)',
         ring: s.dragGal === g.id ? '0 0 0 2.5px #963568' : '0 0 0 1px #E9E3E6',
-        canLeft: i > 0, canRight: i < s.gallery.length - 1,
-        isFirst: i === 0, notFirst: i > 0,
-        left: () => this.galMove(g.id, -1),
-        right: () => this.galMove(g.id, 1),
+        notFirst: i > 0,
         first: () => this.galToFirst(g.id),
         onFile: e => this.readPhoto(e, url => this.setGalPhoto(g.id, url))
       })),
