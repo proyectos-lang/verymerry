@@ -13,7 +13,10 @@ const PAGES = [
   ['Very Merry Tienda.dc.html', 'diseno.html'],           // /diseno
 ];
 
-const SUPPORT = ['support.js', 'image-slot.js', '.image-slots.state.json'];
+// image-slot.js y su sidecar .image-slots.state.json ya no se despliegan:
+// ninguna pagina los carga. Siguen en el repo porque son parte del entorno
+// de edicion en el canvas, no del sitio publicado.
+const SUPPORT = ['support.js'];
 
 await rm(OUT, { recursive: true, force: true });
 await mkdir(OUT, { recursive: true });

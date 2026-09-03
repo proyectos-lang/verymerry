@@ -11,7 +11,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="./image-slot.js"></script>
 <style>
 body{margin:0;background:#F7F4F5;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#29262A}
 a{color:#963568;text-decoration:none}
@@ -30,6 +29,7 @@ body{overflow-x:hidden}
 img,svg{max-width:100%}
 
 @media (max-width:900px){
+  .vm-adm-main section{padding:18px 16px!important}
   .vm-adm-shell{flex-direction:column!important}
   /* width:100% mas el padding daba 422px en un viewport de 390 */
   .vm-adm-side{width:100%!important;box-sizing:border-box!important;flex:none!important;
@@ -67,7 +67,7 @@ img,svg{max-width:100%}
 </div>
 </div>
 <div style="position:relative;background:#F5DCE7;min-height:340px">
-<image-slot id="admin-login-art" shape="rect" src="assets/coleccion-carita.jpg" placeholder="Foto de portada del panel"></image-slot>
+<img src="assets/coleccion-carita.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
 </div>
 </div>
 </sc-if>
@@ -123,7 +123,11 @@ img,svg{max-width:100%}
 <div>
 <div style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:9px">Fotografía del banner</div>
 <div style="position:relative;height:230px;border-radius:10px;overflow:hidden;background:#F5DCE7">
-<image-slot id="admin-hero" shape="rect" src="assets/hero-granja.jpg" placeholder="Arrastra la foto del banner (1440×620)"></image-slot>
+<sc-if value="{{ heroPhoto.hasPhoto }}" hint-placeholder-val="{{ true }}"><img src="{{ heroPhoto.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ heroPhoto.empty }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.45)">Sin foto de banner. Recomendado: horizontal, mínimo 1600 px de ancho.</span></sc-if>
+<label style="position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(255,252,250,.96);border-radius:999px;padding:9px 14px;cursor:pointer;box-shadow:0 2px 10px rgba(41,38,42,.18);font:500 12px/1 'Jost',sans-serif;color:#963568"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>Cambiar foto
+<input type="file" accept="image/*" onChange="{{ heroPhoto.onFile }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+</label>
 </div>
 <div style="font:300 11.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:9px">Arrastra una imagen sobre el marco para reemplazarla. Recomendado: horizontal, mínimo 1600 px de ancho.</div>
 </div>
@@ -166,7 +170,11 @@ img,svg{max-width:100%}
 <h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 18px">Banner de temporada</h2>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:22px">
 <div style="position:relative;height:210px;border-radius:10px;overflow:hidden;background:#F5DCE7">
-<image-slot id="admin-temporada" shape="rect" src="assets/pasteles-rosa.jpg" placeholder="Foto de la campaña de temporada"></image-slot>
+<sc-if value="{{ seasonPhoto.hasPhoto }}" hint-placeholder-val="{{ true }}"><img src="{{ seasonPhoto.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ seasonPhoto.empty }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.45)">Sin foto de la campaña de temporada.</span></sc-if>
+<label style="position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(255,252,250,.96);border-radius:999px;padding:9px 14px;cursor:pointer;box-shadow:0 2px 10px rgba(41,38,42,.18);font:500 12px/1 'Jost',sans-serif;color:#963568"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>Cambiar foto
+<input type="file" accept="image/*" onChange="{{ seasonPhoto.onFile }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+</label>
 </div>
 <div style="display:flex;flex-direction:column;gap:14px">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -182,14 +190,35 @@ img,svg{max-width:100%}
 <section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
 <div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Bloque 4</div>
 <h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 6px">Galería de la tienda</h2>
-<p style="font:300 12.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.55);margin:0 0 18px">Seis fotos de fiestas reales. Arrastra una imagen sobre cualquier marco para cambiarla.</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(140px,100%),1fr));gap:12px">
-<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-1" shape="rect" src="assets/pasteles-rosa.jpg" placeholder="Foto 1"></image-slot></div>
-<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-2" shape="rect" src="assets/platos-cerdito.jpg" placeholder="Foto 2"></image-slot></div>
-<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-3" shape="rect" src="assets/mesa-flores.jpg" placeholder="Foto 3"></image-slot></div>
-<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-4" shape="rect" src="assets/velas-mesa.jpg" placeholder="Foto 4"></image-slot></div>
-<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-5" shape="rect" src="assets/gorritos-fiesta.jpg" placeholder="Foto 5"></image-slot></div>
-<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-6" shape="rect" src="assets/toppers-hadas.jpg" placeholder="Foto 6"></image-slot></div>
+<p style="font:300 12.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.55);margin:0 0 18px">Seis fotos de fiestas reales. {{ galHint }}</p>
+<div onPointerDown="{{ galDown }}" onPointerMove="{{ galOver }}" onPointerUp="{{ galUp }}" onPointerCancel="{{ galUp }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(118px,100%),1fr));gap:14px">
+<sc-for list="{{ gallery }}" as="g" hint-placeholder-count="6">
+<div style="display:flex;flex-direction:column;gap:8px">
+
+<div data-gal-id="{{ g.id }}" style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7;box-shadow:{{ g.ring }}">
+<sc-if value="{{ g.hasPhoto }}" hint-placeholder-val="{{ true }}"><img src="{{ g.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ g.empty }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:300 11.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.45);text-align:center;padding:14px">Sin foto</span></sc-if>
+
+<span data-gal-grip="{{ g.id }}" title="Arrastra para reordenar" style="position:absolute;top:7px;left:7px;width:38px;height:38px;border-radius:9px;background:rgba(255,252,250,.94);box-shadow:0 1px 5px rgba(41,38,42,.2);display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;font:400 15px/1 'Jost',sans-serif;color:rgba(41,38,42,.55);letter-spacing:-.05em">⠿</span>
+
+<span style="position:absolute;top:11px;right:9px;background:{{ g.posBg }};color:#FFFCFA;border-radius:999px;padding:5px 10px;font:500 10px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase">{{ g.posLabel }}</span>
+</div>
+
+<div style="display:flex;gap:6px;align-items:center;justify-content:space-between">
+<span style="display:flex;gap:6px">
+<sc-if value="{{ g.canLeft }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.left }}" aria-label="Mover antes" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:8px;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A;width:44px;height:38px;display:flex;align-items:center;justify-content:center;padding:0">←</button></sc-if>
+<sc-if value="{{ g.isFirst }}" hint-placeholder-val="{{ false }}"><span style="width:44px;height:38px;flex:none"></span></sc-if>
+<sc-if value="{{ g.canRight }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.right }}" aria-label="Mover después" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:8px;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A;width:44px;height:38px;display:flex;align-items:center;justify-content:center;padding:0">→</button></sc-if>
+</span>
+<sc-if value="{{ g.notFirst }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.first }}" style="background:transparent;border:0;padding:0;cursor:pointer;font:400 11.5px/1.2 'Jost',sans-serif;color:#963568;text-align:right">Poner de<br>portada</button></sc-if>
+</div>
+<label style="position:relative;display:flex;align-items:center;justify-content:center;gap:7px;background:#FFF1F6;border-radius:8px;height:38px;cursor:pointer;font:500 12px/1 'Jost',sans-serif;color:#963568">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>Cambiar foto
+<input type="file" accept="image/*" onChange="{{ g.onFile }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+</label>
+
+</div>
+</sc-for>
 </div>
 </section>
 
@@ -208,23 +237,23 @@ img,svg{max-width:100%}
 <button onClick="{{ newProduct }}" style="font:500 13px/1 'Jost',sans-serif;color:#963568;background:transparent;border:1px solid #963568;border-radius:999px;padding:12px 22px;cursor:pointer">+ Nuevo producto</button>
 </div>
 </div>
-<div style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;overflow-x:auto">
-<div style="min-width:880px;display:grid;grid-template-columns:58px 64px minmax(min(220px,100%),1fr) 180px 110px 128px 88px;gap:12px;padding:14px 20px;background:#FFF1F6;font:500 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#963568">
+<div onPointerDown="{{ prodDown }}" onPointerMove="{{ prodOver }}" onPointerUp="{{ prodUp }}" onPointerCancel="{{ prodUp }}" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;overflow-x:auto">
+<div style="min-width:898px;display:grid;grid-template-columns:76px 64px minmax(min(220px,100%),1fr) 180px 110px 128px 88px;gap:12px;padding:14px 20px;background:#FFF1F6;font:500 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#963568">
 <span>Orden</span><span>Foto</span><span>Producto</span><span>Categorías</span><span>Precio</span><span>Existencia</span><span></span>
 </div>
 <sc-for list="{{ prods }}" as="p" hint-placeholder-count="6">
-<div draggable="{{ p.draggable }}" onDragStart="{{ p.onDragStart }}" onDragOver="{{ p.onDragOver }}" onDrop="{{ p.onDrop }}" onDragEnd="{{ p.onDragEnd }}" style="min-width:880px;display:grid;grid-template-columns:58px 64px minmax(min(220px,100%),1fr) 180px 110px 128px 88px;gap:12px;padding:14px 20px;align-items:center;border-top:1px solid #E9E3E6">
-<div style="display:flex;align-items:center;gap:8px;background:{{ p.handleBg }};border-radius:8px;padding:4px 2px;cursor:grab">
-<span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.35);letter-spacing:-.05em">⠿</span>
+<div data-prod-id="{{ p.id }}" style="min-width:898px;display:grid;grid-template-columns:76px 64px minmax(min(220px,100%),1fr) 180px 110px 128px 88px;gap:12px;padding:14px 20px;align-items:center;border-top:1px solid #E9E3E6">
+<div style="display:flex;align-items:center;gap:6px;background:{{ p.handleBg }};border-radius:8px;padding:4px 2px">
+<span data-prod-grip="{{ p.id }}" title="Arrastra para reordenar" style="flex:none;width:30px;height:40px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;font:400 15px/1 'Jost',sans-serif;color:rgba(41,38,42,.4);letter-spacing:-.05em">⠿</span>
 <span style="display:block">
 <span style="display:block;font:500 11px/1 'Jost',sans-serif;color:#963568">{{ p.pos }}</span>
-<span style="display:flex;gap:3px;margin-top:3px">
-<button onClick="{{ p.up }}" aria-label="Subir" style="background:transparent;border:0;padding:0 2px;cursor:pointer;font:400 10px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">▲</button>
-<button onClick="{{ p.down }}" aria-label="Bajar" style="background:transparent;border:0;padding:0 2px;cursor:pointer;font:400 10px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">▼</button>
+<span style="display:flex;gap:3px;margin-top:4px">
+<button onClick="{{ p.up }}" aria-label="Subir" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:7px;cursor:pointer;font:400 11px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);width:30px;height:28px;display:flex;align-items:center;justify-content:center;padding:0">▲</button>
+<button onClick="{{ p.down }}" aria-label="Bajar" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:7px;cursor:pointer;font:400 11px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);width:30px;height:28px;display:flex;align-items:center;justify-content:center;padding:0">▼</button>
 </span>
 </span>
 </div>
-<div style="position:relative;width:52px;height:52px;border-radius:8px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ p.slotId }}" shape="rect" src="{{ p.photo }}" placeholder="Foto"></image-slot></div>
+<div style="position:relative;width:52px;height:52px;border-radius:8px;overflow:hidden;background:#F5DCE7"><img src="{{ p.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
 <div style="min-width:0"><div style="font:400 14px/1.3 'Jost',sans-serif;color:#29262A">{{ p.name }}</div><div style="font:300 11.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">{{ p.sub }}</div></div>
 <div style="font:300 12.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.7)">{{ p.cat }}</div>
 <div style="font:500 13.5px/1.3 'Jost',sans-serif;color:#29262A">{{ p.priceLabel }}<sc-if value="{{ p.hasOld }}" hint-placeholder-val="{{ false }}"><span style="display:block;font:300 11.5px/1.3 'Jost',sans-serif;color:rgba(41,38,42,.45);text-decoration:line-through;margin-top:3px">{{ p.oldPriceLabel }}</span></sc-if></div>
@@ -244,16 +273,20 @@ img,svg{max-width:100%}
 <button onClick="{{ addCat }}" style="flex:none;font:500 13px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:14px 24px;cursor:pointer">+ Agregar categoría</button>
 <div style="flex:1 1 100%;font:300 12px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.5)">Mantén presionado el punteado (⠿) y arrastra una categoría para elegir cuál va primero en el menú y en la página de inicio.</div>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:18px">
+<div onPointerDown="{{ catDown }}" onPointerMove="{{ catOver }}" onPointerUp="{{ catUp }}" onPointerCancel="{{ catUp }}" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:18px">
 <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
-<div draggable="true" onDragStart="{{ c.onDragStart }}" onDragOver="{{ c.onDragOver }}" onDrop="{{ c.onDrop }}" onDragEnd="{{ c.onDragEnd }}" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:18px;display:flex;gap:14px">
-<div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:5px;background:{{ c.handleBg }};border-radius:8px;padding:4px 5px;cursor:grab">
-<span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.35);letter-spacing:-.05em">⠿</span>
+<div data-cat-name="{{ c.name }}" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:18px;display:flex;gap:14px">
+<div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:5px;background:{{ c.handleBg }};border-radius:8px;padding:4px 5px">
+<span data-cat-grip="{{ c.name }}" title="Arrastra para reordenar" style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;font:400 15px/1 'Jost',sans-serif;color:rgba(41,38,42,.4);letter-spacing:-.05em">⠿</span>
 <span style="font:500 11px/1 'Jost',sans-serif;color:#963568">{{ c.pos }}</span>
-<button onClick="{{ c.up }}" aria-label="Subir" style="background:transparent;border:0;padding:1px;cursor:pointer;font:400 10px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">▲</button>
-<button onClick="{{ c.down }}" aria-label="Bajar" style="background:transparent;border:0;padding:1px;cursor:pointer;font:400 10px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">▼</button>
+<button onClick="{{ c.up }}" aria-label="Subir" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:7px;cursor:pointer;font:400 11px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);width:30px;height:28px;display:flex;align-items:center;justify-content:center;padding:0">▲</button>
+<button onClick="{{ c.down }}" aria-label="Bajar" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:7px;cursor:pointer;font:400 11px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);width:30px;height:28px;display:flex;align-items:center;justify-content:center;padding:0">▼</button>
 </div>
-<div style="position:relative;width:88px;height:88px;flex:none;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ c.slotId }}" shape="rect" src="{{ c.photo }}" placeholder="Foto"></image-slot></div>
+<div style="position:relative;width:88px;height:88px;flex:none;border-radius:9px;overflow:hidden;background:#F5DCE7"><sc-if value="{{ c.pic.hasPhoto }}" hint-placeholder-val="{{ true }}"><img src="{{ c.pic.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ c.pic.empty }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.45)">Sin foto</span></sc-if>
+<label style="position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(255,252,250,.96);border-radius:999px;padding:7px 11px;cursor:pointer;box-shadow:0 2px 10px rgba(41,38,42,.18);font:500 11.5px/1 'Jost',sans-serif;color:#963568"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>Cambiar
+<input type="file" accept="image/*" onChange="{{ c.pic.onFile }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+</label></div>
 <div style="flex:1;min-width:0">
 <div style="font:400 15px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">{{ c.name }}</div>
 <div style="font:300 12px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-bottom:12px">{{ c.countLabel }}</div>
@@ -302,7 +335,11 @@ img,svg{max-width:100%}
 </section>
 <section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
 <h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 18px">Logotipo y marca</h2>
-<div style="position:relative;height:150px;border-radius:10px;overflow:hidden;background:#FFF1F6;margin-bottom:14px"><image-slot id="admin-logo" shape="rect" src="assets/very-merry-logo.jpg" placeholder="Logotipo (PNG con fondo transparente)"></image-slot></div>
+<div style="position:relative;height:150px;border-radius:10px;overflow:hidden;background:#FFF1F6;margin-bottom:14px"><sc-if value="{{ logoPhoto.hasPhoto }}" hint-placeholder-val="{{ true }}"><img src="{{ logoPhoto.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ logoPhoto.empty }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.45)">Sin logotipo. PNG con fondo transparente.</span></sc-if>
+<label style="position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(255,252,250,.96);border-radius:999px;padding:9px 14px;cursor:pointer;box-shadow:0 2px 10px rgba(41,38,42,.18);font:500 12px/1 'Jost',sans-serif;color:#963568"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>Cambiar logotipo
+<input type="file" accept="image/*" onChange="{{ logoPhoto.onFile }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+</label></div>
 <label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Frase de la barra superior</span><input value="{{ shop.tagline }}" onChange="{{ onShopTagline }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
 <div style="font:300 11.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:12px">Sube el logotipo vectorial o en PNG sin fondo para que se vea limpio en el encabezado y en el pie oscuro.</div>
 </section>
@@ -326,14 +363,30 @@ img,svg{max-width:100%}
 <div style="flex:1;overflow-y:auto;padding:22px 26px;display:flex;flex-direction:column;gap:16px">
 <div>
 <div style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:9px">Imagen principal</div>
-<div style="position:relative;height:240px;border-radius:10px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ edit.mainSlot }}" shape="rect" src="{{ edit.photo }}" placeholder="Arrastra la foto principal del producto"></image-slot></div>
+<div style="position:relative;height:240px;border-radius:10px;overflow:hidden;background:#F5DCE7"><sc-if value="{{ editPhoto.hasPhoto }}" hint-placeholder-val="{{ true }}"><img src="{{ editPhoto.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ editPhoto.empty }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.45)">Sin foto principal del producto.</span></sc-if>
+<label style="position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(255,252,250,.96);border-radius:999px;padding:9px 14px;cursor:pointer;box-shadow:0 2px 10px rgba(41,38,42,.18);font:500 12px/1 'Jost',sans-serif;color:#963568"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>Cambiar foto
+<input type="file" accept="image/*" onChange="{{ editPhoto.onFile }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+</label></div>
 </div>
 <div>
 <div style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:9px">Galería (hasta 3 fotos más)</div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ edit.g1 }}" shape="rect" placeholder="Foto 2"></image-slot></div>
-<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ edit.g2 }}" shape="rect" placeholder="Foto 3"></image-slot></div>
-<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="{{ edit.g3 }}" shape="rect" placeholder="Foto 4"></image-slot></div>
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><sc-if value="{{ editG1.hasPhoto }}" hint-placeholder-val="{{ true }}"><img src="{{ editG1.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ editG1.empty }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.45)">Foto 2</span></sc-if>
+<label style="position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(255,252,250,.96);border-radius:999px;padding:7px 11px;cursor:pointer;box-shadow:0 2px 10px rgba(41,38,42,.18);font:500 11.5px/1 'Jost',sans-serif;color:#963568"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>Subir
+<input type="file" accept="image/*" onChange="{{ editG1.onFile }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+</label></div>
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><sc-if value="{{ editG2.hasPhoto }}" hint-placeholder-val="{{ true }}"><img src="{{ editG2.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ editG2.empty }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.45)">Foto 3</span></sc-if>
+<label style="position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(255,252,250,.96);border-radius:999px;padding:7px 11px;cursor:pointer;box-shadow:0 2px 10px rgba(41,38,42,.18);font:500 11.5px/1 'Jost',sans-serif;color:#963568"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>Subir
+<input type="file" accept="image/*" onChange="{{ editG2.onFile }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+</label></div>
+<div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><sc-if value="{{ editG3.hasPhoto }}" hint-placeholder-val="{{ true }}"><img src="{{ editG3.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ editG3.empty }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.45)">Foto 4</span></sc-if>
+<label style="position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(255,252,250,.96);border-radius:999px;padding:7px 11px;cursor:pointer;box-shadow:0 2px 10px rgba(41,38,42,.18);font:500 11.5px/1 'Jost',sans-serif;color:#963568"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>Subir
+<input type="file" accept="image/*" onChange="{{ editG3.onFile }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+</label></div>
 </div>
 </div>
 <label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Nombre del producto</span><input value="{{ edit.name }}" onChange="{{ onEditName }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
@@ -400,12 +453,22 @@ class Component extends DCLogic {
       eyebrow: 'Nueva temporada',
       title: 'Haz de cada celebración algo inolvidable',
       text: 'Encuentra todos los detalles para crear momentos muy merry.',
-      cta: 'Comprar ahora', link: 'Todos los productos'
+      cta: 'Comprar ahora', link: 'Todos los productos',
+      photo: 'assets/hero-granja.jpg'
     },
     ribbon: { a: 'Have a very merry party', b: 'Entrega el mismo día en Tegucigalpa', c: 'Armamos tu mesa por WhatsApp' },
-    season: { tag: 'Temporada · Cumpleaños', title: 'Velas altas y bases festoneadas', text: 'El pastel se ve mejor sobre una base con pie y rodeado de velas de colores.', cta: 'Ver la mesa de pastel' },
-    shop: { wa: '+504 9000-0000', hours: 'Lunes a sábado · 9:00 a 18:00', delivery: '90', free: '2000', tagline: 'Have a VERY MERRY party' },
+    season: { tag: 'Temporada · Cumpleaños', title: 'Velas altas y bases festoneadas', text: 'El pastel se ve mejor sobre una base con pie y rodeado de velas de colores.', cta: 'Ver la mesa de pastel', photo: 'assets/pasteles-rosa.jpg' },
+    shop: { wa: '+504 9000-0000', hours: 'Lunes a sábado · 9:00 a 18:00', delivery: '90', free: '2000', tagline: 'Have a VERY MERRY party', logo: 'assets/very-merry-logo.jpg' },
     hiddenCats: [],
+    gallery: [
+      { id: 'g1', photo: 'assets/pasteles-rosa.jpg' },
+      { id: 'g2', photo: 'assets/platos-cerdito.jpg' },
+      { id: 'g3', photo: 'assets/mesa-flores.jpg' },
+      { id: 'g4', photo: 'assets/velas-mesa.jpg' },
+      { id: 'g5', photo: 'assets/gorritos-fiesta.jpg' },
+      { id: 'g6', photo: 'assets/toppers-hadas.jpg' }
+    ],
+    dragGal: '',
     prods: [
       { id: 'coleccion-carita', name: 'Colección Happy Face completa', cat: 'Party Themes', price: 1150, old: null, sub: '8 puestos · platos, vasos y servilletas', stock: 'existencia', badge: 'Destacado', photo: 'assets/coleccion-carita.jpg', desc: 'Todo el tema en una caja: platos flor con carita, platos base estampados, vasos con flor y corazón de papel nido de abeja, servilletas de arcoíris y caritas.' },
       { id: 'platos-carita', name: 'Platos flor Happy Face', cat: 'Mix and Match Tableware', price: 395, old: null, sub: '8 platos flor + 8 de base', stock: 'existencia', badge: 'Nuevo', photo: 'assets/platos-carita.jpg', desc: 'Platos troquelados en forma de flor rosa con carita dorada, sobre platos base de estampado de cerezas, arcoíris y fresas.' },
@@ -488,6 +551,109 @@ class Component extends DCLogic {
     const tmp = list[i]; list[i] = list[j]; list[j] = tmp;
     this.set({ prods: list });
   }
+  // La galeria se reordena con Pointer Events, no con la API de arrastre de
+  // HTML5: esa ultima nunca dispara con el dedo porque el navegador no
+  // convierte un toque en dragstart. Los eventos van en el contenedor (no en
+  // cada foto) para que el reordenamiento no le quite la captura del puntero
+  // al elemento que la inicio, y el agarre `touch-action:none` va solo en el
+  // asa, para que deslizar sobre la foto siga desplazando la pagina.
+  catReorder(fromName, toName) {
+    if (!fromName || fromName === toName) return;
+    const list = (this.state.cats || this.CATS).slice();
+    const fi = list.map(x => x.name).indexOf(fromName);
+    const ti = list.map(x => x.name).indexOf(toName);
+    if (fi < 0 || ti < 0) return;
+    list.splice(ti, 0, list.splice(fi, 1)[0]);
+    this.set({ cats: list });
+  }
+  galIndex(id) { return this.state.gallery.map(g => g.id).indexOf(id); }
+  galMove(id, dir) {
+    const list = this.state.gallery.slice();
+    const i = this.galIndex(id), j = i + dir;
+    if (i < 0 || j < 0 || j >= list.length) return;
+    const t = list[i]; list[i] = list[j]; list[j] = t;
+    this.set({ gallery: list });
+  }
+  galToFirst(id) {
+    const list = this.state.gallery.slice();
+    const i = this.galIndex(id);
+    if (i <= 0) return;
+    list.unshift(list.splice(i, 1)[0]);
+    this.set({ gallery: list });
+    this.flash('Esa foto queda de portada');
+  }
+  galReorder(fromId, toId) {
+    if (!fromId || fromId === toId) return;
+    const list = this.state.gallery.slice();
+    const from = this.galIndex(fromId), to = this.galIndex(toId);
+    if (from < 0 || to < 0) return;
+    list.splice(to, 0, list.splice(from, 1)[0]);
+    this.set({ gallery: list });
+  }
+  // Lee la imagen elegida como data URL. Sin backend la foto vive solo en
+  // esta pestaña: alcanza para mostrar el flujo, no para publicarla.
+  readPhoto(e, done) {
+    const input = e.target;
+    const f = input.files && input.files[0];
+    input.value = '';
+    if (!f) return;
+    if (f.type.indexOf('image/') !== 0) { this.flash('Ese archivo no es una imagen'); return; }
+    if (f.size > 6 * 1024 * 1024) { this.flash('La imagen pesa más de 6 MB'); return; }
+    const r = new FileReader();
+    r.onload = () => done(r.result);
+    r.onerror = () => this.flash('No se pudo leer la imagen');
+    r.readAsDataURL(f);
+  }
+  // Mientras se arrastra, la pagina no se desplaza sola y una foto fuera de
+  // la pantalla quedaria fuera de alcance. Cerca de un borde la desplazamos
+  // nosotros y volvemos a mirar sobre que foto esta el dedo, porque las fotos
+  // se mueven bajo un dedo quieto.
+  startEdgeScroll(alSoltar) {
+    this.stopEdgeScroll();
+    this._es = setInterval(() => {
+      const margen = 110, alto = window.innerHeight;
+      let d = 0;
+      if (this._dy < margen) d = -Math.ceil((margen - this._dy) / 5);
+      else if (this._dy > alto - margen) d = Math.ceil((this._dy - (alto - margen)) / 5);
+      if (!d) return;
+      window.scrollBy(0, d);
+      alSoltar(this._dx, this._dy);
+    }, 16);
+  }
+  stopEdgeScroll() { clearInterval(this._es); this._es = null; }
+  componentWillUnmount() { clearTimeout(this._t); this.stopEdgeScroll(); }
+  // Devuelve el valor de `attr` del elemento que este bajo el punto dado.
+  underPoint(x, y, attr) {
+    const el = document.elementFromPoint(x, y);
+    const hit = el && el.closest ? el.closest('[' + attr + ']') : null;
+    return hit ? hit.getAttribute(attr) : '';
+  }
+  // Devuelve el enlace de un marco de foto: la imagen actual y el handler del
+  // selector de archivos. <image-slot> solo se puede editar dentro del editor
+  // de canvas (comprueba window.omelette), asi que en el sitio publicado los
+  // marcos quedaban de solo lectura y no habia forma de cambiar la foto.
+  photoCtl(url, onSet) {
+    return {
+      photo: url || '',
+      hasPhoto: !!url,
+      empty: !url,
+      onFile: e => this.readPhoto(e, u => { onSet(u); this.flash('Foto actualizada'); })
+    };
+  }
+  prodGallery(p) { return (p && p.gallery) || []; }
+  setProdGalPhoto(i, url) {
+    const s = this.state;
+    this.set({ prods: s.prods.map(p => {
+      if (p.id !== s.editId) return p;
+      const g = (p.gallery || []).slice();
+      g[i] = url;
+      return Object.assign({}, p, { gallery: g });
+    }) });
+  }
+  setGalPhoto(id, url) {
+    this.set({ gallery: this.state.gallery.map(x => x.id === id ? Object.assign({}, x, { photo: url }) : x) });
+    this.flash('Foto de la galería actualizada');
+  }
   stockChip(stock) {
     if (stock === 'agotado') return { label: 'Agotado', color: 'rgba(41,38,42,.5)', bg: '#EFE9EC' };
     if (stock === 'pocas') return { label: 'Pocas unidades', color: '#963568', bg: '#F5DCE7' };
@@ -565,18 +731,67 @@ class Component extends DCLogic {
         const nuevo = { id: id, name: 'Producto nuevo', cat: 'Party Themes', price: 0, old: null, sub: 'Presentación · piezas', stock: 'existencia', badge: 'Nuevo', photo: '', desc: '', isNew: true };
         this.setState({ prods: [nuevo].concat(this.state.prods), editId: id, search: '', section: 'productos', saved: 'Cambios sin guardar' });
       },
+      prodDown: e => {
+        if (this.state.search.trim()) return;
+        const grip = e.target.closest && e.target.closest('[data-prod-grip]');
+        if (!grip) return;
+        const id = grip.getAttribute('data-prod-grip');
+        if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId);
+        this._dx = e.clientX; this._dy = e.clientY;
+        this.setState({ dragId: id });
+        this.startEdgeScroll((x, y) => {
+          const over = this.underPoint(x, y, 'data-prod-id');
+          if (over && over !== this.state.dragId) this.reorder(this.state.dragId, over);
+        });
+      },
+      prodOver: e => {
+        const id = this.state.dragId;
+        if (!id) return;
+        e.preventDefault();
+        this._dx = e.clientX; this._dy = e.clientY;
+        const over = this.underPoint(e.clientX, e.clientY, 'data-prod-id');
+        if (over && over !== id) this.reorder(id, over);
+      },
+      prodUp: () => {
+        this.stopEdgeScroll();
+        if (!this.state.dragId) return;
+        this.setState({ dragId: '' });
+        this.flash('Nuevo orden guardado');
+      },
+      catDown: e => {
+        const grip = e.target.closest && e.target.closest('[data-cat-grip]');
+        if (!grip) return;
+        const name = grip.getAttribute('data-cat-grip');
+        if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId);
+        this._dx = e.clientX; this._dy = e.clientY;
+        this.setState({ dragCat: name });
+        this.startEdgeScroll((x, y) => {
+          const over = this.underPoint(x, y, 'data-cat-name');
+          if (over && over !== this.state.dragCat) this.catReorder(this.state.dragCat, over);
+        });
+      },
+      catOver: e => {
+        const from = this.state.dragCat;
+        if (!from) return;
+        e.preventDefault();
+        this._dx = e.clientX; this._dy = e.clientY;
+        const over = this.underPoint(e.clientX, e.clientY, 'data-cat-name');
+        if (over && over !== from) this.catReorder(from, over);
+      },
+      catUp: () => {
+        this.stopEdgeScroll();
+        if (!this.state.dragCat) return;
+        this.setState({ dragCat: '' });
+        this.flash('Nuevo orden de categorías guardado');
+      },
       canReorder: !q, reorderHint: q ? 'Limpia la búsqueda para reordenar arrastrando' : 'Mantén presionado el punteado y arrastra para elegir qué producto va primero en la tienda',
       prods: list.map((p, i) => {
         const chip = this.stockChip(p.stock);
         return {
           name: p.name, sub: p.sub, cat: this.catsOf(p).join(' · '), photo: p.photo, slotId: 'prod-' + p.id,
           pos: (i + 1 < 10 ? '0' : '') + (i + 1),
-          draggable: !q,
+          id: p.id,
           handleBg: s.dragId === p.id ? '#F5DCE7' : 'transparent',
-          onDragStart: () => this.setState({ dragId: p.id }),
-          onDragOver: e => { e.preventDefault(); this.reorder(s.dragId, p.id); },
-          onDrop: e => { e.preventDefault(); this.setState({ dragId: '' }); this.flash('Nuevo orden guardado'); },
-          onDragEnd: () => this.setState({ dragId: '' }),
           up: () => this.move(p.id, -1),
           down: () => this.move(p.id, 1),
           priceLabel: this.money(p.price), oldPriceLabel: p.old ? this.money(p.old) : '', hasOld: !!p.old,
@@ -589,20 +804,6 @@ class Component extends DCLogic {
         name: c.name, photo: c.photo, slotId: 'cat-' + c.name.toLowerCase().replace(/[^a-z]+/g, '-'),
         pos: (i + 1 < 10 ? '0' : '') + (i + 1),
         handleBg: s.dragCat === c.name ? '#F5DCE7' : 'transparent',
-        onDragStart: () => this.setState({ dragCat: c.name }),
-        onDragOver: e => {
-          e.preventDefault();
-          const from = s.dragCat;
-          if (!from || from === c.name) return;
-          const list = cats.slice();
-          const fi = list.map(x => x.name).indexOf(from);
-          const ti = list.map(x => x.name).indexOf(c.name);
-          if (fi < 0 || ti < 0) return;
-          list.splice(ti, 0, list.splice(fi, 1)[0]);
-          this.set({ cats: list });
-        },
-        onDrop: e => { e.preventDefault(); this.setState({ dragCat: '' }); this.flash('Nuevo orden de categorías guardado'); },
-        onDragEnd: () => this.setState({ dragCat: '' }),
         up: () => {
           const list = cats.slice(); const i2 = list.map(x => x.name).indexOf(c.name);
           if (i2 <= 0) return; const t = list[i2 - 1]; list[i2 - 1] = list[i2]; list[i2] = t; this.set({ cats: list });
@@ -616,7 +817,8 @@ class Component extends DCLogic {
         toggle: () => this.set({ hiddenCats: s.hiddenCats.indexOf(c.name) >= 0 ? s.hiddenCats.filter(x => x !== c.name) : s.hiddenCats.concat([c.name]) }),
         canDelete: s.prods.filter(p => this.catsOf(p).indexOf(c.name) >= 0).length === 0,
         blocked: s.prods.filter(p => this.catsOf(p).indexOf(c.name) >= 0).length > 0,
-        remove: () => this.set({ cats: cats.filter(x => x.name !== c.name) })
+        remove: () => this.set({ cats: cats.filter(x => x.name !== c.name) }),
+        pic: this.photoCtl(c.photo, u => this.set({ cats: cats.map(x => x.name === c.name ? Object.assign({}, x, { photo: u }) : x) }))
       })),
       newCat: s.newCat || '',
       onNewCat: e => this.setState({ newCat: e.target.value }),
@@ -634,6 +836,51 @@ class Component extends DCLogic {
       }),
       editCatsLabel: this.catsOf(edit).length === 1 ? 'Aparece en 1 categoría' : 'Aparece en ' + this.catsOf(edit).length + ' categorías · la primera es la principal',
 
+      galHint: s.dragGal
+        ? 'Suelta el asa sobre otra foto para colocarla ahí'
+        : 'Arrastra el asa ⠿ de una foto sobre otra, o usa las flechas. La primera es la portada.',
+      galDown: e => {
+        const grip = e.target.closest && e.target.closest('[data-gal-grip]');
+        if (!grip) return;
+        const id = grip.getAttribute('data-gal-grip');
+        if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId);
+        this._dx = e.clientX; this._dy = e.clientY;
+        this.setState({ dragGal: id });
+        this.startEdgeScroll((x, y) => {
+          const over = this.underPoint(x, y, 'data-gal-id');
+          if (over && over !== this.state.dragGal) this.galReorder(this.state.dragGal, over);
+        });
+      },
+      galOver: e => {
+        const id = this.state.dragGal;
+        if (!id) return;
+        e.preventDefault();
+        this._dx = e.clientX; this._dy = e.clientY;
+        const over = this.underPoint(e.clientX, e.clientY, 'data-gal-id');
+        if (over && over !== id) this.galReorder(id, over);
+      },
+      galUp: () => {
+        this.stopEdgeScroll();
+        if (!this.state.dragGal) return;
+        this.setState({ dragGal: '' });
+        this.flash('Nuevo orden de la galería guardado');
+      },
+      gallery: s.gallery.map((g, i) => ({
+        id: g.id,
+        photo: g.photo,
+        hasPhoto: !!g.photo,
+        empty: !g.photo,
+        posLabel: i === 0 ? 'Portada' : String(i + 1),
+        posBg: i === 0 ? '#963568' : 'rgba(41,38,42,.55)',
+        ring: s.dragGal === g.id ? '0 0 0 2.5px #963568' : '0 0 0 1px #E9E3E6',
+        canLeft: i > 0, canRight: i < s.gallery.length - 1,
+        isFirst: i === 0, notFirst: i > 0,
+        left: () => this.galMove(g.id, -1),
+        right: () => this.galMove(g.id, 1),
+        first: () => this.galToFirst(g.id),
+        onFile: e => this.readPhoto(e, url => this.setGalPhoto(g.id, url))
+      })),
+
       orders: this.ORDERS.map(o => Object.assign({}, o, {
         color: o.status === 'Nuevo' ? '#FFFCFA' : (o.status === 'Preparando' ? '#963568' : 'rgba(41,38,42,.55)'),
         bg: o.status === 'Nuevo' ? '#963568' : (o.status === 'Preparando' ? '#F5DCE7' : '#EFE9EC')
@@ -642,6 +889,13 @@ class Component extends DCLogic {
       drawerOpen: !!s.editId,
       drawerTitle: edit.isNew ? 'Nuevo producto' : 'Editar producto',
       closeDrawer: () => this.setState({ editId: '', prods: s.prods.filter(p => !(p.isNew && p.name === 'Producto nuevo' && !p.price)) }),
+      heroPhoto: this.photoCtl(s.hero.photo, u => this.patch('hero', 'photo', u)),
+      seasonPhoto: this.photoCtl(s.season.photo, u => this.patch('season', 'photo', u)),
+      logoPhoto: this.photoCtl(s.shop.logo, u => this.patch('shop', 'logo', u)),
+      editPhoto: this.photoCtl(edit.photo, u => this.editProd('photo', u)),
+      editG1: this.photoCtl(this.prodGallery(edit)[0], u => this.setProdGalPhoto(0, u)),
+      editG2: this.photoCtl(this.prodGallery(edit)[1], u => this.setProdGalPhoto(1, u)),
+      editG3: this.photoCtl(this.prodGallery(edit)[2], u => this.setProdGalPhoto(2, u)),
       edit: {
         name: edit.name, sub: edit.sub, desc: edit.desc, photo: edit.photo,
         price: String(edit.price), old: edit.old ? String(edit.old) : '',
