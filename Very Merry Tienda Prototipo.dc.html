@@ -621,6 +621,7 @@ img,svg{max-width:100%}
 <div style="display:flex;justify-content:space-between;align-items:baseline;padding:18px 0 20px"><span style="font:400 15px/1 'Jost',sans-serif;color:#29262A">Total</span><span style="font:500 26px/1 'Jost',sans-serif;color:#29262A">{{ totalLabel }}</span></div>
 <button onClick="{{ confirmOrder }}" style="width:100%;font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:18px;cursor:pointer">Confirmar pedido</button>
 <a href="{{ waPedido }}" target="_blank" rel="noreferrer" style="display:flex;align-items:center;justify-content:center;gap:9px;margin-top:10px;font:500 13.5px/1 'Jost',sans-serif;color:#963568;background:#FFFCFA;border:1px solid #963568;border-radius:999px;padding:16px;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Enviar el pedido por WhatsApp</a>
+<button onClick="{{ compartirPedido }}" disabled="{{ generando }}" style="width:100%;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:9px;font:500 13.5px/1 'Jost',sans-serif;color:#963568;background:#F5DCE7;border:0;border-radius:999px;padding:16px;cursor:pointer"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="15" rx="2.2"></rect><circle cx="8.6" cy="9.4" r="1.6"></circle><path d="M4 16.5l4.6-4.2 3.2 2.8 3-2.5 4.2 3.6"></path></svg>{{ compartirLabel }}</button>
 <button onClick="{{ goCatalog }}" style="width:100%;margin-top:10px;font:500 13px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:15px;cursor:pointer">Seguir comprando</button>
 <div style="font:300 12px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:14px;text-align:center">{{ termsHint }}</div>
 </aside>
@@ -795,6 +796,7 @@ img,svg{max-width:100%}
 <div style="font:300 12px/1.5 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-bottom:16px">El costo de entrega se calcula en el siguiente paso.</div>
 <button onClick="{{ goCheckout }}" style="width:100%;font:500 14.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:18px;cursor:pointer;margin-bottom:10px">Finalizar pedido</button>
 <a href="{{ waPedido }}" target="_blank" rel="noreferrer" style="display:flex;align-items:center;justify-content:center;gap:9px;font:500 13.5px/1 'Jost',sans-serif;color:#963568;background:#F5DCE7;border-radius:999px;padding:16px;text-decoration:none;margin-bottom:10px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>Enviar pedido por WhatsApp</a>
+<button onClick="{{ compartirPedido }}" disabled="{{ generando }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:9px;font:500 13.5px/1 'Jost',sans-serif;color:#963568;background:#FFFCFA;border:1px solid #E9C9D9;border-radius:999px;padding:16px;cursor:pointer;margin-bottom:10px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="15" rx="2.2"></rect><circle cx="8.6" cy="9.4" r="1.6"></circle><path d="M4 16.5l4.6-4.2 3.2 2.8 3-2.5 4.2 3.6"></path></svg>{{ compartirLabel }}</button>
 <button onClick="{{ goCatalogFromCart }}" style="width:100%;font:500 13.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:16px;cursor:pointer">Continuar comprando</button>
 </div>
 </div>
@@ -823,6 +825,7 @@ class Component extends DCLogic {
     qty: 1, variant: 0, gallery: 0, openAcc: 'entrega', openFaq: 'pedido',
     cart: [{ id: 'set-granja', qty: 1 }, { id: 'platos-flor', qty: 1 }],
     delivery: 'domicilio', terms: false, toast: '', news: '', order: null,
+    generando: false,
     form: { nombre: '', telefono: '', correo: '', ciudad: '', colonia: '', direccion: '', referencias: '', notas: '' }
   };
 
@@ -880,6 +883,254 @@ class Component extends DCLogic {
   money(n) { return 'L ' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
   find(id) { return this.P.filter(p => p.id === id)[0] || this.P[0]; }
   set(o) { this.setState(o); }
+  // ===== Imagen del pedido para enviar por WhatsApp =====
+  // Se dibuja en un <canvas> en lugar de capturar la pantalla: no necesita
+  // ninguna libreria externa y el resultado no depende del ancho del telefono
+  // ni de que el pedido quepa en una captura.
+
+  cargarImg(src) {
+    return new Promise(res => {
+      if (!src) return res(null);
+      const img = new Image();
+      img.onload = () => res(img);
+      img.onerror = () => res(null);
+      img.src = src;
+    });
+  }
+
+  // Parte el texto en las lineas que quepan en el ancho dado, con puntos
+  // suspensivos si se pasa del maximo de lineas.
+  cortarLineas(ctx, texto, ancho, maxLineas) {
+    const palabras = String(texto || '').split(/\s+/).filter(Boolean);
+    const lineas = [];
+    let actual = '';
+    for (const p of palabras) {
+      const prueba = actual ? actual + ' ' + p : p;
+      if (!actual || ctx.measureText(prueba).width <= ancho) { actual = prueba; continue; }
+      lineas.push(actual);
+      actual = p;
+      if (lineas.length >= maxLineas) break;
+    }
+    if (lineas.length < maxLineas && actual) lineas.push(actual);
+    const ultima = lineas[lineas.length - 1];
+    if (lineas.length === maxLineas && ultima && ctx.measureText(ultima).width > ancho) {
+      let t = ultima;
+      while (t.length > 1 && ctx.measureText(t + '…').width > ancho) t = t.slice(0, -1);
+      lineas[lineas.length - 1] = t + '…';
+    }
+    return lineas.length ? lineas : [''];
+  }
+
+  rect(ctx, x, y, w, h, r) {
+    if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); return; }
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  // El logotipo es un JPG de tinta rosa sobre fondo claro, sin transparencia:
+  // dibujado tal cual deja un recuadro visible. Se convierte la luminancia en
+  // canal alfa para que el fondo desaparezca sobre cualquier color.
+  async logoRecortado() {
+    const img = await this.cargarImg('assets/very-merry-logo.jpg');
+    if (!img || !img.width) return null;
+    const o = document.createElement('canvas');
+    o.width = img.width; o.height = img.height;
+    const oc = o.getContext('2d');
+    oc.drawImage(img, 0, 0);
+    try {
+      const datos = oc.getImageData(0, 0, o.width, o.height);
+      const px = datos.data;
+      // Luminancia de la tinta de la marca (#963568). Se divide entre ella para
+      // que la tinta quede totalmente opaca y no lavada.
+      const LUM_TINTA = 0.30;
+      for (let i = 0; i < px.length; i += 4) {
+        const lum = (px[i] * 0.299 + px[i + 1] * 0.587 + px[i + 2] * 0.114) / 255;
+        const a = (1 - lum) / (1 - LUM_TINTA);
+        px[i + 3] = Math.round(255 * Math.max(0, Math.min(1, a)));
+      }
+      oc.putImageData(datos, 0, 0);
+      return o;
+    } catch (e) {
+      return img; // si el canvas quedara contaminado, se usa el JPG tal cual
+    }
+  }
+
+  async dibujarPedido(d) {
+    // Las fuentes deben estar cargadas ANTES de medir: si no, el canvas mide
+    // con la fuente de reserva y el texto sale descuadrado.
+    if (document.fonts) {
+      try {
+        await Promise.all([
+          document.fonts.load("500 46px 'Cormorant Garamond'"),
+          document.fonts.load("300 22px 'Jost'"),
+          document.fonts.load("400 24px 'Jost'"),
+          document.fonts.load("500 26px 'Jost'")
+        ]);
+        await document.fonts.ready;
+      } catch (e) { /* seguimos con la fuente de reserva */ }
+    }
+    const fotos = await Promise.all(d.items.map(i => this.cargarImg(i.photo)));
+
+    const W = 1000, P = 56, ESC = 2;
+    const TW = 104, TH = 128, GAP = 20, COL_PRECIO = 210;
+    const anchoTexto = W - P * 2 - TW - GAP - COL_PRECIO;
+
+    const medidor = document.createElement('canvas').getContext('2d');
+    medidor.font = "400 24px 'Jost', sans-serif";
+    const filas = d.items.map(i => {
+      const lineas = this.cortarLineas(medidor, i.name, anchoTexto, 2);
+      return { lineas, alto: Math.max(TH, lineas.length * 31 + 46) + 24 };
+    });
+
+    const yCabecera = 168;
+    const yItems = yCabecera + 130;
+    const altoItems = filas.reduce((t, f) => t + f.alto, 0);
+    const yTotales = yItems + altoItems + 18;
+    const H = yTotales + 190 + 128;
+
+    const cv = document.createElement('canvas');
+    cv.width = W * ESC; cv.height = H * ESC;
+    const c = cv.getContext('2d');
+    c.scale(ESC, ESC);
+    c.textBaseline = 'alphabetic';
+
+    c.fillStyle = '#FFF1F6'; c.fillRect(0, 0, W, H);
+    // Banda blanca: el logotipo es un JPG de fondo blanco, y sobre blanco puro
+    // no se le nota el recuadro.
+    c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, W, yCabecera);
+
+    const logo = await this.logoRecortado();
+    if (logo && logo.width) {
+      const lh = 74, lw = logo.width * (lh / logo.height);
+      c.drawImage(logo, (W - lw) / 2, (yCabecera - lh) / 2, lw, lh);
+    } else {
+      c.fillStyle = '#963568'; c.textAlign = 'center';
+      c.font = "500 italic 52px 'Cormorant Garamond', serif";
+      c.fillText('Very Merry', W / 2, yCabecera / 2 + 16);
+    }
+
+    c.textAlign = 'left';
+    c.fillStyle = '#29262A';
+    c.font = "500 46px 'Cormorant Garamond', serif";
+    c.fillText('Tu pedido', P, yCabecera + 64);
+    c.fillStyle = 'rgba(41,38,42,.55)';
+    c.font = "300 21px 'Jost', sans-serif";
+    const fecha = new Date().toLocaleDateString('es-HN', { day: 'numeric', month: 'long', year: 'numeric' });
+    c.fillText(d.nombre ? d.nombre + ' · ' + fecha : fecha, P, yCabecera + 96);
+
+    let y = yItems;
+    filas.forEach((fila, k) => {
+      const it = d.items[k], foto = fotos[k];
+      if (foto) {
+        c.save(); this.rect(c, P, y, TW, TH, 10); c.clip();
+        const escala = Math.max(TW / foto.width, TH / foto.height);
+        const fw = foto.width * escala, fh = foto.height * escala;
+        c.drawImage(foto, P + (TW - fw) / 2, y + (TH - fh) / 2, fw, fh);
+        c.restore();
+      } else {
+        c.fillStyle = '#F5DCE7'; this.rect(c, P, y, TW, TH, 10); c.fill();
+      }
+
+      const xt = P + TW + GAP;
+      c.fillStyle = '#29262A';
+      c.font = "400 24px 'Jost', sans-serif";
+      fila.lineas.forEach((ln, j) => c.fillText(ln, xt, y + 30 + j * 31));
+      const yBase = y + 30 + fila.lineas.length * 31;
+      c.fillStyle = 'rgba(41,38,42,.55)';
+      c.font = "300 20px 'Jost', sans-serif";
+      c.fillText(it.metaLabel, xt, yBase);
+      c.fillStyle = '#963568';
+      c.font = "500 20px 'Jost', sans-serif";
+      c.fillText('Cantidad: ' + it.qty, xt, yBase + 30);
+
+      c.textAlign = 'right';
+      c.fillStyle = '#29262A';
+      c.font = "500 26px 'Jost', sans-serif";
+      c.fillText(it.lineLabel, W - P, y + 32);
+      c.textAlign = 'left';
+
+      y += fila.alto;
+      if (k < filas.length - 1) {
+        c.strokeStyle = '#F5DCE7'; c.lineWidth = 1;
+        c.beginPath(); c.moveTo(P, y - 12); c.lineTo(W - P, y - 12); c.stroke();
+      }
+    });
+
+    c.strokeStyle = '#E9C9D9'; c.lineWidth = 1.5;
+    c.beginPath(); c.moveTo(P, yTotales); c.lineTo(W - P, yTotales); c.stroke();
+
+    const linea = (etq, val, yy, fuerte) => {
+      c.fillStyle = fuerte ? '#29262A' : 'rgba(41,38,42,.7)';
+      c.font = fuerte ? "400 28px 'Jost', sans-serif" : "300 23px 'Jost', sans-serif";
+      c.textAlign = 'left'; c.fillText(etq, P, yy);
+      c.fillStyle = '#29262A';
+      c.font = fuerte ? "500 40px 'Jost', sans-serif" : "400 23px 'Jost', sans-serif";
+      c.textAlign = 'right'; c.fillText(val, W - P, yy);
+      c.textAlign = 'left';
+    };
+    linea('Subtotal', d.subtotal, yTotales + 44);
+    linea(d.entregaNombre, d.entrega, yTotales + 84);
+    c.strokeStyle = '#E9C9D9';
+    c.beginPath(); c.moveTo(P, yTotales + 112); c.lineTo(W - P, yTotales + 112); c.stroke();
+    linea('Total', d.total, yTotales + 166, true);
+
+    c.fillStyle = '#963568'; c.fillRect(0, H - 92, W, 92);
+    c.fillStyle = '#FFFCFA'; c.textAlign = 'center';
+    c.font = "500 23px 'Jost', sans-serif";
+    c.fillText('WhatsApp ' + d.wa, W / 2, H - 54);
+    c.fillStyle = 'rgba(255,252,250,.75)';
+    c.font = "300 19px 'Jost', sans-serif";
+    c.fillText('Have a very merry party', W / 2, H - 26);
+
+    return new Promise((res, rej) =>
+      cv.toBlob(b => b ? res(b) : rej(new Error('sin blob')), 'image/png'));
+  }
+
+  async compartirPedido(d) {
+    if (this.state.generando) return;
+    if (!d.items.length) { this.flash('Tu carrito está vacío'); return; }
+    this.setState({ generando: true });
+    let blob;
+    try {
+      blob = await this.dibujarPedido(d);
+    } catch (e) {
+      this.flash('No se pudo generar la imagen');
+      this.setState({ generando: false });
+      return;
+    }
+
+    const archivo = new File([blob], 'pedido-very-merry.png', { type: 'image/png' });
+    // Un enlace wa.me no admite adjuntos: la unica via para mandar la imagen
+    // es la hoja de compartir del sistema, donde WhatsApp aparece como opcion.
+    if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+      try {
+        await navigator.share({ files: [archivo], title: 'Mi pedido Very Merry' });
+        this.setState({ generando: false });
+        return;
+      } catch (e) {
+        // Cerrar la hoja no es un error: no hay que insistir con una descarga.
+        if (e && e.name === 'AbortError') { this.setState({ generando: false }); return; }
+        // Hay navegadores que dicen poder compartir y luego fallan (por ejemplo
+        // si se perdio la interaccion del usuario). Se descarga en vez de dejar
+        // al usuario sin nada.
+      }
+    }
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'pedido-very-merry.png';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    this.flash('Imagen descargada. Adjúntala en WhatsApp.');
+    this.setState({ generando: false });
+  }
+
   flash(msg) {
     this.setState({ toast: msg });
     clearTimeout(this._t);
@@ -1054,6 +1305,22 @@ class Component extends DCLogic {
       accordion: accItems.map(a => ({ title: a.title, body: a.body, open: s.openAcc === a.id, sign: s.openAcc === a.id ? '−' : '+', go: () => this.set({ openAcc: s.openAcc === a.id ? '' : a.id }) })),
 
       cartItems: cartItems, cartCount: count, hasCart: count > 0, cartEmpty: count === 0,
+      compartirPedido: () => this.compartirPedido({
+        items: cartItems,
+        subtotal: this.money(subtotal),
+        entrega: deliveryCost ? this.money(deliveryCost) : 'Sin costo',
+        entregaNombre: s.delivery === 'domicilio' ? 'Entrega a domicilio' : 'Retiro en tienda',
+        total: this.money(subtotal + deliveryCost),
+        nombre: (s.form.nombre || '').trim(),
+        wa: '+504 9969-5564'
+      }),
+      // En el telefono la hoja de compartir deja mandar la imagen directo a
+      // WhatsApp; en escritorio no hay hoja, asi que se descarga el archivo.
+      compartirLabel: s.generando
+        ? 'Preparando la imagen…'
+        : (typeof navigator !== 'undefined' && navigator.canShare
+            ? 'Enviar la foto del pedido' : 'Descargar la foto del pedido'),
+      generando: s.generando,
       cartTitle: count > 0 ? 'Tu carrito · ' + count : 'Tu carrito',
       subtotalLabel: this.money(subtotal),
       deliveryLabel: deliveryCost ? this.money(deliveryCost) : 'Sin costo',
