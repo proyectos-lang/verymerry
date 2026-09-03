@@ -20,11 +20,36 @@ input,textarea,select,button{font-family:'Jost',system-ui,sans-serif}
 input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 @keyframes vmIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes vmSlide{from{transform:translateX(100%)}to{transform:none}}
+
+/* ================= Responsive =================
+   Las grillas usan minmax(min(Npx,100%),1fr) para no desbordar en pantallas
+   angostas. Las tablas de productos y pedidos conservan su ancho minimo
+   dentro de un contenedor con overflow-x:auto: se desplazan de lado, que es
+   lo correcto para una tabla de datos. */
+body{overflow-x:hidden}
+img,svg{max-width:100%}
+
+@media (max-width:900px){
+  .vm-adm-shell{flex-direction:column!important}
+  /* width:100% mas el padding daba 422px en un viewport de 390 */
+  .vm-adm-side{width:100%!important;box-sizing:border-box!important;flex:none!important;
+    border-right:0!important;border-bottom:1px solid #E9E3E6!important;
+    padding:14px 16px!important}
+  .vm-adm-nav{flex-direction:row!important;flex:none!important;
+    gap:6px!important;overflow-x:auto;padding-bottom:4px}
+  .vm-adm-nav button{flex:0 0 auto!important;white-space:nowrap}
+  .vm-adm-foot{display:flex!important;align-items:center;gap:18px;
+    border-top:0!important;margin-top:10px!important;padding-top:0!important}
+  .vm-adm-user{display:none!important}
+  .vm-adm-head{padding:14px 16px!important}
+  .vm-adm-main{padding:18px 16px 48px!important}
+}
+
 </style>
 </helmet>
 
 <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
-<div style="min-height:100vh;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))">
+<div style="min-height:100vh;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr))">
 <div style="background:#FFF1F6;display:flex;align-items:center;justify-content:center;padding:48px 32px">
 <div style="width:100%;max-width:380px">
 <img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:180px;display:block;mix-blend-mode:multiply;margin-bottom:34px">
@@ -48,19 +73,19 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 </sc-if>
 
 <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
-<div style="min-height:100vh;display:flex;align-items:stretch">
+<div class="vm-adm-shell" style="min-height:100vh;display:flex;align-items:stretch">
 
-<aside style="width:250px;flex:none;background:#FFFCFA;border-right:1px solid #E9E3E6;display:flex;flex-direction:column;padding:24px 18px">
+<aside class="vm-adm-side" style="width:250px;flex:none;background:#FFFCFA;border-right:1px solid #E9E3E6;display:flex;flex-direction:column;padding:24px 18px">
 <img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:132px;display:block;mix-blend-mode:multiply;margin:0 6px 8px">
 <div style="font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#963568;margin:0 6px 22px">Panel</div>
-<div style="display:flex;flex-direction:column;gap:4px;flex:1">
+<div class="vm-adm-nav" style="display:flex;flex-direction:column;gap:4px;flex:1">
 <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
 <sc-if value="{{ n.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ n.go }}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;background:#FFF1F6;border:0;border-radius:9px;padding:13px 14px;cursor:pointer;font:500 13.5px/1.2 'Jost',sans-serif;color:#963568">{{ n.name }}<span style="font:400 11px/1 'Jost',sans-serif;color:rgba(150,53,104,.6)">{{ n.badge }}</span></button></sc-if>
 <sc-if value="{{ n.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ n.go }}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;background:transparent;border:0;border-radius:9px;padding:13px 14px;cursor:pointer;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A">{{ n.name }}<span style="font:400 11px/1 'Jost',sans-serif;color:rgba(41,38,42,.35)">{{ n.badge }}</span></button></sc-if>
 </sc-for>
 </div>
-<div style="border-top:1px solid #E9E3E6;padding-top:16px;margin-top:16px">
-<div style="display:flex;align-items:center;gap:11px;padding:0 6px 14px">
+<div class="vm-adm-foot" style="border-top:1px solid #E9E3E6;padding-top:16px;margin-top:16px">
+<div class="vm-adm-user" style="display:flex;align-items:center;gap:11px;padding:0 6px 14px">
 <span style="width:34px;height:34px;border-radius:999px;background:#F5DCE7;color:#963568;display:flex;align-items:center;justify-content:center;font:500 13px/1 'Jost',sans-serif">VM</span>
 <span style="display:block"><span style="display:block;font:400 13px/1.2 'Jost',sans-serif;color:#29262A">Very Merry</span><span style="display:block;font:300 11px/1.2 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">Administradora</span></span>
 </div>
@@ -70,7 +95,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 </aside>
 
 <div style="flex:1;min-width:0;display:flex;flex-direction:column">
-<header style="background:#FFFCFA;border-bottom:1px solid #E9E3E6;padding:18px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:sticky;top:0;z-index:20">
+<header class="vm-adm-head" style="background:#FFFCFA;border-bottom:1px solid #E9E3E6;padding:18px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:sticky;top:0;z-index:20">
 <div>
 <h1 style="font:500 26px/1.15 'Cormorant Garamond',serif;color:#29262A;margin:0">{{ sectionTitle }}</h1>
 <div style="font:300 12.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.55);margin-top:4px">{{ sectionHint }}</div>
@@ -81,7 +106,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 </div>
 </header>
 
-<main style="flex:1;padding:26px 30px 60px">
+<main class="vm-adm-main" style="flex:1;padding:26px 30px 60px">
 
 <sc-if value="{{ isInicio }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;flex-direction:column;gap:22px;max-width:1100px">
@@ -94,7 +119,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 </div>
 <span style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5)">Se muestra al abrir la tienda</span>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:22px">
 <div>
 <div style="font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:9px">Fotografía del banner</div>
 <div style="position:relative;height:230px;border-radius:10px;overflow:hidden;background:#F5DCE7">
@@ -126,7 +151,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 <section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
 <div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Bloque 2</div>
 <h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 18px">Cinta de mensajes</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:12px">
 <label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Mensaje 1</span><input value="{{ ribbon.a }}" onChange="{{ onRibbonA }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
 <label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Mensaje 2</span><input value="{{ ribbon.b }}" onChange="{{ onRibbonB }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
 <label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Mensaje 3</span><input value="{{ ribbon.c }}" onChange="{{ onRibbonC }}" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:9px;padding:13px 14px;font:400 13.5px/1.2 'Jost',sans-serif;color:#29262A"></label>
@@ -139,7 +164,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 <section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
 <div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Bloque 3</div>
 <h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 18px">Banner de temporada</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:22px">
 <div style="position:relative;height:210px;border-radius:10px;overflow:hidden;background:#F5DCE7">
 <image-slot id="admin-temporada" shape="rect" src="assets/pasteles-rosa.jpg" placeholder="Foto de la campaña de temporada"></image-slot>
 </div>
@@ -158,7 +183,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 <div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:9px">Bloque 4</div>
 <h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 6px">Galería de la tienda</h2>
 <p style="font:300 12.5px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.55);margin:0 0 18px">Seis fotos de fiestas reales. Arrastra una imagen sobre cualquier marco para cambiarla.</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(140px,100%),1fr));gap:12px">
 <div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-1" shape="rect" src="assets/pasteles-rosa.jpg" placeholder="Foto 1"></image-slot></div>
 <div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-2" shape="rect" src="assets/platos-cerdito.jpg" placeholder="Foto 2"></image-slot></div>
 <div style="position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#F5DCE7"><image-slot id="admin-gal-3" shape="rect" src="assets/mesa-flores.jpg" placeholder="Foto 3"></image-slot></div>
@@ -184,11 +209,11 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 </div>
 </div>
 <div style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;overflow-x:auto">
-<div style="min-width:880px;display:grid;grid-template-columns:58px 64px minmax(220px,1fr) 180px 110px 128px 88px;gap:12px;padding:14px 20px;background:#FFF1F6;font:500 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#963568">
+<div style="min-width:880px;display:grid;grid-template-columns:58px 64px minmax(min(220px,100%),1fr) 180px 110px 128px 88px;gap:12px;padding:14px 20px;background:#FFF1F6;font:500 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#963568">
 <span>Orden</span><span>Foto</span><span>Producto</span><span>Categorías</span><span>Precio</span><span>Existencia</span><span></span>
 </div>
 <sc-for list="{{ prods }}" as="p" hint-placeholder-count="6">
-<div draggable="{{ p.draggable }}" onDragStart="{{ p.onDragStart }}" onDragOver="{{ p.onDragOver }}" onDrop="{{ p.onDrop }}" onDragEnd="{{ p.onDragEnd }}" style="min-width:880px;display:grid;grid-template-columns:58px 64px minmax(220px,1fr) 180px 110px 128px 88px;gap:12px;padding:14px 20px;align-items:center;border-top:1px solid #E9E3E6">
+<div draggable="{{ p.draggable }}" onDragStart="{{ p.onDragStart }}" onDragOver="{{ p.onDragOver }}" onDrop="{{ p.onDrop }}" onDragEnd="{{ p.onDragEnd }}" style="min-width:880px;display:grid;grid-template-columns:58px 64px minmax(min(220px,100%),1fr) 180px 110px 128px 88px;gap:12px;padding:14px 20px;align-items:center;border-top:1px solid #E9E3E6">
 <div style="display:flex;align-items:center;gap:8px;background:{{ p.handleBg }};border-radius:8px;padding:4px 2px;cursor:grab">
 <span style="font:400 13px/1 'Jost',sans-serif;color:rgba(41,38,42,.35);letter-spacing:-.05em">⠿</span>
 <span style="display:block">
@@ -219,7 +244,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 <button onClick="{{ addCat }}" style="flex:none;font:500 13px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:14px 24px;cursor:pointer">+ Agregar categoría</button>
 <div style="flex:1 1 100%;font:300 12px/1.7 'Jost',sans-serif;color:rgba(41,38,42,.5)">Mantén presionado el punteado (⠿) y arrastra una categoría para elegir cuál va primero en el menú y en la página de inicio.</div>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px">
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:18px">
 <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
 <div draggable="true" onDragStart="{{ c.onDragStart }}" onDragOver="{{ c.onDragOver }}" onDrop="{{ c.onDrop }}" onDragEnd="{{ c.onDragEnd }}" style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:18px;display:flex;gap:14px">
 <div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:5px;background:{{ c.handleBg }};border-radius:8px;padding:4px 5px;cursor:grab">
@@ -247,11 +272,11 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 
 <sc-if value="{{ isPedidos }}" hint-placeholder-val="{{ false }}">
 <div style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;overflow-x:auto;max-width:1000px">
-<div style="min-width:740px;display:grid;grid-template-columns:150px minmax(180px,1fr) 130px 120px 150px;gap:14px;padding:14px 20px;background:#FFF1F6;font:500 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#963568">
+<div style="min-width:740px;display:grid;grid-template-columns:150px minmax(min(180px,100%),1fr) 130px 120px 150px;gap:14px;padding:14px 20px;background:#FFF1F6;font:500 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#963568">
 <span>Pedido</span><span>Cliente</span><span>Fecha</span><span>Total</span><span>Estado</span>
 </div>
 <sc-for list="{{ orders }}" as="o" hint-placeholder-count="4">
-<div style="min-width:740px;display:grid;grid-template-columns:150px minmax(180px,1fr) 130px 120px 150px;gap:14px;padding:16px 20px;align-items:center;border-top:1px solid #E9E3E6;font:400 13.5px/1.3 'Jost',sans-serif;color:#29262A">
+<div style="min-width:740px;display:grid;grid-template-columns:150px minmax(min(180px,100%),1fr) 130px 120px 150px;gap:14px;padding:16px 20px;align-items:center;border-top:1px solid #E9E3E6;font:400 13.5px/1.3 'Jost',sans-serif;color:#29262A">
 <span style="letter-spacing:.04em">{{ o.number }}</span>
 <span><span style="display:block">{{ o.client }}</span><span style="display:block;font:300 11.5px/1.4 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-top:3px">{{ o.items }}</span></span>
 <span style="font-weight:300;color:rgba(41,38,42,.65)">{{ o.date }}</span>
@@ -263,7 +288,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#963568}
 </sc-if>
 
 <sc-if value="{{ isAjustes }}" hint-placeholder-val="{{ false }}">
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;max-width:1100px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:18px;max-width:1100px">
 <section style="background:#FFFCFA;border:1px solid #E9E3E6;border-radius:12px;padding:24px 26px">
 <h2 style="font:500 22px/1.2 'Cormorant Garamond',serif;color:#29262A;margin:0 0 18px">Contacto y entregas</h2>
 <div style="display:flex;flex-direction:column;gap:14px">

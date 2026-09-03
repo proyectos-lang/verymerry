@@ -21,6 +21,51 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 @keyframes vmSlide{from{transform:translateX(100%)}to{transform:none}}
 @keyframes vmSlideL{from{transform:translateX(-100%)}to{transform:none}}
 @keyframes vmMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ================= Responsive =================
+   Las grillas usan minmax(min(Npx,100%),1fr): el min() impide que una columna
+   quede mas ancha que su contenedor, que era lo que producia scroll horizontal
+   en pantallas angostas. Lo de abajo ajusta header, hero y espaciados. */
+body{overflow-x:hidden}
+img,svg{max-width:100%}
+
+@media (max-width:1024px){
+  .vm-nav{gap:16px!important}
+  .vm-hero-txt{padding:46px 38px!important;min-height:400px!important}
+  .vm-hero-img{min-height:340px!important}
+}
+
+@media (max-width:820px){
+  /* El menu hamburguesa ya ofrece esta misma navegacion */
+  .vm-nav{display:none!important}
+  .vm-hdr{gap:10px!important}
+  .vm-logo{width:122px!important}
+  .vm-cat-main{min-height:300px!important}
+}
+
+@media (max-width:640px){
+  /* El boton flotante de WhatsApp cubre este acceso */
+  .vm-wa{display:none!important}
+  .vm-hdr{padding-left:16px!important;padding-right:16px!important}
+  .vm-wrap{padding-left:16px!important;padding-right:16px!important}
+  .vm-band{padding-left:16px!important;padding-right:16px!important;
+           padding-top:42px!important;padding-bottom:42px!important}
+  .vm-hero-txt{padding:36px 24px!important;min-height:0!important}
+  .vm-hero-img{min-height:300px!important}
+  .vm-cat-main{min-height:260px!important}
+}
+
+@media (max-width:640px){
+  /* Una sola columna deja tarjetas enormes; dos es lo esperable en una tienda */
+  .vm-grid-prod{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:22px 14px!important}
+  .vm-dot{display:none!important}
+}
+
+@media (max-width:400px){
+  .vm-logo{width:104px!important}
+  .vm-hdr{gap:6px!important}
+}
+
 </style>
 </helmet>
 
@@ -29,23 +74,23 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 <div style="background:#963568;color:#FFFCFA;padding:11px 24px;text-align:center;font:400 11.5px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase">Have a very merry party</div>
 
 <header style="position:sticky;top:0;z-index:40;background:#FFFCFA;border-bottom:1px solid #E9E3E6">
-<div style="max-width:1440px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:18px">
+<div class="vm-hdr" style="max-width:1440px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:18px">
 <button onClick="{{ toggleMenu }}" aria-label="Menú" style="flex:none;background:transparent;border:0;padding:8px;cursor:pointer;display:flex;flex-direction:column;gap:5px">
 <span style="width:22px;height:1.6px;background:#29262A;display:block"></span>
 <span style="width:22px;height:1.6px;background:#29262A;display:block"></span>
 <span style="width:14px;height:1.6px;background:#29262A;display:block"></span>
 </button>
 <button onClick="{{ goHome }}" style="flex:none;background:transparent;border:0;padding:0;cursor:pointer;display:block">
-<img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:150px;display:block;mix-blend-mode:multiply">
+<img class="vm-logo" src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:150px;display:block;mix-blend-mode:multiply">
 </button>
-<nav style="flex:1;display:flex;gap:22px;justify-content:center;flex-wrap:wrap;font:400 13.5px/1 'Jost',sans-serif">
+<nav class="vm-nav" style="flex:1;display:flex;gap:22px;justify-content:center;flex-wrap:wrap;font:400 13.5px/1 'Jost',sans-serif">
 <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
 <sc-if value="{{ l.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ l.go }}" style="background:transparent;border:0;border-bottom:1.5px solid #963568;padding:6px 0 4px;cursor:pointer;font:500 13.5px/1 'Jost',sans-serif;color:#963568">{{ l.name }}</button></sc-if>
 <sc-if value="{{ l.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ l.go }}" style="background:transparent;border:0;padding:6px 0;cursor:pointer;font:400 13.5px/1 'Jost',sans-serif;color:#29262A">{{ l.name }}</button></sc-if>
 </sc-for>
 </nav>
 <div style="flex:none;display:flex;align-items:center;gap:14px">
-<a href="{{ waLink }}" target="_blank" rel="noreferrer" style="display:flex;align-items:center;gap:7px;background:#F5DCE7;border-radius:999px;padding:9px 15px;color:#963568;text-decoration:none">
+<a class="vm-wa" href="{{ waLink }}" target="_blank" rel="noreferrer" style="display:flex;align-items:center;gap:7px;background:#F5DCE7;border-radius:999px;padding:9px 15px;color:#963568;text-decoration:none">
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg>
 <span style="font:500 12px/1 'Jost',sans-serif">WhatsApp</span>
 </a>
@@ -59,7 +104,7 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 </div>
 <div style="border-top:1px solid #E9E3E6">
-<div style="max-width:1440px;margin:0 auto;padding:11px 24px;display:flex;gap:8px;overflow-x:auto">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;padding:11px 24px;display:flex;gap:8px;overflow-x:auto">
 <sc-for list="{{ navCats }}" as="c" hint-placeholder-count="6">
 <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.go }}" style="flex:none;font:400 12.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:10px 15px;cursor:pointer">{{ c.name }}</button></sc-if>
 <sc-if value="{{ c.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.go }}" style="flex:none;font:400 12.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:1px solid #E9E3E6;border-radius:999px;padding:9px 14px;cursor:pointer">{{ c.name }}</button></sc-if>
@@ -68,7 +113,7 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 <sc-if value="{{ searchOpen }}" hint-placeholder-val="{{ false }}">
 <div style="border-top:1px solid #E9E3E6;background:#FFF1F6;animation:vmIn .18s ease-out">
-<div style="max-width:1000px;margin:0 auto;padding:22px 24px 26px">
+<div class="vm-wrap" style="max-width:1000px;margin:0 auto;padding:22px 24px 26px">
 <div style="display:flex;align-items:center;gap:12px;background:#FFFCFA;border:1px solid #F5DCE7;border-radius:999px;padding:14px 20px">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#963568" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><line x1="16.2" y1="16.2" x2="21" y2="21"></line></svg>
 <input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Buscar platos, guirnaldas, toppers…" style="flex:1;min-width:0;border:0;background:transparent;font:400 15px/1.2 'Jost',sans-serif;color:#29262A;padding:2px 0">
@@ -114,11 +159,11 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <div>
-<div style="max-width:1440px;margin:0 auto;padding:34px 24px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:26px;align-items:stretch">
-<div style="background:#FFF1F6;border-radius:18px;padding:58px 50px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;min-height:460px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;padding:34px 24px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr));gap:26px;align-items:stretch">
+<div class="vm-hero-txt" style="background:#FFF1F6;border-radius:18px;padding:58px 50px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;min-height:460px">
 <span style="position:absolute;top:-40px;right:-40px;width:190px;height:190px;border-radius:999px;background:#F5DCE7"></span>
-<span style="position:absolute;bottom:34px;right:44px;width:9px;height:9px;border-radius:999px;background:#E87FAF"></span>
-<span style="position:absolute;bottom:58px;right:76px;width:6px;height:6px;border-radius:999px;background:#963568"></span>
+<span class="vm-dot" style="position:absolute;bottom:34px;right:44px;width:9px;height:9px;border-radius:999px;background:#E87FAF"></span>
+<span class="vm-dot" style="position:absolute;bottom:58px;right:76px;width:6px;height:6px;border-radius:999px;background:#963568"></span>
 <div style="position:relative;z-index:1">
 <div>
 <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px">
@@ -134,7 +179,7 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 </div>
 </div>
-<div style="position:relative;border-radius:18px;overflow:hidden;min-height:460px;background:#F5DCE7">
+<div class="vm-hero-img" style="position:relative;border-radius:18px;overflow:hidden;min-height:460px;background:#F5DCE7">
 <img src="assets/hero-granja.jpg" alt="Fiesta de cumpleaños" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
 <button onClick="{{ heroPeek.open }}" style="position:absolute;left:18px;bottom:18px;display:flex;gap:12px;align-items:center;background:rgba(255,252,250,.95);border:0;border-radius:12px;padding:12px 18px 12px 12px;cursor:pointer;box-shadow:0 10px 26px rgba(41,38,42,.18);text-align:left">
 <sc-if value="{{ dataReady }}" hint-placeholder-val="{{ false }}"><img src="{{ heroPeek.photo }}" alt="" style="width:54px;height:54px;border-radius:8px;object-fit:cover;display:block"></sc-if>
@@ -152,16 +197,16 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 </div>
 
-<div style="max-width:1440px;margin:0 auto;padding:72px 24px 20px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;padding:72px 24px 20px">
 <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:28px">
 <div>
 <div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Explora</div>
-<h2 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Categorías principales</h2>
+<h2 style="font:500 clamp(28px,6.4vw,40px)/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Categorías principales</h2>
 </div>
 <button onClick="{{ goCatalog }}" style="font:400 13.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:0;border-bottom:1px solid rgba(41,38,42,.25);padding:0 0 4px;cursor:pointer">Ver todos los productos</button>
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:stretch">
-<button onClick="{{ catA.go }}" style="flex:1 1 300px;min-height:438px;position:relative;border:0;padding:0;cursor:pointer;border-radius:14px;overflow:hidden;display:block;background:#F5DCE7">
+<button onClick="{{ catA.go }}" class="vm-cat-main" style="flex:1 1 300px;min-height:438px;position:relative;border:0;padding:0;cursor:pointer;border-radius:14px;overflow:hidden;display:block;background:#F5DCE7">
 <sc-if value="{{ dataReady }}" hint-placeholder-val="{{ false }}"><img src="{{ catA.photo }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></sc-if>
 <span style="position:absolute;inset:auto 0 0 0;padding:26px 24px;background:linear-gradient(to top,rgba(41,38,42,.62),rgba(41,38,42,0));display:block;text-align:left">
 <span style="display:block;font:500 30px/1.1 'Cormorant Garamond',serif;color:#FFFCFA">{{ catA.name }}</span>
@@ -202,15 +247,15 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 </div>
 
-<div style="max-width:1440px;margin:0 auto;padding:64px 24px 0">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;padding:64px 24px 0">
 <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:26px">
 <div>
 <div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Recién llegado</div>
-<h2 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">New Arrivals</h2>
+<h2 style="font:500 clamp(28px,6.4vw,40px)/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">New Arrivals</h2>
 </div>
 <button onClick="{{ goNew }}" style="font:400 13.5px/1 'Jost',sans-serif;color:#29262A;background:transparent;border:0;border-bottom:1px solid rgba(41,38,42,.25);padding:0 0 4px;cursor:pointer">Ver todo</button>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:26px">
+<div class="vm-grid-prod" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));gap:26px">
 <sc-for list="{{ newArrivals }}" as="p" hint-placeholder-count="4">
 <div style="display:flex;flex-direction:column">
 <div style="position:relative">
@@ -231,19 +276,19 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 
 <sc-if value="{{ showSale }}" hint-placeholder-val="{{ true }}">
-<div style="background:#963568;margin-top:66px;padding:64px 24px">
-<div style="max-width:1440px;margin:0 auto">
+<div class="vm-band" style="background:#963568;margin-top:66px;padding:64px 24px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto">
 <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:30px">
 <div style="display:flex;align-items:flex-end;gap:26px;flex-wrap:wrap">
 <div style="font:500 clamp(64px,9vw,120px)/.8 'Cormorant Garamond',serif;color:#E87FAF;letter-spacing:-.03em">30%</div>
 <div>
 <div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,252,250,.7);margin-bottom:12px">Hasta 30% menos</div>
-<h2 style="font:500 44px/1.05 'Cormorant Garamond',serif;color:#FFFCFA;margin:0">Sale <span style="font-style:italic;color:#F5DCE7">de temporada</span></h2>
+<h2 style="font:500 clamp(30px,7vw,44px)/1.05 'Cormorant Garamond',serif;color:#FFFCFA;margin:0">Sale <span style="font-style:italic;color:#F5DCE7">de temporada</span></h2>
 </div>
 </div>
 <button onClick="{{ goSale }}" style="font:400 13.5px/1 'Jost',sans-serif;color:#FFFCFA;background:transparent;border:0;border-bottom:1px solid rgba(255,252,250,.45);padding:0 0 4px;cursor:pointer">Ver toda la promoción</button>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:24px">
+<div class="vm-grid-prod" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr));gap:24px">
 <sc-for list="{{ saleItems }}" as="p" hint-placeholder-count="3">
 <div style="background:#FFFCFA;border-radius:10px;padding:16px;display:flex;flex-direction:column">
 <div style="position:relative">
@@ -265,12 +310,12 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 </sc-if>
 
-<div style="max-width:1440px;margin:0 auto;padding:64px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;padding:64px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:24px">
 <div style="position:relative;border-radius:12px;overflow:hidden;min-height:320px;display:flex;align-items:center;background:#F5DCE7">
 <img src="assets/pasteles-rosa.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
 <div style="position:relative;margin:26px;background:rgba(255,252,250,.94);border-radius:10px;padding:30px 32px;max-width:340px">
 <div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Temporada · Cumpleaños</div>
-<h3 style="font:500 34px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Velas altas y bases festoneadas</h3>
+<h3 style="font:500 clamp(25px,5.6vw,34px)/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Velas altas y bases festoneadas</h3>
 <p style="font:300 14px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.7);margin:0 0 20px">El pastel se ve mejor sobre una base con pie y rodeado de velas de colores.</p>
 <button onClick="{{ goVelas }}" style="font:500 13.5px/1 'Jost',sans-serif;color:#FFFCFA;background:#963568;border:0;border-radius:999px;padding:15px 28px;cursor:pointer">Ver la mesa de pastel</button>
 </div>
@@ -278,22 +323,22 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 <div style="border-radius:12px;background:#963568;padding:34px;display:flex;flex-direction:column;justify-content:space-between;min-height:320px">
 <div>
 <div style="font:500 10px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,252,250,.7);margin-bottom:12px">Tema del mes</div>
-<h3 style="font:500 32px/1.12 'Cormorant Garamond',serif;color:#FFFCFA;margin:0 0 12px">Fiesta<br>en la granja</h3>
+<h3 style="font:500 clamp(24px,5.4vw,32px)/1.12 'Cormorant Garamond',serif;color:#FFFCFA;margin:0 0 12px">Fiesta<br>en la granja</h3>
 <p style="font:300 14px/1.6 'Jost',sans-serif;color:rgba(255,252,250,.75);margin:0;max-width:280px">Guirnaldas, coronas, toppers y vajilla que combinan entre sí.</p>
 </div>
 <button onClick="{{ goFarm }}" style="align-self:flex-start;font:400 13px/1 'Jost',sans-serif;color:#FFFCFA;background:transparent;border:0;border-bottom:1px solid rgba(255,252,250,.4);padding:0 0 4px;cursor:pointer">Ver el tema completo</button>
 </div>
 </div>
 
-<div style="max-width:1440px;margin:0 auto;padding:8px 24px 64px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;padding:8px 24px 64px">
 <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:28px">
 <div>
 <div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">Cómo lo hacemos</div>
-<h2 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Arma tu mesa en tres pasos</h2>
+<h2 style="font:500 clamp(28px,6.4vw,40px)/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Arma tu mesa en tres pasos</h2>
 </div>
 <a href="{{ waLink }}" target="_blank" rel="noreferrer" style="font:400 13.5px/1 'Jost',sans-serif;color:#963568;border-bottom:1px solid rgba(150,53,104,.3);padding-bottom:4px">Que te ayudemos por WhatsApp</a>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:24px">
 <div>
 <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#F5DCE7"><img src="assets/set-granja.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
 <div style="display:flex;gap:14px;margin-top:16px">
@@ -327,13 +372,13 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 </div>
 
-<div style="background:#FFF1F6;padding:60px 24px">
-<div style="max-width:1440px;margin:0 auto">
+<div class="vm-band" style="background:#FFF1F6;padding:60px 24px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto">
 <div style="text-align:center;margin-bottom:26px">
 <div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:12px">@verymerryhn</div>
-<h2 style="font:500 40px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Fiestas muy merry</h2>
+<h2 style="font:500 clamp(28px,6.4vw,40px)/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0">Fiestas muy merry</h2>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:12px">
 <img src="assets/pasteles-rosa.jpg" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block">
 <img src="assets/platos-cerdito.jpg" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block">
 <img src="assets/mesa-flores.jpg" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block">
@@ -344,8 +389,8 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 </div>
 
-<div style="background:#FFFCFA;border-top:1px solid #E9E3E6;padding:52px 24px">
-<div style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:30px">
+<div class="vm-band" style="background:#FFFCFA;border-top:1px solid #E9E3E6;padding:52px 24px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:30px">
 <div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.4"></circle></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Variedad para cada celebración</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Temas completos, vajilla, velas y flores decorativas.</div></div>
 <div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 12a9 9 0 1 0-4.4 7.7L21 21l-1.3-4.3A8.9 8.9 0 0 0 21 12Z"></path></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Atención personalizada</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Te ayudamos a armar la fiesta por WhatsApp, de 9 a 6.</div></div>
 <div><div style="color:#963568;margin-bottom:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="12" height="9" rx="1.4"></rect><path d="M15 10h3.4l2.6 3v3H15z"></path><circle cx="7" cy="18" r="1.8"></circle><circle cx="17.4" cy="18" r="1.8"></circle></svg></div><div style="font:500 16px/1.3 'Jost',sans-serif;color:#29262A;margin-bottom:6px">Entregas disponibles</div><div style="font:300 13px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.62)">Mismo día en la capital y envío nacional en 24–72 h.</div></div>
@@ -357,14 +402,14 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 
 <sc-if value="{{ isCatalog }}" hint-placeholder-val="{{ false }}">
 <div>
-<div style="background:#FFF1F6;padding:38px 24px 40px">
-<div style="max-width:1440px;margin:0 auto">
+<div class="vm-band" style="background:#FFF1F6;padding:38px 24px 40px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto">
 <div style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-bottom:14px">{{ crumbs }}</div>
-<h1 style="font:500 44px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 12px">{{ catalogTitle }}</h1>
+<h1 style="font:500 clamp(30px,7vw,44px)/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 12px">{{ catalogTitle }}</h1>
 <p style="font:300 15px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.68);margin:0;max-width:560px">{{ catalogDesc }}</p>
 </div>
 </div>
-<div style="max-width:1440px;margin:0 auto;padding:30px 24px 70px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;padding:30px 24px 70px">
 <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid #E9E3E6;margin-bottom:26px">
 <span style="font:300 13.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6)">{{ resultsCountLabel }}</span>
 <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
@@ -375,7 +420,7 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </sc-for>
 </div>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:30px 26px">
+<div class="vm-grid-prod" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));gap:30px 26px">
 <sc-for list="{{ catalogItems }}" as="p" hint-placeholder-count="8">
 <div style="display:flex;flex-direction:column">
 <div style="position:relative">
@@ -415,10 +460,10 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 
 <sc-if value="{{ isProduct }}" hint-placeholder-val="{{ false }}">
 <div>
-<div style="max-width:1440px;margin:0 auto;padding:26px 24px 0">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;padding:26px 24px 0">
 <button onClick="{{ goBackCatalog }}" style="font:300 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.55);background:transparent;border:0;padding:0;cursor:pointer">← {{ detail.crumb }}</button>
 </div>
-<div style="max-width:1440px;margin:0 auto;padding:22px 24px 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:50px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;padding:22px 24px 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr));gap:50px">
 <div>
 <div style="position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1;background:#F5DCE7">
 <img src="{{ detail.photo }}" alt="{{ detail.name }}" style="width:100%;height:100%;object-fit:cover;display:block">
@@ -432,7 +477,7 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 <div>
 <div style="font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#963568;margin-bottom:14px">{{ detail.cat }}</div>
-<h1 style="font:500 42px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 14px">{{ detail.name }}</h1>
+<h1 style="font:500 clamp(29px,6.8vw,42px)/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 14px">{{ detail.name }}</h1>
 <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:10px">
 <span style="font:500 28px/1 'Jost',sans-serif;color:#29262A">{{ detail.priceLabel }}</span>
 <sc-if value="{{ detail.hasOld }}" hint-placeholder-val="{{ false }}"><span style="font:400 16px/1 'Jost',sans-serif;color:rgba(41,38,42,.42);text-decoration:line-through">{{ detail.oldPriceLabel }}</span></sc-if>
@@ -473,10 +518,10 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 </div>
 </div>
-<div style="background:#FFF1F6;padding:56px 24px">
-<div style="max-width:1440px;margin:0 auto">
-<h2 style="font:500 34px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 26px">Combina muy merry</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px">
+<div class="vm-band" style="background:#FFF1F6;padding:56px 24px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto">
+<h2 style="font:500 clamp(25px,5.6vw,34px)/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 26px">Combina muy merry</h2>
+<div class="vm-grid-prod" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(220px,100%),1fr));gap:24px">
 <sc-for list="{{ related }}" as="p" hint-placeholder-count="4">
 <div style="display:flex;flex-direction:column">
 <button onClick="{{ p.open }}" style="width:100%;border:0;padding:0;cursor:pointer;border-radius:9px;overflow:hidden;aspect-ratio:1;display:block;background:#F5DCE7"><img src="{{ p.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></button>
@@ -491,16 +536,16 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </sc-if>
 
 <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
-<div style="max-width:1180px;margin:0 auto;padding:40px 24px 70px">
+<div class="vm-wrap" style="max-width:1180px;margin:0 auto;padding:40px 24px 70px">
 <div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:26px;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.45)">
 <span style="color:#963568">1 · Datos</span><span>2 · Entrega</span><span>3 · Confirmación</span>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:40px">
 <div>
-<h1 style="font:500 38px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 8px">Finalizar pedido</h1>
+<h1 style="font:500 clamp(27px,6.2vw,38px)/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 8px">Finalizar pedido</h1>
 <p style="font:300 14px/1.6 'Jost',sans-serif;color:rgba(41,38,42,.65);margin:0 0 28px">Completa tus datos y confirmamos por WhatsApp en pocos minutos.</p>
 <div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#963568;margin-bottom:16px">Tus datos</div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:30px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:14px;margin-bottom:30px">
 <label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Nombre completo</span><input value="{{ form.nombre }}" onChange="{{ onNombre }}" placeholder="María Fernanda López" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
 <label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Teléfono / WhatsApp</span><input value="{{ form.telefono }}" onChange="{{ onTelefono }}" placeholder="+504 9876-5432" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
 <label style="display:block;grid-column:1/-1"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Correo electrónico</span><input value="{{ form.correo }}" onChange="{{ onCorreo }}" placeholder="tu@correo.com" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
@@ -532,7 +577,7 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 </sc-if>
 <sc-if value="{{ esDomicilio }}" hint-placeholder-val="{{ true }}">
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:26px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:14px;margin-bottom:26px">
 <label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Ciudad</span><input value="{{ form.ciudad }}" onChange="{{ onCiudad }}" placeholder="Tegucigalpa" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
 <label style="display:block"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Colonia / zona</span><input value="{{ form.colonia }}" onChange="{{ onColonia }}" placeholder="Col. Tepeyac" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
 <label style="display:block;grid-column:1/-1"><span style="display:block;font:400 12.5px/1 'Jost',sans-serif;color:rgba(41,38,42,.6);margin-bottom:8px">Dirección de entrega</span><input value="{{ form.direccion }}" onChange="{{ onDireccion }}" placeholder="Calle principal, casa #24" style="width:100%;box-sizing:border-box;background:#FFFCFA;border:1px solid #E9E3E6;border-radius:10px;padding:15px 16px;font:400 14px/1.2 'Jost',sans-serif;color:#29262A"></label>
@@ -575,10 +620,10 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </sc-if>
 
 <sc-if value="{{ isConfirm }}" hint-placeholder-val="{{ false }}">
-<div style="max-width:720px;margin:0 auto;padding:50px 24px 80px">
+<div class="vm-wrap" style="max-width:720px;margin:0 auto;padding:50px 24px 80px">
 <div style="background:#FFF1F6;border-radius:12px;padding:46px 40px 40px;text-align:center">
 <div style="width:58px;height:58px;border-radius:999px;background:#963568;display:flex;align-items:center;justify-content:center;margin:0 auto 22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFCFA" stroke-width="1.8"><path d="M6 12.4l4 4 8-8.4"></path></svg></div>
-<h1 style="font:500 38px/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 12px">¡Tu pedido está en camino a ser muy merry!</h1>
+<h1 style="font:500 clamp(27px,6.2vw,38px)/1.1 'Cormorant Garamond',serif;color:#29262A;margin:0 0 12px">¡Tu pedido está en camino a ser muy merry!</h1>
 <p style="font:300 14.5px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.7);margin:0 auto;max-width:400px">Recibimos tu pedido y te escribimos por WhatsApp para coordinar la entrega.</p>
 <div style="display:inline-flex;gap:10px;align-items:center;background:#FFFCFA;border-radius:999px;padding:12px 22px;margin-top:22px;font:400 13.5px/1 'Jost',sans-serif;color:#29262A"><span style="color:rgba(41,38,42,.5);font-weight:300">Pedido</span><span style="font-weight:500;letter-spacing:.06em">{{ order.number }}</span></div>
 </div>
@@ -605,14 +650,14 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 
 <sc-if value="{{ isFaq }}" hint-placeholder-val="{{ false }}">
 <div>
-<div style="background:#FFF1F6;padding:44px 24px 40px">
-<div style="max-width:1000px;margin:0 auto">
+<div class="vm-band" style="background:#FFF1F6;padding:44px 24px 40px">
+<div class="vm-wrap" style="max-width:1000px;margin:0 auto">
 <div style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.5);margin-bottom:14px">Inicio / Ayuda / Preguntas frecuentes</div>
-<h1 style="font:500 42px/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Preguntas frecuentes</h1>
+<h1 style="font:500 clamp(29px,6.8vw,42px)/1.08 'Cormorant Garamond',serif;color:#29262A;margin:0 0 10px">Preguntas frecuentes</h1>
 <p style="font:300 15px/1.65 'Jost',sans-serif;color:rgba(41,38,42,.68);margin:0;max-width:520px">Si no encuentras tu respuesta, escríbenos por WhatsApp de lunes a sábado de 9:00 a 18:00.</p>
 </div>
 </div>
-<div style="max-width:1000px;margin:0 auto;padding:36px 24px 70px">
+<div class="vm-wrap" style="max-width:1000px;margin:0 auto;padding:36px 24px 70px">
 <sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
 <button onClick="{{ f.go }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;background:transparent;border:0;border-bottom:1px solid #E9E3E6;cursor:pointer;text-align:left;font:400 17.5px/1.4 'Jost',sans-serif;color:#29262A">{{ f.q }}<span style="font:300 20px/1 'Jost',sans-serif;color:#963568">{{ f.sign }}</span></button>
 <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><div style="font:300 14.5px/1.75 'Jost',sans-serif;color:rgba(41,38,42,.7);padding:16px 0 20px;border-bottom:1px solid #E9E3E6;max-width:680px">{{ f.a }}</div></sc-if>
@@ -630,8 +675,8 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 
 </main>
 
-<footer style="background:#29262A;padding:56px 24px 28px">
-<div style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:40px;padding-bottom:38px;border-bottom:1px solid rgba(255,252,250,.13)">
+<footer class="vm-band" style="background:#29262A;padding:56px 24px 28px">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:40px;padding-bottom:38px;border-bottom:1px solid rgba(255,252,250,.13)">
 <div>
 <img src="assets/very-merry-logo.jpg" alt="Very Merry" style="width:160px;display:block;filter:invert(1) grayscale(1) brightness(1.9);mix-blend-mode:screen;margin-bottom:18px">
 <div style="font:300 13px/1.8 'Jost',sans-serif;color:rgba(255,252,250,.62)">Tegucigalpa, Honduras<br>+504 9000-0000<br>hola@verymerry.hn<br>L–S 9:00 a 18:00</div>
@@ -663,7 +708,7 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 </div>
 </div>
 </div>
-<div style="max-width:1440px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(255,252,250,.4)">
+<div class="vm-wrap" style="max-width:1440px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font:300 12px/1.5 'Jost',sans-serif;color:rgba(255,252,250,.4)">
 <span>© 2026 Very Merry · Todos los derechos reservados</span>
 <a href="Very Merry Panel Admin.dc.html" style="color:rgba(255,252,250,.55)">Iniciar sesión · panel administrativo</a>
 <span>Have a very merry party</span>
@@ -682,7 +727,7 @@ input:focus,textarea:focus{outline:none;border-color:#963568}
 <button onClick="{{ goNew }}" style="width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #E9E3E6;padding:15px 0;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A">New Arrivals</button>
 <button onClick="{{ goSale }}" style="width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #E9E3E6;padding:15px 0;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A">Sale</button>
 <sc-for list="{{ menuCats }}" as="m" hint-placeholder-count="6">
-<button onClick="{{ m.go }}" style="width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #E9E3E6;padding:15px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font:400 15px/1.3 'Jost',sans-serif;color:#29262A">{{ m.name }}<span style="font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">{{ m.countLabel }}</span></button>
+<button onClick="{{ m.go }}" style="width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #E9E3E6;padding:15px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font:400 15px/1.3 'Jost',sans-serif;color:#29262A">{{ m.name }}<span style="flex:none;white-space:nowrap;padding-left:12px;font:300 12px/1 'Jost',sans-serif;color:rgba(41,38,42,.4)">{{ m.countLabel }}</span></button>
 </sc-for>
 <button onClick="{{ goCatalog }}" style="width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #E9E3E6;padding:15px 0;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A">Todos los productos</button>
 <button onClick="{{ goFaq }}" style="width:100%;text-align:left;background:transparent;border:0;padding:15px 0;cursor:pointer;font:400 15px/1 'Jost',sans-serif;color:#29262A">Preguntas frecuentes · Contacto</button>
