@@ -1095,46 +1095,39 @@ class Component extends DCLogic {
     if (this.state.generando) return;
     if (!d.items.length) { this.flash('Tu carrito está vacío'); return; }
     this.setState({ generando: true });
-    // La pestaña se abre AHORA, dentro del toque del usuario. Si se abriera
-    // despues de generar la imagen, el navegador ya no la asociaria a ese toque
-    // y la bloquearia como ventana emergente.
-    let ventana = null;
-    try { ventana = window.open('', '_blank'); } catch (e) { ventana = null; }
-    if (ventana) {
-      try {
-        ventana.document.write('<meta name="viewport" content="width=device-width,initial-scale=1">' +
-          '<title>Very Merry</title><body style="margin:0;height:100vh;display:flex;align-items:center;' +
-          'justify-content:center;background:#FFF1F6;color:#963568;font:400 15px system-ui,sans-serif">' +
-          'Preparando tu pedido…</body>');
-        ventana.document.close();
-      } catch (e) { /* algunos navegadores no dejan escribir; no importa */ }
-    }
-
     let blob;
     try {
       blob = await this.dibujarPedido(d);
     } catch (e) {
-      if (ventana) { try { ventana.close(); } catch (e2) {} }
       this.flash('No se pudo generar la imagen');
       this.setState({ generando: false });
       return;
     }
 
-    // Se guarda la foto en el telefono...
+    const archivo = new File([blob], 'pedido-very-merry.png', { type: 'image/png' });
+    // Un enlace wa.me no admite adjuntos: la unica via para mandar la imagen
+    // es la hoja de compartir del sistema, donde WhatsApp aparece como opcion.
+    if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+      try {
+        await navigator.share({ files: [archivo], title: 'Mi pedido Very Merry' });
+        this.setState({ generando: false });
+        return;
+      } catch (e) {
+        // Cerrar la hoja no es un error: no hay que insistir con una descarga.
+        if (e && e.name === 'AbortError') { this.setState({ generando: false }); return; }
+        // Hay navegadores que dicen poder compartir y luego fallan (por ejemplo
+        // si se perdio la interaccion del usuario). Se descarga en vez de dejar
+        // al usuario sin nada.
+      }
+    }
+
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = 'pedido-very-merry.png';
     document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 8000);
-
-    // ...y se abre el chat de Very Merry con el pedido ya escrito. WhatsApp no
-    // acepta adjuntos por enlace, asi que la foto se adjunta con el clip: es la
-    // unica forma de que el numero se abra solo.
-    if (ventana) ventana.location.href = d.waFoto;
-    else window.open(d.waFoto, '_blank', 'noopener');
-
-    this.flash('Foto guardada. Adjúntala en el chat con el clip 📎');
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    this.flash('Imagen descargada. Adjúntala en WhatsApp.');
     this.setState({ generando: false });
   }
 
@@ -1205,8 +1198,6 @@ class Component extends DCLogic {
       const texto = ['¡Hola Very Merry! Quiero hacer este pedido:', '', lineas.join('\n'), '', 'Subtotal: ' + this.money(sub), entrega, datos.length ? '\n' + datos.join('\n') : ''].join('\n');
       return 'https://wa.me/' + wa + '?text=' + encodeURIComponent(texto);
     })();
-    // Mismo chat, avisando que va la foto adjunta.
-    const waFoto = waPedido + encodeURIComponent('\n\nTe adjunto la foto de mi pedido.');
     const freeFrom = props.envioGratisDesde || 2000;
     const showSale = props.mostrarSale !== false;
 
@@ -1321,10 +1312,14 @@ class Component extends DCLogic {
         entregaNombre: s.delivery === 'domicilio' ? 'Entrega a domicilio' : 'Retiro en tienda',
         total: this.money(subtotal + deliveryCost),
         nombre: (s.form.nombre || '').trim(),
-        wa: '+504 9969-5564',
-        waFoto: waFoto
+        wa: '+504 9969-5564'
       }),
-      compartirLabel: s.generando ? 'Preparando la foto…' : 'Enviar la foto por WhatsApp',
+      // En el telefono la hoja de compartir deja mandar la imagen directo a
+      // WhatsApp; en escritorio no hay hoja, asi que se descarga el archivo.
+      compartirLabel: s.generando
+        ? 'Preparando la imagen…'
+        : (typeof navigator !== 'undefined' && navigator.canShare
+            ? 'Enviar la foto del pedido' : 'Descargar la foto del pedido'),
       generando: s.generando,
       cartTitle: count > 0 ? 'Tu carrito · ' + count : 'Tu carrito',
       subtotalLabel: this.money(subtotal),
